@@ -20,7 +20,9 @@ rbm_website/      - The Django project
     rbm/          - The RBM Library git repo as a sub module 
   settings.py     - Project level settings
   urls.py         - Project level urls
-hooks             - Git hooks
+hooks/            - Git hooks
+  pre-commit      - Update requirements.txt with pip freeze
+  post-merge      - Install all requirements in requirements.txt (someone else might have added new packages)
 install.sh        - Sets up virtual enviroment, project requirements, git hooks, submodules.
 requirements.txt  - Required python packages, use pip freeze to see what is currently installed in your venv. 
 ```
