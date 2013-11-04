@@ -1,0 +1,3 @@
+#!/bin/bash
+bash --rcfile <(echo "export PS1='> ' && source venv/bin/activate")
+
