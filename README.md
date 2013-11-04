@@ -1,3 +1,3 @@
 RBM-Website
 ===========
-Django website for RBM library. 
+Django website for RBM Library. 
