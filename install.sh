@@ -9,4 +9,7 @@ echo "Linking post commit and merge hooks..."
 cd .git/hooks
 ln -s ../../hooks/pre-commit pre-commit
 ln -s ../../hooks/post-merge post-merge
-echo "Finished, activate the virtual env with 'source venv/bin/activate' or 'source venv/bin/activate.csh'"
+echo "Cloning submodules..."
+git submodule init
+git submodule update
+echo "Finished, activate the virtual env with ./activate or 'source venv/bin/activate' or 'source venv/bin/activate.csh'"
