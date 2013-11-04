@@ -1,4 +1,2 @@
-#!/bin/bash
-cd ../../
-source venv/bin/activate
-pip install -r requirements.txt
+#!/bin/sh
+$VIRTUAL_ENV/bin/pip install -r requirements.txt
