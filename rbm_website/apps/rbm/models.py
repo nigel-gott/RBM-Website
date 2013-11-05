@@ -5,4 +5,7 @@ from jsonfield import JSONField
 class RBM(models.Model):
     name = models.CharField(max_length=200)
     matrix = JSONField()
+    visible = models.IntegerField()
+    hidden = models.IntegerField()
+    learning_rate = models.FloatField()
     
