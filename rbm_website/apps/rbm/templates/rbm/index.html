@@ -1,0 +1,13 @@
+<ul>
+{% for rbm in rbm_list %}
+<li> <a href="{% url 'view' rbm.id %}"> {{rbm.name}} </a> </li>
+{% endfor %}
+</ul>
+
+
+<form action="{% url 'create' %}" method="post">
+    {% csrf_token %}
+    Name: <input type="text" name="name"  /> 
+    Matrix: <input type="text" name="matrix"  /> 
+    <input type="submit" />
+</form>
