@@ -1,2 +1,13 @@
-#!/bin/sh
-$VIRTUAL_ENV/bin/pip install -r requirements.txt
+#!/bin/bash
+
+if [[ "$VIRTUAL_ENV" != "" ]]
+then
+    if [ $(git diff HEAD@{1} HEAD --name-only | grep 'requirements.txt' -c) -ne 0 ]
+    then
+        $VIRTUAL_ENV/bin/pip install -r requirements.txt
+    else
+        echo "Did not install from requirements.txt as no changes were made to the file."
+    fi
+else
+    echo "WARNING: Virtualenv not activated, did not automatically check requirements.txt for updates."
+fi

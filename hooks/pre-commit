@@ -1,3 +1,9 @@
 #!/bin/bash
-$VIRTUAL_ENV/bin/pip freeze > requirements.txt
-git add requirements.txt
+
+if [[ "$VIRTUAL_ENV" != "" ]]
+then
+    $VIRTUAL_ENV/bin/pip freeze > requirements.txt
+    git add requirements.txt
+else
+    echo "WARNING: Virtualenv not activated, did not automatically save pip requirements to requirements.txt" 
+fi
