@@ -8,6 +8,12 @@
 <form action="{% url 'create' %}" method="post">
     {% csrf_token %}
     Name: <input type="text" name="name"  /> 
+    Number Visible: <input type="text" name="visible"  /> 
+    Number Hidden: <input type="text" name="hidden"  /> 
+    Learning Rate: <input type="text" name="learning_rate" value="0.1"  /> 
+    <br/>
+    Use semicolons to seperate sub matrices, commas to seperate values in them (e.g. "1,0,0,1,1;1,1,1,1,1"):
+    <br/>
     Matrix: <input type="text" name="matrix"  /> 
     <input type="submit" />
 </form>
