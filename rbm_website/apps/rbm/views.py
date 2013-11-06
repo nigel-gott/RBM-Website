@@ -2,12 +2,15 @@
 import numpy as np
 from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from rbm_website.libs.rbm import rbm
 from rbm_website.apps.rbm.models import RBM 
 
-class RBMList(ListView):
+class RBMListView(ListView):
+    model = RBM
+
+class RBMDetailView(DetailView):
     model = RBM
 
 def create(request):
@@ -24,11 +27,6 @@ def create(request):
     new_rbm = RBM(name=request.POST['name'], matrix=matrix, visible=visible, hidden=hidden, learning_rate=learning_rate)
     new_rbm.save()
     return redirect('index')
-
-def view(request, rbm_id):
-    stored_rbm = get_object_or_404(RBM , pk=rbm_id)
-    matrix = str(stored_rbm.matrix)
-    return render(request, 'rbm/view.html', {'rbm': stored_rbm, 'matrix': matrix})
 
 def regenerate(request, rbm_id):
     stored_rbm = get_object_or_404(RBM , pk=rbm_id)

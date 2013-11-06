@@ -1,10 +1,9 @@
-<h2> {{rbm.name}} </h2>
+<h2> {{object.name}} </h2>
 <p>
-Matrix: {{matrix}} 
+Matrix: {{object.matrix}} 
 </p>
 
-
-<form action="{% url 'regenerate' rbm.id %}" method="post">
+<form action="{% url 'regenerate' object.id %}" method="post">
     {% csrf_token %}
     <br/>
     Comma seperated values
