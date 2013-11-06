@@ -1,5 +1,5 @@
 <ul>
-{% for rbm in rbm_list %}
+{% for rbm in object_list %}
 <li> <a href="{% url 'view' rbm.id %}"> {{rbm.name}} </a> </li>
 {% endfor %}
 </ul>

@@ -2,13 +2,13 @@
 import numpy as np
 from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
+from django.views.generic import ListView
 
 from rbm_website.libs.rbm import rbm
 from rbm_website.apps.rbm.models import RBM 
 
-def index(request):
-    rbm_list = RBM.objects.all()
-    return render(request, 'rbm/index.html', {'rbm_list': rbm_list})
+class RBMList(ListView):
+    model = RBM
 
 def create(request):
     training_data = request.POST['matrix']
