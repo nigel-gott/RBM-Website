@@ -1,10 +1,10 @@
 from django.db import models
-from jsonfield import JSONField
+from picklefield.fields import PickledObjectField
 
 # Create your models here.
-class RBM(models.Model):
+class RBMModel(models.Model):
     name = models.CharField(max_length=200)
-    matrix = JSONField()
+    weights = PickledObjectField()
     visible = models.IntegerField()
     hidden = models.IntegerField()
     learning_rate = models.FloatField()

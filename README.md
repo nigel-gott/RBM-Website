@@ -17,7 +17,7 @@ Project Structure
 rbm_website/      - The Django project
   apps/           - The Django apps (created by us, a Django project ideally consists of a bunch of little apps)
   libs/           - 3rd party librarys
-    rbm/          - The RBM Library git repo as a sub module 
+    rbm_lib/      - The RBM Library git repo as a sub module 
   settings.py     - Project level settings
   urls.py         - Project level urls
 hooks/            - Git hooks
