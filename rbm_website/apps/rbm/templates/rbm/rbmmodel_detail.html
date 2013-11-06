@@ -1,6 +1,6 @@
 <h2> {{object.name}} </h2>
 <p>
-Weights: {{object.weights}} 
+Weights: {{object.rbm.weights}} 
 </p>
 
 <form action="{% url 'regenerate' object.id %}" method="post">
