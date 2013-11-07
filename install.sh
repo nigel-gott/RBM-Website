@@ -9,6 +9,7 @@ echo "Linking post commit and merge hooks..."
 cd .git/hooks
 ln -s ../../hooks/pre-commit pre-commit
 ln -s ../../hooks/post-merge post-merge
+cd ../../
 echo "Cloning submodules..."
 git submodule init
 git submodule update
