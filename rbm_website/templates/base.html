@@ -1,25 +1,48 @@
 {% load i18n %}
+{% load staticfiles %}
+
 <html  lang="en">
 
 <head>
-    <link rel="stylesheet" href="/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
     <title>{% block title %}RBM{% endblock %}</title>
 </head>
 
 <body>
+    <div class="container">
     <div id="header">
         {% block header %}
-	<a href="{% url 'index' %}">{% trans "Home" %}</a> | 
+            <ul class="nav nav-pills pull-right">
+                <li class="active">
+                    <a href="{% url 'index' %}">{% trans "Home" %}</a> 
+                </li>
 
-	{% if user.is_authenticated %}
-	{% trans "Logged in" %}: {{ user.username }} 
-	(<a href="{% url 'auth_logout' %}">{% trans "Log out" %}</a> | 
-	<a href="{% url 'auth_password_change' %}">{% trans "Change password" %}</a>)
-	{% else %}
-	<a href="{% url 'auth_login' %}">{% trans "Log in" %}</a>
-	{% endif %}
+                {% if user.is_authenticated %}
+                
+                    <li> <a href="{% url 'auth_logout' %}">{% trans "Log out" %}</a> </li>
+                    <li> <a href="{% url 'auth_password_change' %}">{% trans "Change password" %}</a> </li>
+                {% else %}
+                    <li> <a href="{% url 'auth_login' %}">{% trans "Log in" %}</a> </li>
+                {% endif %}
+            </ul>
+            <h3 class="text-muted">RBM Website 
+                {% if user.is_authenticated %} - 
+                    {% trans "Logged in" %} as {{ user.username }}
+                {% endif %}
+            </h3>
         {% endblock %}
     </div>
+    <hr> 
 
     <div id="content">
         {% block content %}{% endblock %}
@@ -29,6 +52,11 @@
         {% block footer %}
         {% endblock %}
     </div>
+</div>
+
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
 
 </html>
