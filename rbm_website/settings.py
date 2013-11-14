@@ -1,4 +1,7 @@
 # Django settings for rbm_website project.
+import os
+
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -6,6 +9,8 @@ TEMPLATE_DEBUG = DEBUG
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
+
+
 
 MANAGERS = ADMINS
 
@@ -108,12 +113,16 @@ ROOT_URLCONF = 'rbm_website.urls'
 WSGI_APPLICATION = 'rbm_website.wsgi.application'
 
 TEMPLATE_DIRS = (
+        os.path.join(PROJECT_ROOT, 'templates'),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
 
+LOGIN_REDIRECT_URL = '/rbm'
+
 INSTALLED_APPS = (
+    'registration_defaults',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -124,8 +133,14 @@ INSTALLED_APPS = (
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'rbm_website.apps.rbm'
+    'rbm_website.apps.rbm',
+    'rbm_website.apps.users',
+
+    'registration'
 )
+
+from registration_defaults.settings import *
+
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 

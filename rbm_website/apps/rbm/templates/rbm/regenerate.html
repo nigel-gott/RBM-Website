@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+
 <h2> {{rbm.name}} </h2>
 <p>
 Visible state: {{visible_state}} 
@@ -17,3 +20,5 @@ Hidden state: {{hidden_state}}
 </form>
 
 <a href="{% url 'index' %}"> Index </a>
+
+{% endblock %}

@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+
 <h2> {{object.name}} </h2>
 <p>
 Weights: {{object.rbm.weights}} 
@@ -13,3 +16,5 @@ Weights: {{object.rbm.weights}}
 </form>
 
 <a href="{% url 'index' %}"> Index </a>
+
+{% endblock %}

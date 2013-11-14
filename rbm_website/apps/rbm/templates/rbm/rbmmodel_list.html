@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+
 <ul>
 {% for rbm in object_list %}
 <li> <a href="{% url 'view' rbm.id %}"> {{rbm.name}} </a> </li>
@@ -5,6 +8,7 @@
 </ul>
 
 
+{% if user.is_authenticated %}
 <form action="{% url 'create' %}" method="post">
     {% csrf_token %}
     Name: <input type="text" name="name"  /> 
@@ -17,3 +21,8 @@
     Weights: <input type="text" name="weights"  /> 
     <input type="submit" />
 </form>
+{% else %}
+<h3> You must login to create an RBM. </h3>
+{% endif %}
+
+{% endblock %}

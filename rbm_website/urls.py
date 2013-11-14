@@ -8,6 +8,9 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'rbm_website.views.home', name='home'),
     url(r'^rbm/', include('rbm_website.apps.rbm.urls')),
+    url(r'^users/', include('rbm_website.apps.users.urls')),
+    url(r'^accounts/', include('registration.backends.simple.urls')),
+
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
