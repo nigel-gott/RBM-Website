@@ -4,6 +4,8 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import ListView, DetailView
 
+from django import forms
+
 from rbm_website.apps.rbm.models import RBMModel
 
 class RBMListView(ListView):
@@ -12,20 +14,36 @@ class RBMListView(ListView):
 class RBMDetailView(DetailView):
     model = RBMModel
 
+
+class RBMForm(forms.Form):
+        name =  forms.CharField(max_length=200)
+        visible = forms.IntegerField()
+        hidden = forms.IntegerField()
+        learning_rate = forms.FloatField()
+        training_data = forms.CharField(max_length=2000)
+
+
 def create(request):
-    training_data_string = request.POST['weights']
-    # training_data_string is a list of comma seperated values seperated by 
-    # semi-colons.
-    training_data = [map(int, x.split(',')) for x in training_data_string.split(';')]
+    error = False 
+    if request.method == 'POST':
+        form = RBMForm(request.POST, request.FILES)
 
-    visible = int(request.POST['visible'])
-    hidden = int(request.POST['hidden'])
-    learning_rate = float(request.POST['learning_rate'])
+        if form.is_valid():
+            visible = form.cleaned_data['visible']
+            hidden = form.cleaned_data['hidden']
+            learning_rate = form.cleaned_data['learning_rate']
+            name = form.cleaned_data['name']
+            training_data = [map(int, x.split(',')) for x in form.cleaned_data['training_data'].split(';')] 
 
-    rbm = RBMModel.build_rbm(request.POST['name'], visible, hidden, learning_rate)
-    rbm.train(training_data)
-    rbm.save()
-    return redirect('index')
+            rbm = RBMModel.build_rbm(name, visible, hidden, learning_rate)
+            rbm.train(training_data)
+            rbm.save()
+            return redirect('index')
+        else: 
+            error = True 
+
+    form = RBMForm()
+    return render(request, 'rbm/create.html', { 'form' : form , 'error' : error })
 
 def regenerate(request, rbm_id):
     rbm = get_object_or_404(RBMModel , pk=rbm_id)

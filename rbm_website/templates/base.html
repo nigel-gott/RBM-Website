@@ -23,21 +23,24 @@
     <div id="header">
         {% block header %}
             <ul class="nav nav-pills pull-right">
-                <li class="active">
-                    <a href="{% url 'index' %}">{% trans "Home" %}</a> 
+
+                <li {% block list_link_class %} {% endblock %}>
+                    <a href="{% url 'index' %}">{% trans "RBM List" %}</a> 
                 </li>
 
                 {% if user.is_authenticated %}
+                <li {% block create_link_class %} {% endblock %}>
+                    <a href="{% url 'create' %}">{% trans "Create RBM" %}</a> 
+                </li>
                 
                     <li> <a href="{% url 'auth_logout' %}">{% trans "Log out" %}</a> </li>
-                    <li> <a href="{% url 'auth_password_change' %}">{% trans "Change password" %}</a> </li>
                 {% else %}
                     <li> <a href="{% url 'auth_login' %}">{% trans "Log in" %}</a> </li>
                 {% endif %}
             </ul>
             <h3 class="text-muted">RBM Website 
                 {% if user.is_authenticated %} - 
-                    {% trans "Logged in" %} as {{ user.username }}
+                    {{ user.username }}
                 {% endif %}
             </h3>
         {% endblock %}
