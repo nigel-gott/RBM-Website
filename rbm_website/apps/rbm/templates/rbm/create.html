@@ -1,12 +1,116 @@
-
 {% extends "base.html" %}
 {% block content %}
-{% if error %} Invalid form input! {% endif %}
+
+<style type="text/css">
+    label {
+        display: inline-block;
+        width:150px;
+        text-align: right;
+    }
+
+    ul.errorList {
+        color: #981919;
+        font-weight: bold;
+        list-style-type: none;
+    }
+
+    #id_description {
+        height: 100px;
+    }
+
+</style>
+
+<script src="https://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+var layerCount;
+$(document).ready( function () {
+    layerCount = $("[name=layer_count]").val();
+
+    $("#add-layer").click(function() {
+        input = $('<input type="text">');
+        input.attr('name', 'layer_' + layerCount);
+        input.attr('id', 'id_layer_' + layerCount);
+
+        label = $('<label></label> ');
+        label.attr('for', 'id_layer_' + layerCount);
+        label.text("Layer " + layerCount + ":");
+
+        div = $('<div class="fieldWrapper"></div>');
+
+        div.append(label);
+        div.append(' ');
+        div.append(input);
+        div.hide().appendTo('#layers').fadeIn(400);
+
+        layerCount ++;
+        $("[name=layer_count]").val(layerCount);
+    });
+
+    $("#delete-layer").click(function() {
+        layerCount --;
+        $("[name=layer_count]").val(layerCount);
+
+        layerWrapper = $("#id_layer_" + layerCount).parent(".fieldWrapper");
+        layerWrapper.fadeOut(300, function() { $(this).remove(); });
+    });
+});
+</script>
+
 <form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }} 
-    <input type="submit" />
+    {{ form.non_field_errors }}
+
+    {% for hidden in form.hidden_fields %}
+        {{ hidden }}
+    {% endfor %}
+
+    <div class="fieldWrapper">
+        {{ form.name.errors }}
+        <label for="id_name">Name:</label>
+        {{ form.name }}
+    </div>
+    <div class="fieldWrapper">
+        {{ form.description.errors }}
+        <label for="id_description">Description:</label>
+        {{ form.description }}
+    </div>
+    <div class="fieldWrapper">
+        {{ form.learning_rate.errors }}
+        <label for="id_learning_rate">Learning Rate:</label>
+        {{ form.learning_rate }}
+    </div>
+    <div class="fieldWrapper">
+        {{ form.visible.errors }}
+        <label for="id_visible">Input Nodes:</label>
+        {{ form.visible }}
+    </div>
+    <div id="layers">
+        {% for field in form.visible_fields %}
+            {% if "Layer" in field.label %}
+                <div class="fieldWrapper">
+                    {{ field.errors }}
+                    {{ field.label_tag }} {{ field }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="fieldWrapper">
+        {{ form.labels.errors }}
+        <label for="id_labels">No. Labels:</label>
+        {{ form.labels }}
+    </div>
+    <div class="fieldWrapper">
+        {{ form.training_data.errors }}
+        <label for="id_training_data">Training Data:</label>
+        {{ form.training_data }}
+    </div>
+    <p><input type="submit" value="Create DBN" /></p>
 </form>
+
+<button id="add-layer">Add layer</button>
+<button id="delete-layer">Delete layer</button>
+<button id="preview">Preview</button>
+
 {% endblock %}
 
 {% block create_link_class %} class="active" {% endblock %}

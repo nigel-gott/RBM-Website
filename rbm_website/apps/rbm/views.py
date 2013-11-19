@@ -17,33 +17,58 @@ class RBMDetailView(DetailView):
 
 class RBMForm(forms.Form):
         name =  forms.CharField(max_length=200)
+        description = forms.CharField(max_length=1000, widget=forms.Textarea)
         visible = forms.IntegerField()
-        hidden = forms.IntegerField()
+        labels = forms.IntegerField()
         learning_rate = forms.FloatField()
         training_data = forms.CharField(max_length=2000)
+        layer_count = forms.IntegerField(widget = forms.HiddenInput())
+
+        def __init__(self, *args, **kwargs):
+            layers = kwargs.pop('layer', 0)
+
+            super(RBMForm, self).__init__(*args, **kwargs)
+            self.fields['layer_count'].initial = layers
+
+            for index in range(int(layers)):
+                self.fields['layer_{index}'.format(index=index)] = forms.IntegerField()
 
 
 def create(request):
-    error = False 
     if request.method == 'POST':
-        form = RBMForm(request.POST, request.FILES)
+
+        form = RBMForm(request.POST, layer=request.POST.get('layer_count'))
 
         if form.is_valid():
             visible = form.cleaned_data['visible']
-            hidden = form.cleaned_data['hidden']
+            labels = form.cleaned_data['labels']
             learning_rate = form.cleaned_data['learning_rate']
+            description = form.cleaned_data['description']
             name = form.cleaned_data['name']
-            training_data = [map(int, x.split(',')) for x in form.cleaned_data['training_data'].split(';')] 
+            training_data = [map(int, x.split(',')) for x in form.cleaned_data['training_data'].split(';')]
+            layer_count = form.cleaned_data['layer_count']
 
-            rbm = RBMModel.build_rbm(name, visible, hidden, learning_rate)
+            # topology of the network
+            # MOVE HTML JAVASCRIPT TO FILE
+            # OPtimise errors and form input. Separate from form.as p
+            # Incorporate with DBN
+            # separate css and js from html
+            # Maybe change visibles to image dimensions
+            topology = []
+            topology.append(visible)
+            for index in range(layer_count):
+                topology.append(form.cleaned_data['layer_{index}'.format(index=index)])
+            topology.append(labels)
+
+            rbm = RBMModel.build_rbm(name, description, visible, labels, learning_rate)
             rbm.train(training_data)
             rbm.save()
             return redirect('index')
-        else: 
-            error = True 
 
-    form = RBMForm()
-    return render(request, 'rbm/create.html', { 'form' : form , 'error' : error })
+    else:
+        form = RBMForm()
+
+    return render(request, 'rbm/create.html', { 'form' : form })
 
 def regenerate(request, rbm_id):
     rbm = get_object_or_404(RBMModel , pk=rbm_id)

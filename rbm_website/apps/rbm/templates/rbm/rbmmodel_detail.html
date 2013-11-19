@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h2> {{object.name}} </h2>
+<h1> {{object.name}} </h1>
+<h2>{{object.description}} </h2>
+
 <p>
-Weights: {{object.rbm.weights}} 
+Weights: {{object.rbm.weights}}
 </p>
 
 <form action="{% url 'regenerate' object.id %}" method="post">
@@ -11,7 +13,7 @@ Weights: {{object.rbm.weights}}
     <br/>
     Comma seperated values
     <br/>
-    Data: <input type="text" name="data"  /> 
+    Data: <input type="text" name="data"  />
     <input type="submit" />
 </form>
 
