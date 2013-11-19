@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1> {{object.name}} </h1>
+<h1>{{object.name}} </h1>
 <h2>{{object.description}} </h2>
+<h3>Created by: {{object.creator}}</h3>
 
 <p>
 Weights: {{object.rbm.weights}}

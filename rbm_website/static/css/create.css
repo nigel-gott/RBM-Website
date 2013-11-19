@@ -1,0 +1,26 @@
+label {
+    display: inline-block;
+    width:150px;
+    text-align: right;
+}
+
+.errorList {
+    color: #981919;
+    font-weight: bold;
+    list-style-type: none;
+}
+
+#id_description {
+    height: 100px;
+}
+
+#canvasContainer {
+    height: 600px;
+    width: 350px;
+    overflow: auto;
+    float: right;
+}
+
+#formContainer {
+    float: left;
+}

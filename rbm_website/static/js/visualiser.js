@@ -1,168 +1,104 @@
-var canvas;
-var previewCanvas;
-var ctx;
-var aspRatio = 10;
-var id = "pixelDrawer"
-var pixelHeight;
-var pixelWidth;
-var currentlyDrawing = false;
-var offset;
-var blank = true;
-var tools = {PEN: 0, ERASER: 1};
-var currentTool = tools.PEN;
-var colours = {GREY: "#DEDDDC", BLACK: "#000000", WHITE:"#FFFFFF"};
-var directions = {NONE: 0, NORTH: 1, EAST: 2, SOUTH: 3, WEST: 4};
-
-//TODO: Maybe add on off screen support
-//TODO: Download option
-//TODO: clean up code
-//TODO: shift click for straight lines
-
-function pixelDrawerCanvas(container, width, height) {
-    var canvContainer = document.getElementById(container);
-    canvas = document.createElement('canvas');
-    ctx = canvas.getContext("2d");
-    canvas.id = id;
-    canvas.width = width*aspRatio;
-    canvas.height = height*aspRatio;
-    pixelHeight = height;
-    pixelWidth = width;
-    styleCanvas();
-    addCheckerboard();
-    canvContainer.appendChild(canvas);
-    offset = $("#" + id).offset();
-    createPreviewCanvas(canvContainer);
-}
-
-function draw(event) {
-    pixelX = Math.floor((event.pageX - offset.left) / aspRatio);
-    pixelY = Math.floor((event.pageY - offset.top) / aspRatio);
-
-    switch(currentTool) {
-        case tools.PEN:
-            fillPixel(colours.BLACK, pixelX, pixelY);
-            if (blank) {
-                $('#clear').attr("disabled", false);
-            }
-            blank = false;
-            break;
-        case tools.ERASER:
-            fillCheckerboardPiece(pixelX, pixelY);
-            break;
-    }
-}
-
-function fillPixel(colour, x,y) {
-    ctx.fillStyle = colour;
-    ctx.fillRect(x*aspRatio, y*aspRatio, aspRatio,aspRatio);
-}
-
-function fillCheckerboardPiece(x,y) {
-    if (x%2 === 0) {
-        if (y%2 === 0) {
-            fillPixel(colours.GREY, x, y);
-        } else {
-            fillPixel(colours.WHITE, x, y);
-        }
-    } else {
-        if (y%2 == 1) {
-            fillPixel(colours.GREY, x, y);
-        } else {
-            fillPixel(colours.WHITE, x, y);
-        }
-    }
-}
-
-function addCheckerboard() {
-    for (var row = 0; row < pixelHeight; row++) {
-        for (var col = 0; col < pixelWidth; col++) {
-            fillCheckerboardPiece(row, col);
-        }
-    }
-}
-
-function createPreviewCanvas(container) {
-    previewCanvas = document.createElement('canvas');
-    previewCanvas.id = id + "Preview";
-    previewCanvas.width = pixelHeight;
-    previewCanvas.height = pixelWidth;
-    previewCanvas.style.position = "relative";
-    previewCanvas.style.border = "1px solid";
-}
-
-function generatePreview() {
-    var prevCtx = previewCanvas.getContext("2d");
-    for (var row = 0; row < pixelHeight; row++) {
-        for (var col = 0; col < pixelWidth; col++) {
-            var pixData = ctx.getImageData(row*aspRatio, col*aspRatio, 1, 1);
-            if (pixData.data[0] == 0) {
-                prevCtx.fillStyle = colours.BLACK;
-            } else {
-                prevCtx.fillStyle = colours.WHITE;
-            }
-            prevCtx.fillRect(row, col, 1, 1);
-        }
-    }
-}
-
-function styleCanvas() {
-    canvas.style.position = "relative";
-    canvas.style.border = "1px solid";
-    canvas.style.width = pixelWidth*aspRatio;
-    canvas.style.height = pixelHeight*aspRatio;
-}
-
+var layerCount = 0;
 $(document).ready( function () {
-    $('#pen').attr("disabled", true);
-    $('#clear').attr("disabled", true);
+    layerCount = parseInt($("[name=layer_count]").val(), 10);
 
-    $('#clear').click(function() {
-        addCheckerboard();
-        blank = true;
-        $('#clear').attr("disabled", true);
+    $("#add-layer").click(function() {
+        input = $('<input type="text">');
+        input.attr('name', 'layer_' + layerCount);
+        input.attr('id', 'id_layer_' + layerCount);
+
+        label = $('<label></label> ');
+        label.attr('for', 'id_layer_' + layerCount);
+        label.text("Layer " + layerCount + ":");
+
+        div = $('<div class="fieldWrapper"></div>');
+
+        div.append(label);
+        div.append(' ');
+        div.append(input);
+        div.hide().appendTo('#layers').fadeIn(400);
+
+        layerCount ++;
+        $("[name=layer_count]").val(layerCount);
     });
 
-    $('#pen').click(function() {
-        currentTool = tools.PEN;
-        $('#pen').attr("disabled", true);
-        $('#eraser').attr("disabled", false);
-    });
+    $("#delete-layer").click(function() {
+        if (layerCount > 0) {
+            layerCount --;
+            $("[name=layer_count]").val(layerCount);
 
-    $('#eraser').click(function() {
-        currentTool = tools.ERASER;
-        $('#eraser').attr("disabled", true);
-        $('#pen').attr("disabled", false);
-    });
-
-    $('#download').click(function() {
-        generatePreview();
-        window.location = previewCanvas.toDataURL("image/png");
-    });
-
-    $("#" + id).mousedown( function (event) {
-        draw(event);
-        currentlyDrawing = true;
-    });
-
-    $("#" + id).mousemove( function (event) {
-        if (currentlyDrawing) {
-            draw(event);
+            layerWrapper = $("#id_layer_" + layerCount).parent(".fieldWrapper");
+            layerWrapper.fadeOut(300, function() { $(this).remove(); });
         }
     });
 
-    $("#" + id).mouseup( function (event) {
-        currentlyDrawing = false;
-    });
-
-    $("#" + id).mouseleave( function (event) {
-        currentlyDrawing = false;
-    });
-
-    $(document).keydown( function (event) {
-        if (event.which == 16) {
-        }
-    });
-
-    $(document).keyup( function (event) {
+    $("#preview").click( function() {
+        preview();
     });
 });
+
+function preview() {
+    $("#previewCanvas").remove();
+    var topology = getTopology();
+    drawTopology(topology);
+}
+
+function getTopology() {
+    var topology = new Array();
+    topology[0] = $("#id_visible").val();
+    for (var i = 0; i < layerCount; i++) {
+        topology[1 + i] = $("#id_layer_" + i).val();
+    }
+    topology[layerCount + 1] = $("#id_labels").val();
+    return topology;
+}
+
+function drawTopology(topology) {
+    var height = 60;
+    var gap = 40;
+    var textOffset = height + 15;
+    var perHeight = height + gap;
+    var canvasHeight = perHeight * (layerCount + 2);
+    var canvasWidth = 300;
+    var canvas = $('<canvas />').attr({
+        id: "previewCanvas",
+        width: canvasWidth,
+        height: canvasHeight
+    });
+    canvas.appendTo('#canvasContainer');
+
+    var ctx = $("#previewCanvas")[0].getContext("2d");
+    ctx.clearRect(0,0,canvasWidth,canvasHeight);
+    ctx.fillStyle = "#000000";
+    ctx.font = '8pt Calibri';
+    ctx.textAlign = 'left';
+    var max = Math.max.apply(Math, topology);
+    var ratio = canvasWidth/max;
+    var widths = $.map(topology, function(n) {
+        return Math.round(ratio*n);
+    });
+
+    var currentHeight = canvasHeight - perHeight;
+    for (var i = 0; i < layerCount + 2; i++) {
+        fillRandomPixels(ctx, (canvasWidth/2) - widths[i]/2, currentHeight, widths[i], height);
+        if (i === 0) {
+            ctx.fillText("Input Data: " + topology[0] + " nodes", 0, currentHeight + textOffset);
+        } else if (i == layerCount + 1) {
+            ctx.fillText("Classifier: " + topology[layerCount + 1] + " nodes", 0, currentHeight + textOffset);
+        } else {
+            ctx.fillText(("Layer " + (i-1)) + ": " + topology[i] + " nodes", 0, currentHeight + textOffset);
+        }
+        currentHeight = currentHeight - perHeight;
+    }
+}
+
+function fillRandomPixels(ctx,xcoord,ycoord,width,height, pixels) {
+    for (var x = 0; x < width; x++) {
+        for (var y = 0; y < height; y++) {
+            var prob = Math.floor(Math.random()*2);
+            if (prob == 1) {
+                ctx.fillRect(xcoord + x, ycoord + y, 1, 1);
+            }
+        }
+    }
+}

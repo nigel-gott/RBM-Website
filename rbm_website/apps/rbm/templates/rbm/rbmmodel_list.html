@@ -3,7 +3,7 @@
 
 <ul>
 {% for rbm in object_list %}
-<li> <a href="{% url 'view' rbm.id %}"> {{rbm.name}} </a> </li>
+<li> <a href="{% url 'view' rbm.id %}"> {{rbm.name}} </a> created by {{rbm.creator}} </li>
 {% endfor %}
 </ul>
 

@@ -17,11 +17,11 @@ class RBMDetailView(DetailView):
 
 class RBMForm(forms.Form):
         name =  forms.CharField(max_length=200)
+        creator =  forms.CharField(max_length=200, widget = forms.HiddenInput())
         description = forms.CharField(max_length=1000, widget=forms.Textarea)
         visible = forms.IntegerField()
         labels = forms.IntegerField()
         learning_rate = forms.FloatField()
-        training_data = forms.CharField(max_length=2000)
         layer_count = forms.IntegerField(widget = forms.HiddenInput())
 
         def __init__(self, *args, **kwargs):
@@ -37,6 +37,8 @@ class RBMForm(forms.Form):
 def create(request):
     if request.method == 'POST':
 
+        print request;
+
         form = RBMForm(request.POST, layer=request.POST.get('layer_count'))
 
         if form.is_valid():
@@ -45,23 +47,16 @@ def create(request):
             learning_rate = form.cleaned_data['learning_rate']
             description = form.cleaned_data['description']
             name = form.cleaned_data['name']
-            training_data = [map(int, x.split(',')) for x in form.cleaned_data['training_data'].split(';')]
+            creator = form.cleaned_data['creator']
             layer_count = form.cleaned_data['layer_count']
 
-            # topology of the network
-            # MOVE HTML JAVASCRIPT TO FILE
-            # OPtimise errors and form input. Separate from form.as p
-            # Incorporate with DBN
-            # separate css and js from html
-            # Maybe change visibles to image dimensions
             topology = []
             topology.append(visible)
             for index in range(layer_count):
                 topology.append(form.cleaned_data['layer_{index}'.format(index=index)])
             topology.append(labels)
 
-            rbm = RBMModel.build_rbm(name, description, visible, labels, learning_rate)
-            rbm.train(training_data)
+            rbm = RBMModel.build_rbm(name, creator, description, visible, labels, learning_rate)
             rbm.save()
             return redirect('index')
 
