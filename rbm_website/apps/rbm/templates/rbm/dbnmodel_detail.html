@@ -6,7 +6,10 @@
 <h3>Created by: {{object.creator}}</h3>
 
 <p>
-Weights: {{object.rbm.weights}}
+Layers: {{object.dbn.number_layers}}
+Labels: {{object.dbn.number_labels}}
+
+TODO: SHOW TOPOLOGY!!
 </p>
 
 <a href="{% url 'train' object.id %}"> Train </a>

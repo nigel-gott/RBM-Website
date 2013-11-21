@@ -2,8 +2,8 @@
 {% block content %}
 
 <ul>
-{% for rbm in object_list %}
-<li> <a href="{% url 'view' rbm.id %}"> {{rbm.name}} </a> created by {{rbm.creator}} </li>
+{% for dbn in object_list %}
+<li> <a href="{% url 'view' dbn.id %}"> {{dbn.name}} </a> created by {{dbn.creator}} </li>
 {% endfor %}
 </ul>
 

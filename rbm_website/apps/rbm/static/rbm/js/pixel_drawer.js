@@ -2,7 +2,7 @@ var canvas;
 var previewCanvas;
 var ctx;
 var aspRatio = 10;
-var id = "pixelDrawer"
+var id = "pixelDrawer";
 var pixelHeight;
 var pixelWidth;
 var currentlyDrawing = false;
@@ -12,11 +12,6 @@ var tools = {PEN: 0, ERASER: 1};
 var currentTool = tools.PEN;
 var colours = {GREY: "#DEDDDC", BLACK: "#000000", WHITE:"#FFFFFF"};
 var directions = {NONE: 0, NORTH: 1, EAST: 2, SOUTH: 3, WEST: 4};
-
-//TODO: Maybe add on off screen support
-//TODO: Download option
-//TODO: clean up code
-//TODO: shift click for straight lines
 
 function pixelDrawerCanvas(container, width, height) {
     var canvContainer = document.getElementById(container);
@@ -95,7 +90,7 @@ function generatePreview() {
     for (var row = 0; row < pixelHeight; row++) {
         for (var col = 0; col < pixelWidth; col++) {
             var pixData = ctx.getImageData(row*aspRatio, col*aspRatio, 1, 1);
-            if (pixData.data[0] == 0) {
+            if (pixData.data[0] === 0) {
                 prevCtx.fillStyle = colours.BLACK;
             } else {
                 prevCtx.fillStyle = colours.WHITE;

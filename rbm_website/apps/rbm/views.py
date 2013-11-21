@@ -3,19 +3,18 @@ import numpy as np
 from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import ListView, DetailView
-
+from django.contrib import messages
 from django import forms
+from rbm_website.apps.rbm.models import DBNModel
 
-from rbm_website.apps.rbm.models import RBMModel
+class DBNListView(ListView):
+    model = DBNModel
 
-class RBMListView(ListView):
-    model = RBMModel
-
-class RBMDetailView(DetailView):
-    model = RBMModel
+class DBNDetailView(DetailView):
+    model = DBNModel
 
 
-class RBMForm(forms.Form):
+class DBNForm(forms.Form):
     name =  forms.CharField(max_length=200)
     description = forms.CharField(max_length=1000, widget=forms.Textarea)
     visible = forms.IntegerField(initial=784)
@@ -26,22 +25,22 @@ class RBMForm(forms.Form):
     def __init__(self, *args, **kwargs):
         layers = kwargs.pop('layer', 0)
 
-        super(RBMForm, self).__init__(*args, **kwargs)
+        super(DBNForm, self).__init__(*args, **kwargs)
         self.fields['layer_count'].initial = layers
 
         for index in range(int(layers)):
             self.fields['layer_{index}'.format(index=index)] = forms.IntegerField()
 
-def train(request, rbm_id):
-    rbm = get_object_or_404(RBMModel , pk=rbm_id)
-    return render(request, 'rbm/train.html', {'rbm': rbm})
+def train(request, dbn_id):
+    dbn = get_object_or_404(DBNModel , pk=dbn_id)
+    return render(request, 'rbm/train.html', {'dbn': dbn})
 
 def training(request):
     return render(request, 'rbm/training.html', {})
 
 def create(request):
     if request.method == 'POST':
-        form = RBMForm(request.POST, layer=request.POST.get('layer_count'))
+        form = DBNForm(request.POST, layer=request.POST.get('layer_count'))
 
         if form.is_valid():
             visible = form.cleaned_data['visible']
@@ -56,22 +55,23 @@ def create(request):
             topology.append(visible)
             for index in range(layer_count):
                 topology.append(form.cleaned_data['layer_{index}'.format(index=index)])
-            topology.append(labels)
+            #topology.append(labels)
 
-            rbm = RBMModel.build_rbm(name, creator, description, visible, labels, learning_rate)
-            rbm.save()
+            dbn = DBNModel.build_dbn(name, creator, description, topology, labels, learning_rate)
+            dbn.save()
+            messages.add_message(request, messages.INFO, 'Successfully created the DBN!')
             return redirect('index')
 
     else:
-        form = RBMForm()
+        form = DBNForm()
 
     return render(request, 'rbm/create.html', { 'form' : form })
 
-def regenerate(request, rbm_id):
-    rbm = get_object_or_404(RBMModel , pk=rbm_id)
+def regenerate(request, dbn_id):
+    dbn = get_object_or_404(DBNModel , pk=dbn_id)
     data = [map(int, request.POST['data'].split(','))]
-    (visible_state, hidden_state) = rbm.regenerate(data)
+    (visible_state, hidden_state) = dbn.regenerate(data)
     visible_state = np.array_str(visible_state)
     hidden_state = np.array_str(hidden_state)
-    return render(request, 'rbm/regenerate.html', {'old_data': request.POST['data'], 'rbm': rbm, 'visible_state': visible_state, 'hidden_state': hidden_state})
+    return render(request, 'rbm/regenerate.html', {'old_data': request.POST['data'], 'dbn': dbn, 'visible_state': visible_state, 'hidden_state': hidden_state})
 

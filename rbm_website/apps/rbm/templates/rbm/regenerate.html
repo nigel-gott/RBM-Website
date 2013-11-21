@@ -8,18 +8,18 @@
 
 {% block content %}
 
-<h2> {{rbm.name}} </h2>
+<h2> {{dbn.name}} </h2>
 <p>
-Visible state: {{visible_state}} 
+Visible state: {{visible_state}}
 </p>
 <p>
-Hidden state: {{hidden_state}} 
+Hidden state: {{hidden_state}}
 </p>
 
 
-<form action="{% url 'regenerate' rbm.id %}" method="post">
+<form action="{% url 'regenerate' dbn.id %}" method="post">
     {% csrf_token %}
-    <input type="hidden" name="data" value="{{old_data}}" /> 
+    <input type="hidden" name="data" value="{{old_data}}" />
     <input type="submit" />
 </form>
 

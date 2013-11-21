@@ -1,23 +1,23 @@
 from django.db import models
 from picklefield.fields import PickledObjectField
 
-from rbm_website.libs.rbm_lib.rbm import RBM
+from rbm_website.libs.rbm_lib.dbn import DBN
 
 # Create your models here.
-class RBMModel(models.Model):
+class DBNModel(models.Model):
     name = models.CharField(max_length=200)
     creator = models.CharField(max_length=100)
     description = models.CharField(max_length=1000)
-    rbm = PickledObjectField()
+    dbn = PickledObjectField()
 
     @staticmethod
-    def build_rbm(name, creator, description, visible, hidden, learning_rate):
-        rbm = RBM(visible, hidden, learning_rate)
-        return RBMModel(name=name, creator=creator, description=description, rbm=rbm)
+    def build_dbn(name, creator, description, config, labels, learning_rate):
+        dbn = DBN(config, labels, learning_rate)
+        return DBNModel(name=name, creator=creator, description=description, dbn=dbn)
 
-    def train(self, training_data):
-        self.rbm.train(training_data)
+    #def train(self, training_data):
+    #    self.dbn.train(training_data)
 
-    def regenerate(self, data):
-        return self.rbm.regenerate(data)
+    #def regenerate(self, data):
+    #    return self.dbn.regenerate(data)
 
