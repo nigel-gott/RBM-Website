@@ -16,23 +16,25 @@ class RBMDetailView(DetailView):
 
 
 class RBMForm(forms.Form):
-        name =  forms.CharField(max_length=200)
-        creator =  forms.CharField(max_length=200, widget = forms.HiddenInput())
-        description = forms.CharField(max_length=1000, widget=forms.Textarea)
-        visible = forms.IntegerField()
-        labels = forms.IntegerField()
-        learning_rate = forms.FloatField()
-        layer_count = forms.IntegerField(widget = forms.HiddenInput())
+    name =  forms.CharField(max_length=200)
+    creator =  forms.CharField(max_length=200, widget = forms.HiddenInput())
+    description = forms.CharField(max_length=1000, widget=forms.Textarea)
+    visible = forms.IntegerField()
+    labels = forms.IntegerField()
+    learning_rate = forms.FloatField()
+    layer_count = forms.IntegerField(widget = forms.HiddenInput())
 
-        def __init__(self, *args, **kwargs):
-            layers = kwargs.pop('layer', 0)
+    def __init__(self, *args, **kwargs):
+        layers = kwargs.pop('layer', 0)
 
-            super(RBMForm, self).__init__(*args, **kwargs)
-            self.fields['layer_count'].initial = layers
+        super(RBMForm, self).__init__(*args, **kwargs)
+        self.fields['layer_count'].initial = layers
 
-            for index in range(int(layers)):
-                self.fields['layer_{index}'.format(index=index)] = forms.IntegerField()
+        for index in range(int(layers)):
+            self.fields['layer_{index}'.format(index=index)] = forms.IntegerField()
 
+def train(request):
+    return render(request, 'rbm/train.html', {})
 
 def create(request):
     if request.method == 'POST':
