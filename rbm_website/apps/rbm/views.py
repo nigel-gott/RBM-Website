@@ -38,9 +38,6 @@ def train(request):
 
 def create(request):
     if request.method == 'POST':
-
-        print request;
-
         form = RBMForm(request.POST, layer=request.POST.get('layer_count'))
 
         if form.is_valid():

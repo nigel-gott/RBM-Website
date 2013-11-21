@@ -1,6 +1,6 @@
 var layerCount = 0;
 $(document).ready( function () {
-    $("[name=creator]").val("{{ user.username }}");
+    $("[name=creator]").val(USERNAME);
     layerCount = parseInt($("[name=layer_count]").val());
 
     $("#add-layer").click(function() {

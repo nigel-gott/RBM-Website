@@ -6,6 +6,9 @@
 {% endblock %}
 
 {% block scripts %}
+    <script> 
+        USERNAME = "{{ user.username }}";
+    </script>
     <script src="{% static 'js/visualiser.js' %}"></script>
 {% endblock %}
 
