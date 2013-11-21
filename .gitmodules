@@ -1,3 +1,0 @@
-[submodule "rbm_website/libs/rbm_lib"]
-	path = rbm_website/libs/rbm_lib
-	url = git@github.com:fleurette/RBM.git
