@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+<ul>
+{% for dbn in object_list %}
+<li> <a href="{% url 'view' dbn.id %}"> {{dbn.name}} </a> created by {{dbn.creator}} </li>
+{% endfor %}
+</ul>
+
+
+{% endblock %}
+
+{% block list_link_class %} class="active" {% endblock %}
+

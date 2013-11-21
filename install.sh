@@ -13,4 +13,8 @@ cd ../../
 echo "Cloning rbm lib.."
 git clone https://github.com/fleurette/RBM.git rbm_website/libs/rbm_lib
 
+echo "Setting up database.."
+rm database.sqlite3
+python manage.py syncdb --noinput
+
 echo "Finished, activate the virtual env with ./activate or 'source venv/bin/activate' or 'source venv/bin/activate.csh'"
