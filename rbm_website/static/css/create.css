@@ -4,7 +4,7 @@ label {
     text-align: right;
 }
 
-.errorList {
+ul.errorList {
     color: #981919;
     font-weight: bold;
     list-style-type: none;
@@ -24,3 +24,4 @@ label {
 #formContainer {
     float: left;
 }
+
