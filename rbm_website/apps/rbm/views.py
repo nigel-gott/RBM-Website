@@ -17,9 +17,8 @@ class RBMDetailView(DetailView):
 
 class RBMForm(forms.Form):
     name =  forms.CharField(max_length=200)
-    creator =  forms.CharField(max_length=200, widget = forms.HiddenInput())
     description = forms.CharField(max_length=1000, widget=forms.Textarea)
-    visible = forms.IntegerField()
+    visible = forms.IntegerField(initial=784)
     labels = forms.IntegerField()
     learning_rate = forms.FloatField()
     layer_count = forms.IntegerField(widget = forms.HiddenInput())
@@ -33,8 +32,12 @@ class RBMForm(forms.Form):
         for index in range(int(layers)):
             self.fields['layer_{index}'.format(index=index)] = forms.IntegerField()
 
-def train(request):
-    return render(request, 'rbm/train.html', {})
+def train(request, rbm_id):
+    rbm = get_object_or_404(RBMModel , pk=rbm_id)
+    return render(request, 'rbm/train.html', {'rbm': rbm})
+
+def training(request):
+    return render(request, 'rbm/training.html', {})
 
 def create(request):
     if request.method == 'POST':
@@ -46,7 +49,7 @@ def create(request):
             learning_rate = form.cleaned_data['learning_rate']
             description = form.cleaned_data['description']
             name = form.cleaned_data['name']
-            creator = form.cleaned_data['creator']
+            creator = request.user.username
             layer_count = form.cleaned_data['layer_count']
 
             topology = []

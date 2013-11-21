@@ -9,6 +9,7 @@
 Weights: {{object.rbm.weights}}
 </p>
 
+<a href="{% url 'train' object.id %}"> Train </a>
 <form action="{% url 'regenerate' object.id %}" method="post">
     {% csrf_token %}
     <br/>

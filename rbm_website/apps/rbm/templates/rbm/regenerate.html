@@ -1,4 +1,11 @@
 {% extends "base.html" %}
+{% load staticfiles %}
+
+
+{% block scripts %}
+    <script src="{% static 'js/pixel_drawer.js' %}"></script>
+{% endblock %}
+
 {% block content %}
 
 <h2> {{rbm.name}} </h2>
@@ -12,10 +19,7 @@ Hidden state: {{hidden_state}}
 
 <form action="{% url 'regenerate' rbm.id %}" method="post">
     {% csrf_token %}
-    <br/>
-    Comma seperated values
-    <br/>
-    Data: <input type="text" name="data" value="{{old_data}}" /> 
+    <input type="hidden" name="data" value="{{old_data}}" /> 
     <input type="submit" />
 </form>
 
