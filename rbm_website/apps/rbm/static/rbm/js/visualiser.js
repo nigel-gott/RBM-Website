@@ -71,7 +71,7 @@ function drawTopology(topology) {
     var ctx = $("#previewCanvas")[0].getContext("2d");
     ctx.clearRect(0,0,canvasWidth,canvasHeight);
     ctx.fillStyle = "#000000";
-    ctx.font = '8pt Calibri';
+    ctx.font = '8pt Helvetica';
     ctx.textAlign = 'left';
     var max = Math.max.apply(Math, topology);
     var ratio = canvasWidth/max;

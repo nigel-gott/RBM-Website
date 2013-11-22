@@ -1,0 +1,37 @@
+ul.errorList {
+    color: #981919;
+    font-weight: bold;
+    list-style-type: none;
+}
+
+.messages {
+    font-weight: bold;
+    list-style-type: none;
+}
+
+.warning {
+    color: #DB7A12;
+}
+
+.success {
+    color: #15841A;
+}
+
+.error {
+    color: #981919;
+}
+
+.info {
+    color: #145FA3;
+}
+
+label {
+    display: inline-block;
+    width:150px;
+    text-align: right;
+}
+
+body {
+    font-family: helvetica;
+}
+
