@@ -92,11 +92,12 @@ function PixelDrawer(container, width, height) {
 }
 
 function Canvas(pixelWidth, pixelHeight){
-    this.aspRatio = 10;
+    var aspRatio = 10
+    this.aspRatio = aspRatio;
     var colours = {GREY: "#DEDDDC", BLACK: "#000000", WHITE:"#FFFFFF"};
 
-    var canvasWidth = this.aspRatio * pixelWidth;
-    var canvasHeight = this.aspRatio * pixelHeight;
+    var canvasWidth = aspRatio * pixelWidth;
+    var canvasHeight = aspRatio * pixelHeight;
 
     this.canvas = createCanvas(canvasWidth, canvasHeight);
 
@@ -117,7 +118,7 @@ function Canvas(pixelWidth, pixelHeight){
         var previewContext = previewCanvas[0].getContext("2d");
         for (var row = 0; row < pixelWidth; row++) {
             for (var col = 0; col < pixelHeight; col++) {
-                var pixData = context.getImageData(row*this.aspRatio, col*this.aspRatio, 1, 1);
+                var pixData = context.getImageData(row*aspRatio, col*aspRatio, 1, 1);
                 if (pixData.data[0] === 0) {
                     previewContext.fillStyle = colours.BLACK;
                 } else {
@@ -149,7 +150,7 @@ function Canvas(pixelWidth, pixelHeight){
 
     function fillPixel(colour, x, y) {
         context.fillStyle = colour;
-        context.fillRect(x*this.aspRatio, y*this.aspRatio, this.aspRatio,this.aspRatio);
+        context.fillRect(x*aspRatio, y*aspRatio, aspRatio, aspRatio);
     }
 
     function fillCheckerboardPiece(x,y) {
