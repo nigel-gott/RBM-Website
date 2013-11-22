@@ -1,5 +1,4 @@
-
-function PixelDrawer(container, width, height) {
+function PixelDrawer(container, width, height, mode) {
     var canvas_object = new Canvas(width, height);
     var canvas = canvas_object.canvas;
     canvas_object.addCheckerboard();
@@ -13,13 +12,29 @@ function PixelDrawer(container, width, height) {
     var clear = appendButton('Clear');
     var pen = appendButton('Pen');
     var eraser = appendButton('Eraser');
-    var download = appendButton('Download');
+
+    var download;
+    var className;
+    if (mode == "train") {
+        download = appendButton('Add Class');
+        className = appendClassNameInput();
+    } else if (mode == "classify") {
+        download = appendButton('Classify');
+    } else {
+        download = appendButton('Classify');
+    }
+
+    function appendClassNameInput() {
+        var inputBox = $('<input id="className" type="text"/>');
+        container.append(inputBox);
+        return inputBox;
+    }
 
     function appendButton(name){
         var button = $('<button />', {
-            class : 'btn', 
-            id: name.toLowerCase(), 
-            text: name, 
+            class : 'btn',
+            id: name.toLowerCase(),
+            text: name,
             type: 'button'
         });
 
@@ -31,9 +46,7 @@ function PixelDrawer(container, width, height) {
     clear.attr("disabled", true);
 
     clear.click(function() {
-        canvas_object.addCheckerboard();
-        blank = true;
-        clear.attr("disabled", true);
+        clearCanvas();
     });
 
     pen.click(function() {
@@ -49,9 +62,43 @@ function PixelDrawer(container, width, height) {
     });
 
     download.click(function() {
-        previewCanvas = canvas_object.generatePreview();
-        window.location = previewCanvas.toDataURL("image/png");
+        if (mode == "train") {
+            addClass();
+        } else if (mode == "classify") {
+            classify();
+        } else {
+            classify();
+        }
     });
+
+    function addClass() {
+        previewCanvas = canvas_object.generatePreview();
+        imageURL = previewCanvas.toDataURL("image/png");
+        imageID = className.val();
+
+        if (imageID === "") {
+            alert("Please enter a class name before adding a class!");
+        } else {
+            image = $('<img id="' + imageID + '" src="' +  imageURL + '" alt="this is a failure">');
+            deleteButton = $('<input type="button" value="-" />');
+            deleteButton.click(function() {
+                $(this).parent().fadeOut(300, function() { $(this).remove(); });
+            });
+            div = $('<div class="imageClass"></div>');
+
+            div.append(deleteButton);
+            div.append('  ');
+            div.append(image);
+            div.append(' - ' + imageID);
+            clearCanvas();
+            className.val('');
+            div.hide().appendTo('#imageClasses').fadeIn(400);
+        }
+    }
+
+    function classify() {
+        alert('Classifying not adding');
+    }
 
     canvas.mousedown(draw);
 
@@ -60,6 +107,12 @@ function PixelDrawer(container, width, height) {
             draw(e);
         }
     });
+
+    function clearCanvas() {
+        canvas_object.addCheckerboard();
+        blank = true;
+        clear.attr("disabled", true);
+    }
 
     function draw(e){
         var offset = canvas.offset();
@@ -92,7 +145,7 @@ function PixelDrawer(container, width, height) {
 }
 
 function Canvas(pixelWidth, pixelHeight){
-    var aspRatio = 10
+    var aspRatio = 10;
     this.aspRatio = aspRatio;
 
     var colours = {GREY: "#DEDDDC", BLACK: "#000000", WHITE:"#FFFFFF"};
@@ -143,7 +196,7 @@ function Canvas(pixelWidth, pixelHeight){
     function createCanvas(canvasWidth, canvasHeight){
         var canvas = $('<canvas/>', {
             'style' : 'position: relative; border: 1px solid;',
-            'width' : canvasWidth, 
+            'width' : canvasWidth,
             'height' : canvasHeight
         });
         canvas[0].width = canvasWidth;

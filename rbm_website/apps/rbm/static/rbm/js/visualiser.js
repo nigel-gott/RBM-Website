@@ -29,12 +29,20 @@ $(document).ready( function () {
 
             layerWrapper = $("#id_layer_" + layerCount).parent(".fieldWrapper");
             layerWrapper.fadeOut(300, function() { $(this).remove(); });
-        };
+        }
     });
 
+    var prevInterval;
     $("#preview").click( function() {
-        preview();
-        setInterval ("preview()", 1000);funcName, delay
+        if ($(this).html() == "Preview") {
+            preview();
+            prevInterval = setInterval ("preview()", 1000);
+            $(this).html("Stop");
+        } else {
+            clearInterval(prevInterval);
+            $("#previewCanvas").remove();
+            $(this).html("Preview");
+        }
     });
 });
 
@@ -49,7 +57,7 @@ function getTopology() {
     topology[0] = $("#id_visible").val();
     for (var i = 0; i < layerCount; i++) {
         topology[1 + i] = $("#id_layer_" + i).val();
-    };
+    }
     topology[layerCount + 1] = $("#id_labels").val();
     return topology;
 }
@@ -82,15 +90,15 @@ function drawTopology(topology) {
     var currentHeight = canvasHeight - perHeight;
     for (var i = 0; i < layerCount + 2; i++) {
         fillRandomPixels(ctx, (canvasWidth/2) - widths[i]/2, currentHeight, widths[i], height);
-        if (i == 0) {
+        if (i === 0) {
             ctx.fillText("Input Data: " + topology[0] + " nodes", 0, currentHeight + textOffset);
         } else if (i == layerCount + 1) {
             ctx.fillText("Classifier: " + topology[layerCount + 1] + " nodes", 0, currentHeight + textOffset);
         } else {
             ctx.fillText(("Layer " + (i-1)) + ": " + topology[i] + " nodes", 0, currentHeight + textOffset);
-        };
+        }
         currentHeight = currentHeight - perHeight;
-    };
+    }
 }
 
 function fillRandomPixels(ctx,xcoord,ycoord,width,height, pixels) {
@@ -99,8 +107,8 @@ function fillRandomPixels(ctx,xcoord,ycoord,width,height, pixels) {
             var prob = Math.floor(Math.random()*2);
             if (prob == 1) {
                 ctx.fillRect(xcoord + x, ycoord + y, 1, 1);
-            };
-        };
-    };
+            }
+        }
+    }
 }
 

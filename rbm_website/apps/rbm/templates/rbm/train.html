@@ -14,8 +14,12 @@
 <div id="pixelDrawerContainer">
 </div>
 <script>
-    pixelDrawer = new PixelDrawer($('#pixelDrawerContainer'), 28, 28);
+    pixelDrawer = new PixelDrawer($('#pixelDrawerContainer'), 28, 28, "train");
 </script>
+
+<div id="imageClasses">
+
+</div>
 
 <form action="{% url 'training' %}" method="post">
     {% csrf_token %}
