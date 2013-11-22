@@ -94,6 +94,7 @@ function PixelDrawer(container, width, height) {
 function Canvas(pixelWidth, pixelHeight){
     var aspRatio = 10
     this.aspRatio = aspRatio;
+
     var colours = {GREY: "#DEDDDC", BLACK: "#000000", WHITE:"#FFFFFF"};
 
     var canvasWidth = aspRatio * pixelWidth;
@@ -145,6 +146,8 @@ function Canvas(pixelWidth, pixelHeight){
             'width' : canvasWidth, 
             'height' : canvasHeight
         });
+        canvas[0].width = canvasWidth;
+        canvas[0].height= canvasHeight;
         return canvas;
     }
 
