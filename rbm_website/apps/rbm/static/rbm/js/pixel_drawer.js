@@ -62,8 +62,9 @@ function PixelDrawer(container, width, height) {
     });
 
     function draw(e){
-        x = Math.floor((e.pageX - canvas.offset.left) / this.aspRatio);
-        y = Math.floor((e.pageY - canvas.offset.top) / this.aspRatio);
+        var offset = canvas.offset();
+        x = Math.floor((e.pageX - offset.left) / canvas_object.aspRatio);
+        y = Math.floor((e.pageY - offset.top) / canvas_object.aspRatio);
 
         switch(currentTool) {
             case tools.PEN:
