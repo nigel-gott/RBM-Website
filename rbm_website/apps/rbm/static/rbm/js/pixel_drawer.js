@@ -1,163 +1,170 @@
-var canvas;
-var previewCanvas;
-var ctx;
-var aspRatio = 10;
-var id = "pixelDrawer";
-var pixelHeight;
-var pixelWidth;
-var currentlyDrawing = false;
-var offset;
-var blank = true;
-var tools = {PEN: 0, ERASER: 1};
-var currentTool = tools.PEN;
-var colours = {GREY: "#DEDDDC", BLACK: "#000000", WHITE:"#FFFFFF"};
-var directions = {NONE: 0, NORTH: 1, EAST: 2, SOUTH: 3, WEST: 4};
 
-function pixelDrawerCanvas(container, width, height) {
-    var canvContainer = document.getElementById(container);
-    canvas = document.createElement('canvas');
-    ctx = canvas.getContext("2d");
-    canvas.id = id;
-    canvas.width = width*aspRatio;
-    canvas.height = height*aspRatio;
-    pixelHeight = height;
-    pixelWidth = width;
-    styleCanvas();
-    addCheckerboard();
-    canvContainer.appendChild(canvas);
-    offset = $("#" + id).offset();
-    createPreviewCanvas(canvContainer);
-}
+function PixelDrawer(container, width, height) {
+    var canvas_object = new Canvas(width, height);
+    var canvas = canvas_object.canvas;
+    canvas_object.addCheckerboard();
+    container.append(canvas);
 
-function draw(event) {
-    pixelX = Math.floor((event.pageX - offset.left) / aspRatio);
-    pixelY = Math.floor((event.pageY - offset.top) / aspRatio);
+    var currentlyDrawing = false;
+    var blank = true;
+    var tools = {PEN: 0, ERASER: 1};
+    var currentTool = tools.PEN;
 
-    switch(currentTool) {
-        case tools.PEN:
-            fillPixel(colours.BLACK, pixelX, pixelY);
-            if (blank) {
-                $('#clear').attr("disabled", false);
-            }
-            blank = false;
-            break;
-        case tools.ERASER:
-            fillCheckerboardPiece(pixelX, pixelY);
-            break;
+    var clear = appendButton('Clear');
+    var pen = appendButton('Pen');
+    var eraser = appendButton('Eraser');
+    var download = appendButton('Download');
+
+    function appendButton(name){
+        var button = $('<button />', {
+            class : 'btn', 
+            id: name.toLowerCase(), 
+            text: name, 
+            type: 'button'
+        });
+
+        container.append(button);
+        return button;
     }
-}
 
-function fillPixel(colour, x,y) {
-    ctx.fillStyle = colour;
-    ctx.fillRect(x*aspRatio, y*aspRatio, aspRatio,aspRatio);
-}
+    pen.attr("disabled", true);
+    clear.attr("disabled", true);
 
-function fillCheckerboardPiece(x,y) {
-    if (x%2 === 0) {
-        if (y%2 === 0) {
-            fillPixel(colours.GREY, x, y);
-        } else {
-            fillPixel(colours.WHITE, x, y);
-        }
-    } else {
-        if (y%2 == 1) {
-            fillPixel(colours.GREY, x, y);
-        } else {
-            fillPixel(colours.WHITE, x, y);
-        }
-    }
-}
-
-function addCheckerboard() {
-    for (var row = 0; row < pixelHeight; row++) {
-        for (var col = 0; col < pixelWidth; col++) {
-            fillCheckerboardPiece(row, col);
-        }
-    }
-}
-
-function createPreviewCanvas(container) {
-    previewCanvas = document.createElement('canvas');
-    previewCanvas.id = id + "Preview";
-    previewCanvas.width = pixelHeight;
-    previewCanvas.height = pixelWidth;
-    previewCanvas.style.position = "relative";
-    previewCanvas.style.border = "1px solid";
-}
-
-function generatePreview() {
-    var prevCtx = previewCanvas.getContext("2d");
-    for (var row = 0; row < pixelHeight; row++) {
-        for (var col = 0; col < pixelWidth; col++) {
-            var pixData = ctx.getImageData(row*aspRatio, col*aspRatio, 1, 1);
-            if (pixData.data[0] === 0) {
-                prevCtx.fillStyle = colours.BLACK;
-            } else {
-                prevCtx.fillStyle = colours.WHITE;
-            }
-            prevCtx.fillRect(row, col, 1, 1);
-        }
-    }
-}
-
-function styleCanvas() {
-    canvas.style.position = "relative";
-    canvas.style.border = "1px solid";
-    canvas.style.width = pixelWidth*aspRatio;
-    canvas.style.height = pixelHeight*aspRatio;
-}
-
-$(document).ready( function () {
-    $('#pen').attr("disabled", true);
-    $('#clear').attr("disabled", true);
-
-    $('#clear').click(function() {
-        addCheckerboard();
+    clear.click(function() {
+        canvas_object.addCheckerboard();
         blank = true;
-        $('#clear').attr("disabled", true);
+        clear.attr("disabled", true);
     });
 
-    $('#pen').click(function() {
+    pen.click(function() {
         currentTool = tools.PEN;
-        $('#pen').attr("disabled", true);
-        $('#eraser').attr("disabled", false);
+        pen.attr("disabled", true);
+        eraser.attr("disabled", false);
     });
 
-    $('#eraser').click(function() {
+    eraser.click(function() {
         currentTool = tools.ERASER;
-        $('#eraser').attr("disabled", true);
-        $('#pen').attr("disabled", false);
+        eraser.attr("disabled", true);
+        pen.attr("disabled", false);
     });
 
-    $('#download').click(function() {
-        generatePreview();
+    download.click(function() {
+        previewCanvas = canvas_object.generatePreview();
         window.location = previewCanvas.toDataURL("image/png");
     });
 
-    $("#" + id).mousedown( function (event) {
-        draw(event);
-        currentlyDrawing = true;
-    });
+    canvas.mousedown(draw);
 
-    $("#" + id).mousemove( function (event) {
+    canvas.mousemove( function (e) {
         if (currentlyDrawing) {
-            draw(event);
+            draw(e);
         }
     });
 
-    $("#" + id).mouseup( function (event) {
-        currentlyDrawing = false;
-    });
+    function draw(e){
+        x = Math.floor((e.pageX - canvas.offset.left) / this.aspRatio);
+        y = Math.floor((e.pageY - canvas.offset.top) / this.aspRatio);
 
-    $("#" + id).mouseleave( function (event) {
-        currentlyDrawing = false;
-    });
-
-    $(document).keydown( function (event) {
-        if (event.which == 16) {
+        switch(currentTool) {
+            case tools.PEN:
+                canvas_object.draw(x, y);
+                if (blank) {
+                    clear.attr("disabled", false);
+                }
+                blank = false;
+                break;
+            case tools.ERASER:
+                canvas_object.erase(x, y);
+                break;
         }
+
+        currentlyDrawing = true;
+    }
+
+    canvas.mouseup( function (event) {
+        currentlyDrawing = false;
     });
 
-    $(document).keyup( function (event) {
+    canvas.mouseleave( function (event) {
+        currentlyDrawing = false;
     });
-});
+}
+
+function Canvas(pixelWidth, pixelHeight){
+    this.aspRatio = 10;
+    var colours = {GREY: "#DEDDDC", BLACK: "#000000", WHITE:"#FFFFFF"};
+
+    var canvasWidth = this.aspRatio * pixelWidth;
+    var canvasHeight = this.aspRatio * pixelHeight;
+
+    this.canvas = createCanvas(canvasWidth, canvasHeight);
+
+    var context = this.canvas[0].getContext("2d");
+
+    /* Public Functions */
+    this.draw = function(x, y) {
+        fillPixel(colours.BLACK, x, y);
+    };
+
+    this.erase = function(x, y) {
+        fillCheckerboardPiece(x, y);
+    };
+
+    this.generatePreview = function() {
+        previewCanvas = createCanvas(pixelWidth, pixelHeight);
+
+        var previewContext = previewCanvas[0].getContext("2d");
+        for (var row = 0; row < pixelWidth; row++) {
+            for (var col = 0; col < pixelHeight; col++) {
+                var pixData = context.getImageData(row*this.aspRatio, col*this.aspRatio, 1, 1);
+                if (pixData.data[0] === 0) {
+                    previewContext.fillStyle = colours.BLACK;
+                } else {
+                    previewContext.fillStyle = colours.WHITE;
+                }
+                previewContext.fillRect(row, col, 1, 1);
+            }
+        }
+        return previewCanvas[0];
+    };
+
+    this.addCheckerboard = function() {
+        for (var row = 0; row < pixelHeight; row++) {
+            for (var col = 0; col < pixelHeight; col++) {
+                fillCheckerboardPiece(row, col);
+            }
+        }
+    };
+
+    /* Private Functions */
+    function createCanvas(canvasWidth, canvasHeight){
+        var canvas = $('<canvas/>', {
+            'style' : 'position: relative; border: 1px solid;',
+            'width' : canvasWidth, 
+            'height' : canvasHeight
+        });
+        return canvas;
+    }
+
+    function fillPixel(colour, x, y) {
+        context.fillStyle = colour;
+        context.fillRect(x*this.aspRatio, y*this.aspRatio, this.aspRatio,this.aspRatio);
+    }
+
+    function fillCheckerboardPiece(x,y) {
+        if (x%2 === 0) {
+            if (y%2 === 0) {
+                fillPixel(colours.GREY, x, y);
+            } else {
+                fillPixel(colours.WHITE, x, y);
+            }
+        } else {
+            if (y%2 == 1) {
+                fillPixel(colours.GREY, x, y);
+            } else {
+                fillPixel(colours.WHITE, x, y);
+            }
+        }
+    }
+
+}

@@ -11,16 +11,11 @@
 <h2> {{dbn.name}} </h2>
 
 
-<script src="https://code.jquery.com/jquery.js"></script>
 <div id="pixelDrawerContainer">
-    <button class="btn" id="clear" type="button">Clear</button>
-    <button class="btn" id="pen" type="button">Pen</button>
-    <button class="btn" id="eraser" type="button">Eraser</button>
-    <button class="btn" id="download" type="button">Download</button>
-    <script>
-      pixelDrawerCanvas("pixelDrawerContainer", 28, 28)
-    </script>
 </div>
+<script>
+    pixelDrawer = new PixelDrawer($('#pixelDrawerContainer'), 28, 28);
+</script>
 
 <form action="{% url 'training' %}" method="post">
     {% csrf_token %}
