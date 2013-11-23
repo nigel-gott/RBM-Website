@@ -13,17 +13,20 @@
 
 <div id="pixelDrawerContainer">
 </div>
-<script>
-    pixelDrawer = new PixelDrawer($('#pixelDrawerContainer'), 28, 28, "train");
-</script>
+
+<div id="classesRemainingDisplay">
+</div>
 
 <div id="imageClasses">
-
 </div>
 
 <form action="{% url 'training' %}" method="post">
     {% csrf_token %}
     <input class="btn" value="Train" type="submit" />
 </form>
+
+<script>
+    pixelDrawer = new PixelDrawer($('#pixelDrawerContainer'), {{dbn.width}}, {{dbn.height}}, "train", {{dbn.labels}});
+</script>
 
 {% endblock %}

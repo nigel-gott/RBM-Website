@@ -1,4 +1,11 @@
-function PixelDrawer(container, width, height, mode) {
+// TODO: Add border around image previews
+// TODO: replace alerts with button disables and messages
+// TODO: add the classify mode
+// TODO: upload images to server
+// TODO: Prevent duplicate class names, use dictionary?
+// TODO: CLEAN UP CODE
+
+function PixelDrawer(container, width, height, mode, max_labels) {
     var canvas_object = new Canvas(width, height);
     var canvas = canvas_object.canvas;
     canvas_object.addCheckerboard();
@@ -15,7 +22,11 @@ function PixelDrawer(container, width, height, mode) {
 
     var download;
     var className;
+    var classes_remaining;
+
     if (mode == "train") {
+        classes_remaining = max_labels;
+        printRemainingClasses();
         download = appendButton('Add Class');
         className = appendClassNameInput();
     } else if (mode == "classify") {
@@ -71,6 +82,10 @@ function PixelDrawer(container, width, height, mode) {
         }
     });
 
+    function printRemainingClasses() {
+        $('#classesRemainingDisplay').empty().prepend('You have ' + classes_remaining + ' out of ' + max_labels + ' image classes remaining!');
+    }
+
     function addClass() {
         previewCanvas = canvas_object.generatePreview();
         imageURL = previewCanvas.toDataURL("image/png");
@@ -78,10 +93,14 @@ function PixelDrawer(container, width, height, mode) {
 
         if (imageID === "") {
             alert("Please enter a class name before adding a class!");
+        } else if (classes_remaining <= 0) {
+            alert("You have added the maximum number of classes (" + max_labels + ")! Please remove some to continue.");
         } else {
-            image = $('<img id="' + imageID + '" src="' +  imageURL + '" alt="this is a failure">');
+            image = $('<img id="' + imageID + '" src="' +  imageURL + '" alt="Error: Image failed to load!">');
             deleteButton = $('<input type="button" value="-" />');
             deleteButton.click(function() {
+                classes_remaining++;
+                printRemainingClasses();
                 $(this).parent().fadeOut(300, function() { $(this).remove(); });
             });
             div = $('<div class="imageClass"></div>');
@@ -92,7 +111,9 @@ function PixelDrawer(container, width, height, mode) {
             div.append(' - ' + imageID);
             clearCanvas();
             className.val('');
+            classes_remaining--;
             div.hide().appendTo('#imageClasses').fadeIn(400);
+            printRemainingClasses();
         }
     }
 

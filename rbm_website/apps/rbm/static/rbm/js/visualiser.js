@@ -54,7 +54,7 @@ function preview() {
 
 function getTopology() {
     var topology = new Array();
-    topology[0] = $("#id_visible").val();
+    topology[0] = $("#id_height").val()*$("#id_width").val();
     for (var i = 0; i < layerCount; i++) {
         topology[1 + i] = $("#id_layer_" + i).val();
     }
