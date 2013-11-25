@@ -57,8 +57,14 @@ class DBNForm(forms.Form):
         return data
 
 def train(request, dbn_id):
-    dbn = get_object_or_404(DBNModel , pk=dbn_id)
-    return render(request, 'rbm/train.html', {'dbn': dbn})
+    if request.method == 'POST':
+        print request
+        dbn = get_object_or_404(DBNModel , pk=dbn_id)
+        print request.POST['test']
+        return render(request, 'rbm/training.html', {})
+    else:
+        dbn = get_object_or_404(DBNModel , pk=dbn_id)
+        return render(request, 'rbm/train.html', {'dbn': dbn})
 
 def training(request):
     return render(request, 'rbm/training.html', {})

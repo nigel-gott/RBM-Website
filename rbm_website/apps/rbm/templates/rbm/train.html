@@ -20,13 +20,24 @@
 <div id="imageClasses">
 </div>
 
+ <input id="trainButton" class="btn" value="Train" type="button" />
+
 <form action="{% url 'training' %}" method="post">
     {% csrf_token %}
-    <input class="btn" value="Train" type="submit" />
+    <input class="btn" value="Train (OLD)" type="submit" />
 </form>
 
 <script>
     pixelDrawer = new PixelDrawer($('#pixelDrawerContainer'), {{dbn.width}}, {{dbn.height}}, "train", {{dbn.labels}});
+</script>
+
+<script>
+    $( "#trainButton" ).click(function() {
+        alert("clicked");
+        $.post("{% url 'train' dbn.id %}", {test: 'testing 1 2 3', csrfmiddlewaretoken:'{{csrf_token}}' }, function(data, textStatus, xhr) {
+           alert('success');
+        });
+    });
 </script>
 
 {% endblock %}
