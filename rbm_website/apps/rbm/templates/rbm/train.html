@@ -33,9 +33,19 @@
 
 <script>
     $( "#trainButton" ).click(function() {
-        alert("clicked");
-        $.post("{% url 'train' dbn.id %}", {test: 'testing 1 2 3', csrfmiddlewaretoken:'{{csrf_token}}' }, function(data, textStatus, xhr) {
-           alert('success');
+        var images = [];
+
+        $('.imageClass').each(function() {
+            var classImg = $(this).children("img");
+            var data = {
+                'image_name': classImg.prop('id'),
+                'image_data' : classImg.prop('src')
+            }
+            images.push(data);
+        });
+
+        $.post("{% url 'train' dbn.id %}", {classImages: images, csrfmiddlewaretoken:'{{csrf_token}}' }, function(data, textStatus, xhr) {
+           window.location.href = '/rbm/training/'
         });
     });
 </script>

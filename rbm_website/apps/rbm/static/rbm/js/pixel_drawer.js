@@ -10,15 +10,16 @@ function PixelDrawer(container, width, height, mode, max_labels) {
     var canvas = canvas_object.canvas;
     canvas_object.addCheckerboard();
     container.append(canvas);
+    $('#trainButton').attr("disabled", true);
 
     var currentlyDrawing = false;
     var blank = true;
     var tools = {PEN: 0, ERASER: 1};
     var currentTool = tools.PEN;
 
-    var clear = appendButton('Clear');
-    var pen = appendButton('Pen');
-    var eraser = appendButton('Eraser');
+    var clear = appendButton('clear', 'Clear');
+    var pen = appendButton('pen', 'Pen');
+    var eraser = appendButton('eraser', 'Eraser');
 
     var download;
     var className;
@@ -27,12 +28,12 @@ function PixelDrawer(container, width, height, mode, max_labels) {
     if (mode == "train") {
         classes_remaining = max_labels;
         printRemainingClasses();
-        download = appendButton('Add Class');
+        download = appendButton('addClass', 'Add Class');
         className = appendClassNameInput();
     } else if (mode == "classify") {
-        download = appendButton('Classify');
+        download = appendButton('classify', 'Classify');
     } else {
-        download = appendButton('Classify');
+        download = appendButton('classify', 'Classify');
     }
 
     function appendClassNameInput() {
@@ -41,11 +42,11 @@ function PixelDrawer(container, width, height, mode, max_labels) {
         return inputBox;
     }
 
-    function appendButton(name){
+    function appendButton(name, value){
         var button = $('<button />', {
             class : 'btn',
-            id: name.toLowerCase(),
-            text: name,
+            id: name,
+            text: value,
             type: 'button'
         });
 
@@ -100,6 +101,11 @@ function PixelDrawer(container, width, height, mode, max_labels) {
             deleteButton = $('<input type="button" value="-" />');
             deleteButton.click(function() {
                 classes_remaining++;
+                if (classes_remaining == 1) {
+                    $('#trainButton').attr("disabled", true);
+                    $('#addClass').attr("disabled", false);
+                    $('#className').attr("disabled", false);
+                }
                 printRemainingClasses();
                 $(this).parent().fadeOut(300, function() { $(this).remove(); });
             });
@@ -114,6 +120,11 @@ function PixelDrawer(container, width, height, mode, max_labels) {
             classes_remaining--;
             div.hide().appendTo('#imageClasses').fadeIn(400);
             printRemainingClasses();
+            if (classes_remaining === 0) {
+                $('#addClass').attr("disabled", true);
+                $('#className').attr("disabled", true);
+                $('#trainButton').attr("disabled", false);
+            }
         }
     }
 

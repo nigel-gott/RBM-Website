@@ -60,14 +60,28 @@ def train(request, dbn_id):
     if request.method == 'POST':
         print request
         dbn = get_object_or_404(DBNModel , pk=dbn_id)
-        print request.POST['test']
-        return render(request, 'rbm/training.html', {})
+        print "----------------------------"
+        print ""
+        print "----------------------------"
+        print ""
+        print "----------------------------"
+
+        for x in range(0, dbn.labels):
+            print request.POST['classImages[' + str(x) + '][image_name]']
+            print request.POST['classImages[' + str(x) + '][image_data]']
+            print "--------             ------------"
+
+        return redirect('/rbm/training/')
     else:
         dbn = get_object_or_404(DBNModel , pk=dbn_id)
         return render(request, 'rbm/train.html', {'dbn': dbn})
 
 def training(request):
-    return render(request, 'rbm/training.html', {})
+    if request.method == 'POST':
+        return render(request, 'rbm/training.html', {})
+    else:
+        messages.add_message(request, messages.INFO, 'Training the DBN!')
+        return render(request, 'rbm/training.html', {})
 
 def create(request):
     if request.method == 'POST':
