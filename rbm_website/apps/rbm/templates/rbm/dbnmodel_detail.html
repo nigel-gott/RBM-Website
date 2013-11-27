@@ -13,14 +13,7 @@ TODO: SHOW TOPOLOGY!!
 </p>
 
 <a href="{% url 'train' object.id %}"> Train </a>
-<form action="{% url 'regenerate' object.id %}" method="post">
-    {% csrf_token %}
-    <br/>
-    Comma seperated values
-    <br/>
-    Data: <input type="text" name="data"  />
-    <input type="submit" />
-</form>
 
+<a href="{% url 'classify' object.id %}"> Classify </a>
 
 {% endblock %}

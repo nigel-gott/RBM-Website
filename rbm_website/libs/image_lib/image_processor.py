@@ -8,13 +8,13 @@ def convert_url_to_image(url, img_id):
 	image = __open_url_canvas(url)
 	return image
 
-def convert_url_to_array(url, img_id, height, width):
-	image = convert_url_to_image(url, img_id, height, width)
+def convert_url_to_array(url, img_id):
+	image_data = convert_url_to_image(url, img_id)
+	image = pil.open(image_data)
 	return convert_image_to_array(image)
 
 def convert_array_to_image(array, height, width):
 	array = array.flatten()
-	print array.shape
 	img_array = []
 	for row in range(0, height):
 		img_array.append(array[row*width : (row+1)*width])

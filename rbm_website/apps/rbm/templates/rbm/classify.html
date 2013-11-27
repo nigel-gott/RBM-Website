@@ -10,18 +10,11 @@
 
 <h2> {{dbn.name}} </h2>
 
-
 <div id="pixelDrawerContainer">
 </div>
 
-<div id="classesRemainingDisplay">
-</div>
-
-<div id="imageClasses">
-</div>
-
 <script>
-    pixelDrawer = new PixelDrawer($('#pixelDrawerContainer'), {{dbn.width}}, {{dbn.height}}, "train", {{dbn.labels}}, "{% url 'train' dbn.id %}", '{{csrf_token}}');
+    pixelDrawer = new PixelDrawer($('#pixelDrawerContainer'), {{dbn.width}}, {{dbn.height}}, "classify", {{dbn.labels}}, "{% url 'classify' dbn.id %}", '{{csrf_token}}');
 </script>
 
 {% endblock %}

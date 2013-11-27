@@ -61,6 +61,18 @@ class DBNForm(forms.Form):
             raise forms.ValidationError("Learning rate must be a positive float!")
         return data
 
+def classify(request, dbn_id):
+    if request.method == 'POST':
+        dbn = get_object_or_404(DBNModel , pk=dbn_id)
+        save_image("classifyImage", request.POST['image_data'], dbn)
+        image_data = imgpr.convert_url_to_array(request.POST['image_data'], "classifyImage")
+
+
+        return redirect('/rbm/training/')
+    else:
+        dbn = get_object_or_404(DBNModel , pk=dbn_id)
+        return render(request, 'rbm/classify.html', {'dbn': dbn})
+
 def train(request, dbn_id):
     if request.method == 'POST':
         dbn = get_object_or_404(DBNModel , pk=dbn_id)

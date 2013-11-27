@@ -5,12 +5,11 @@
 // TODO: Prevent duplicate class names, use dictionary?
 // TODO: CLEAN UP CODE
 
-function PixelDrawer(container, width, height, mode, max_labels) {
+function PixelDrawer(container, width, height, mode, max_labels, uploadURL, csrfToken) {
     var canvas_object = new Canvas(width, height);
     var canvas = canvas_object.canvas;
     canvas_object.addCheckerboard();
     container.append(canvas);
-    $('#trainButton').attr("disabled", true);
 
     var currentlyDrawing = false;
     var blank = true;
@@ -22,6 +21,7 @@ function PixelDrawer(container, width, height, mode, max_labels) {
     var eraser = appendButton('eraser', 'Eraser');
 
     var download;
+    var train;
     var className;
     var classes_remaining;
 
@@ -29,6 +29,25 @@ function PixelDrawer(container, width, height, mode, max_labels) {
         classes_remaining = max_labels;
         printRemainingClasses();
         download = appendButton('addClass', 'Add Class');
+
+        train = appendButton('trainButton', 'Train DBN');
+        train.attr("disabled", true);
+        train.click(function() {
+        var images = [];
+
+        $('.imageClass').each(function() {
+            var classImg = $(this).children("img");
+            var data = {
+                'image_name': classImg.prop('id'),
+                'image_data' : classImg.prop('src')
+            };
+            images.push(data);
+        });
+
+        $.post(uploadURL, {classImages: images, csrfmiddlewaretoken: csrfToken}, function(data, textStatus, xhr) {
+           window.location.href = '/rbm/training/';
+        });
+    });
         className = appendClassNameInput();
     } else if (mode == "classify") {
         download = appendButton('classify', 'Classify');
@@ -87,6 +106,15 @@ function PixelDrawer(container, width, height, mode, max_labels) {
         $('#classesRemainingDisplay').empty().prepend('You have ' + classes_remaining + ' out of ' + max_labels + ' image classes remaining!');
     }
 
+    function classify() {
+        previewCanvas = canvas_object.generatePreview();
+        imageURL = previewCanvas.toDataURL("image/png");
+
+        $.post(uploadURL, {'image_data' : imageURL, csrfmiddlewaretoken : csrfToken}, function(data, textStatus, xhr) {
+           alert('UPLOADED');
+        });
+    }
+
     function addClass() {
         previewCanvas = canvas_object.generatePreview();
         imageURL = previewCanvas.toDataURL("image/png");
@@ -94,10 +122,8 @@ function PixelDrawer(container, width, height, mode, max_labels) {
 
         if (imageID === "") {
             alert("Please enter a class name before adding a class!");
-        } else if (classes_remaining <= 0) {
-            alert("You have added the maximum number of classes (" + max_labels + ")! Please remove some to continue.");
         } else {
-            image = $('<img id="' + imageID + '" src="' +  imageURL + '" alt="Error: Image failed to load!">');
+            image = $('<img id="' + imageID + '" src="' +  imageURL + '" >');
             deleteButton = $('<input type="button" value="-" />');
             deleteButton.click(function() {
                 classes_remaining++;
@@ -126,10 +152,6 @@ function PixelDrawer(container, width, height, mode, max_labels) {
                 $('#trainButton').attr("disabled", false);
             }
         }
-    }
-
-    function classify() {
-        alert('Classifying not adding');
     }
 
     canvas.mousedown(draw);
