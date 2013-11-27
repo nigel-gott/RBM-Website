@@ -1,0 +1,3 @@
+This is where training images get uploaded. 
+
+To configure. Go into settings.py and changed MEDIA_ROOT variable to point to this folder on your local file system.

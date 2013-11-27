@@ -1,11 +1,16 @@
 # Create your views here.
 import numpy as np
+import os
+import shutil
+from PIL import Image as pil
 from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import ListView, DetailView
+from django.conf import settings
 from django.contrib import messages
 from django import forms
 from rbm_website.apps.rbm.models import DBNModel
+from rbm_website.libs.image_lib import image_processor as imgpr
 
 class DBNListView(ListView):
     model = DBNModel
@@ -58,23 +63,30 @@ class DBNForm(forms.Form):
 
 def train(request, dbn_id):
     if request.method == 'POST':
-        print request
         dbn = get_object_or_404(DBNModel , pk=dbn_id)
-        print "----------------------------"
-        print ""
-        print "----------------------------"
-        print ""
-        print "----------------------------"
+        clean_image_directory(dbn.id)
 
         for x in range(0, dbn.labels):
-            print request.POST['classImages[' + str(x) + '][image_name]']
-            print request.POST['classImages[' + str(x) + '][image_data]']
-            print "--------             ------------"
+            save_image(request.POST['classImages[' + str(x) + '][image_name]'],
+                request.POST['classImages[' + str(x) + '][image_data]'], dbn)
 
         return redirect('/rbm/training/')
     else:
         dbn = get_object_or_404(DBNModel , pk=dbn_id)
         return render(request, 'rbm/train.html', {'dbn': dbn})
+
+def clean_image_directory(id):
+    path = settings.MEDIA_ROOT + str(id)
+    if os.path.exists(path):
+        shutil.rmtree(path)
+    os.makedirs(path)
+
+
+def save_image(image_id, image_data, dbn):
+    image_data = imgpr.convert_url_to_image(image_data, image_id)
+    image = pil.open(image_data).convert("L")
+    image_path = settings.MEDIA_ROOT + str(dbn.id) + '/' + image_id + '.png'
+    image.save(image_path)
 
 def training(request):
     if request.method == 'POST':
@@ -120,4 +132,3 @@ def regenerate(request, dbn_id):
     visible_state = np.array_str(visible_state)
     hidden_state = np.array_str(hidden_state)
     return render(request, 'rbm/regenerate.html', {'old_data': request.POST['data'], 'dbn': dbn, 'visible_state': visible_state, 'hidden_state': hidden_state})
-
