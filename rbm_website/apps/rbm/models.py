@@ -23,4 +23,3 @@ class DBNModel(models.Model):
 
     #def regenerate(self, data):
     #    return self.dbn.regenerate(data)
-

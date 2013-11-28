@@ -10,5 +10,11 @@ def train_dbn(dbn):
     print dbn.height
     print dbn.width
     print dbn.labels
-    images = imgpr.retrieve_image_class((settings.MEDIA_ROOT + str(dbn.id)), dbn.height, dbn.width)
+
+    DBN = dbn.dbn
+    
+    class_path = settings.MEDIA_ROOT + str(dbn.id)
+    print class_path
+    ( images, labels ) = imgpr.retrieve_image_class(class_path, dbn.height, dbn.width)
     print images
+    print labels

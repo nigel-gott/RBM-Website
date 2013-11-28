@@ -32,11 +32,13 @@ def retrieve_image(image_path, height, width):
 	return convert_image_to_array(image)
 
 def retrieve_image_class(class_path, height, width):
-	data = []
-	for image_name in os.listdir(class_path):
-		image = __open_image(class_path + '/' + image_name, height, width)
-		data.append(convert_image_to_array(image))
-	return data
+    image_data = []
+    image_names = []
+    for image_name in os.listdir(class_path):
+        image = __open_image(class_path + '/' + image_name, height, width)
+        image_data.append(convert_image_to_array(image))
+        image_names.append(image_name)
+    return (image_data, image_names) 
 
 def retrieve_all_images(root_path, height, width):
 	data = []
