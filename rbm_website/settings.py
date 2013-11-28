@@ -1,5 +1,8 @@
 # Django settings for rbm_website project.
 import os
+import djcelery
+
+djcelery.setup_loader()
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
@@ -10,7 +13,7 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
-
+BROKER_URL = "django://"
 
 MANAGERS = ADMINS
 
@@ -55,7 +58,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = '/homes/jbc11/Documents/JMC3/RBM/RBM-Website/rbm_website/media/'
+MEDIA_ROOT = '/home/james/Documents/JMC3/GroupProject/RBM-Website/rbm_website/media/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -136,6 +139,9 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'rbm_website.apps.rbm',
     'rbm_website.apps.users',
+
+    'kombu.transport.django',
+    'djcelery',
 
     'registration'
 )

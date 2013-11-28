@@ -3,6 +3,7 @@ import numpy as np
 import os
 import shutil
 from PIL import Image as pil
+import tasks
 from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import ListView, DetailView
@@ -67,7 +68,6 @@ def classify(request, dbn_id):
         save_image("classifyImage", request.POST['image_data'], dbn)
         image_data = imgpr.convert_url_to_array(request.POST['image_data'], "classifyImage")
 
-
         return redirect('/rbm/training/')
     else:
         dbn = get_object_or_404(DBNModel , pk=dbn_id)
@@ -81,6 +81,8 @@ def train(request, dbn_id):
         for x in range(0, dbn.labels):
             save_image(request.POST['classImages[' + str(x) + '][image_name]'],
                 request.POST['classImages[' + str(x) + '][image_data]'], dbn)
+
+        tasks.train_dbn.delay(dbn)
 
         return redirect('/rbm/training/')
     else:

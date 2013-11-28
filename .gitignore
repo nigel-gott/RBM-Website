@@ -2,5 +2,6 @@
 *.pot
 *.pyc
 venv/
+rbm_website/media/
 *.sqlite3
 local_settings.py
