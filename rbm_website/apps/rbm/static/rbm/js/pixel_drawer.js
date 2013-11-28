@@ -33,21 +33,21 @@ function PixelDrawer(container, width, height, mode, max_labels, uploadURL, csrf
         train = appendButton('trainButton', 'Train DBN');
         train.attr("disabled", true);
         train.click(function() {
-        var images = [];
+            var images = [];
 
-        $('.imageClass').each(function() {
-            var classImg = $(this).children("img");
-            var data = {
-                'image_name': classImg.prop('id'),
-                'image_data' : classImg.prop('src')
-            };
-            images.push(data);
-        });
+            $('.imageClass').each(function() {
+                var classImg = $(this).children("img");
+                var data = {
+                    'image_name': classImg.prop('id'),
+                    'image_data' : classImg.prop('src')
+                };
+                images.push(data);
+            });
 
-        $.post(uploadURL, {classImages: images, csrfmiddlewaretoken: csrfToken}, function(data, textStatus, xhr) {
-           window.location.href = '/rbm/training/';
+            $.post(uploadURL, {classImages: images, csrfmiddlewaretoken: csrfToken}, function(data, textStatus, xhr) {
+                window.location.href = '/rbm/training/';
+            });
         });
-    });
         className = appendClassNameInput();
     } else if (mode == "classify") {
         download = appendButton('classify', 'Classify');
@@ -111,7 +111,8 @@ function PixelDrawer(container, width, height, mode, max_labels, uploadURL, csrf
         imageURL = previewCanvas.toDataURL("image/png");
 
         $.post(uploadURL, {'image_data' : imageURL, csrfmiddlewaretoken : csrfToken}, function(data, textStatus, xhr) {
-           alert('UPLOADED');
+           alert(data.number + ' with probability ' + data.max_prob);
+           console.log(data);
         });
     }
 
@@ -214,6 +215,10 @@ function Canvas(pixelWidth, pixelHeight){
     /* Public Functions */
     this.draw = function(x, y) {
         fillPixel(colours.BLACK, x, y);
+        fillPixel(colours.BLACK, x+1, y);
+        fillPixel(colours.BLACK, x-1, y);
+        fillPixel(colours.BLACK, x, y+1);
+        fillPixel(colours.BLACK, x, y-1);
     };
 
     this.erase = function(x, y) {

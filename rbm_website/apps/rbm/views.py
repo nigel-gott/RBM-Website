@@ -1,6 +1,7 @@
 # Create your views here.
 import numpy as np
 import os
+import json
 import shutil
 from PIL import Image as pil
 import tasks
@@ -67,11 +68,37 @@ def classify(request, dbn_id):
         dbn = get_object_or_404(DBNModel , pk=dbn_id)
         save_image("classifyImage", request.POST['image_data'], dbn)
         image_data = imgpr.convert_url_to_array(request.POST['image_data'], "classifyImage")
+        iterator = np.vectorize(flip_pixels)
+        image_data = iterator(image_data)
 
-        return redirect('/rbm/training/')
+        probs = dbn.dbn.classify([image_data],1)
+        for i in range(1,10):
+            probs = probs + dbn.dbn.classify([image_data],1)
+
+        
+
+        probs = probs[0] / 10
+        max_prob = probs.max()
+        number = probs.argmax(axis=0)
+
+        json_data = json.dumps({
+            "probs":probs.tolist(),
+            "max_prob":max_prob,
+            "number":number
+            })
+
+
+
+        return HttpResponse(json_data, mimetype="application/json")
     else:
         dbn = get_object_or_404(DBNModel , pk=dbn_id)
         return render(request, 'rbm/classify.html', {'dbn': dbn})
+
+def flip_pixels(value):
+    if value == 1:
+        return 0
+    else:
+        return 1
 
 def train(request, dbn_id):
     if request.method == 'POST':
@@ -99,7 +126,7 @@ def clean_image_directory(id):
 def save_image(image_id, image_data, dbn):
     image_data = imgpr.convert_url_to_image(image_data, image_id)
     image = pil.open(image_data).convert("L")
-    image_path = settings.MEDIA_ROOT + str(dbn.id) + '/' + image_id + '.png'
+    image_path = settings.MEDIA_ROOT  + str(dbn.id) + '/' + image_id + '.png'
     image.save(image_path)
 
 def training(request):

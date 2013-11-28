@@ -2,7 +2,7 @@ RBM-Website
 ===========
 Django website for RBM Library. 
 
-Run install.sh to create virtual env, install required packages into it and setup git hooks. 
+Run install.sh to create virtual env, install required packages into it, clean database and setup git hooks. 
 
 !!! Important !!!
 ===========
@@ -13,7 +13,15 @@ The git hooks will update requirements.txt every time you commit with whatever p
 
 Running the Website:
 ===========
+
 Once in the virtual environment, run 'python manage.py runserver' to setup the local server. If it runs correctly, it will output the address of the home page.
+
+Running Celery:
+===========
+Celery is used to run the background tasks such as training. To edit these tasks, look at tasks.py. To start celery, run the following: ```python manage.py celeryd -v 2 -B -s celery -E -l INFO```
+
+I'm not 100% on what all these arguments do and will look into them soon.
+
 
 Project Structure 
 ===========
@@ -34,6 +42,20 @@ hooks/            - Git hooks
 install.sh        - Sets up virtual enviroment, project requirements, git hooks, submodules.
 requirements.txt  - Required python packages, use pip freeze to see what is currently installed in your venv. 
 ```
+
+TODO:
+===========
+- Add page authentication
+- Complete celery training
+- Add information page
+- Train static DBNs (Digits, Characters)
+- Add classifier on home page
+- Setup RabbitMQ for celery
+- Find a better way of storing files
+- Clean up javascript/python
+- Make HTML pages and elements look nice
+- Document and Comment code
+- Prepare library to download
 
 What are all these words, help!
 ===========
