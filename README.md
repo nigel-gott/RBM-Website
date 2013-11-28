@@ -13,7 +13,6 @@ The git hooks will update requirements.txt every time you commit with whatever p
 
 Running the Website:
 ===========
-NOTE: If you are going to be training or classifying, images will be uploaded. To ensure this works, go into ```rbm_website/settings.py``` and change the ```MEDIA_ROOT``` variable to the exact system path to ```../rbm_website/media/```
 
 Once in the virtual environment, run 'python manage.py runserver' to setup the local server. If it runs correctly, it will output the address of the home page.
 
