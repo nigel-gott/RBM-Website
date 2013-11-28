@@ -33,21 +33,21 @@ function PixelDrawer(container, width, height, mode, max_labels, uploadURL, csrf
         train = appendButton('trainButton', 'Train DBN');
         train.attr("disabled", true);
         train.click(function() {
-        var images = [];
+            var images = [];
 
-        $('.imageClass').each(function() {
-            var classImg = $(this).children("img");
-            var data = {
-                'image_name': classImg.prop('id'),
+            $('.imageClass').each(function() {
+                var classImg = $(this).children("img");
+                var data = {
+                    'image_name': classImg.prop('id'),
                 'image_data' : classImg.prop('src')
-            };
-            images.push(data);
-        });
+                };
+                images.push(data);
+            });
 
-        $.post(uploadURL, {classImages: images, csrfmiddlewaretoken: csrfToken}, function(data, textStatus, xhr) {
-           window.location.href = '/rbm/training/';
+            $.post(uploadURL, {classImages: images, csrfmiddlewaretoken: csrfToken}, function(data, textStatus, xhr) {
+                window.location.href = '/rbm/training/';
+            });
         });
-    });
         className = appendClassNameInput();
     } else if (mode == "classify") {
         download = appendButton('classify', 'Classify');
