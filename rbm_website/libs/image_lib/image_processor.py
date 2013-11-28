@@ -29,7 +29,7 @@ def convert_image_to_array(image):
 
 def retrieve_image(image_path, height, width):
 	image = __open_image(image_path, height, width)
-	return convert_image_to_array(image)
+	return (convert_image_to_array(image), os.path.splitext(os.path.split(image_path)[1])[0])
 
 def retrieve_image_class(class_path, height, width):
     image_data = []
@@ -37,15 +37,17 @@ def retrieve_image_class(class_path, height, width):
     for image_name in os.listdir(class_path):
         image = __open_image(class_path + '/' + image_name, height, width)
         image_data.append(convert_image_to_array(image))
-        image_names.append(image_name)
-    return (image_data, image_names) 
+        image_names.append(os.path.splitext(image_name)[0])
+    return (image_data, image_names)
 
 def retrieve_all_images(root_path, height, width):
 	data = []
+	names = []
 	for class_dir in os.listdir(root_path):
-		class_data = retrieve_image_class(root_path + '/' + class_dir, height, width)
+		(class_data, class_names) = retrieve_image_class(root_path + '/' + class_dir, height, width)
 		data.append(class_data)
-	return data
+		names.append(class_names)
+	return (data, names)
 
 def __check_image(image, image_path, exp_height, exp_width):
 	if image is None:
