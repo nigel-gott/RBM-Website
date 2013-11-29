@@ -1,15 +1,15 @@
-// TODO: Add border around image previews
-// TODO: replace alerts with button disables and messages
-// TODO: add the classify mode
-// TODO: upload images to server
 // TODO: Prevent duplicate class names, use dictionary?
-// TODO: CLEAN UP CODE
+// CHANGE BRUSH SIZE TO JQUERY UI SLIDER
+// CLEAN UP CODE
+// Centre by default on submit
 
 function PixelDrawer(container, width, height, mode, max_labels, uploadURL, csrfToken) {
     var canvas_object = new Canvas(width, height);
     var canvas = canvas_object.canvas;
     canvas_object.addCheckerboard();
     container.append(canvas);
+
+    var brushes = {SMALL: 1, MEDIUM: 2, LARGE: 3};
 
     var currentlyDrawing = false;
     var blank = true;
@@ -19,6 +19,10 @@ function PixelDrawer(container, width, height, mode, max_labels, uploadURL, csrf
     var clear = appendButton('clear', 'Clear');
     var pen = appendButton('pen', 'Pen');
     var eraser = appendButton('eraser', 'Eraser');
+    var centre = appendButton('centre', 'Centre');
+    var small = appendButton('small', 'Small Brush');
+    var medium = appendButton('medium', 'Medium Brush');
+    var large = appendButton('large', 'Large Brush');
 
     var download;
     var train;
@@ -100,6 +104,29 @@ function PixelDrawer(container, width, height, mode, max_labels, uploadURL, csrf
         } else {
             classify();
         }
+    });
+
+    centre.click(function() {
+        var bounds = canvas_object.getCanvasBounds();
+        var drawHeight = bounds["top"] - bounds["bottom"];
+        var drawWidth = bounds["right"] - bounds["left"];
+        var drawHeightCentre = bounds["bottom"] + Math.round(drawHeight/2);
+        var drawWidthCentre = bounds["left"] + Math.round(drawWidth/2);
+        var heightOffset = Math.round(height/2) - drawHeightCentre;
+        var widthOffset = Math.round(width/2) - drawWidthCentre;
+        canvas_object.shiftDrawing(heightOffset, widthOffset);
+    });
+
+    small.click(function() {
+        canvas_object.changeBrushSize(brushes.SMALL);
+    });
+
+    medium.click(function() {
+        canvas_object.changeBrushSize(brushes.MEDIUM);
+    });
+
+    large.click(function() {
+        canvas_object.changeBrushSize(brushes.LARGE);
     });
 
     function printRemainingClasses() {
@@ -202,8 +229,10 @@ function PixelDrawer(container, width, height, mode, max_labels, uploadURL, csrf
 function Canvas(pixelWidth, pixelHeight){
     var aspRatio = 10;
     this.aspRatio = aspRatio;
+    this.brushSize = 1;
 
     var colours = {GREY: "#DEDDDC", BLACK: "#000000", WHITE:"#FFFFFF"};
+    var size = {SMALL: 1, MEDIUM: 2, LARGE: 3};
 
     var canvasWidth = aspRatio * pixelWidth;
     var canvasHeight = aspRatio * pixelHeight;
@@ -214,42 +243,102 @@ function Canvas(pixelWidth, pixelHeight){
 
     /* Public Functions */
     this.draw = function(x, y) {
-        fillPixel(colours.BLACK, x, y);
-        fillPixel(colours.BLACK, x+1, y);
-        fillPixel(colours.BLACK, x-1, y);
-        fillPixel(colours.BLACK, x, y+1);
-        fillPixel(colours.BLACK, x, y-1);
+        if (this.brushSize >= size.SMALL) {
+            fillPixel(colours.BLACK, x, y);
+        }
+        if (this.brushSize >= size.MEDIUM) {
+            fillPixel(colours.BLACK, x+1, y);
+            fillPixel(colours.BLACK, x-1, y);
+            fillPixel(colours.BLACK, x, y+1);
+            fillPixel(colours.BLACK, x, y-1);
+        }
+        if (this.brushSize >= size.LARGE) {
+            fillPixel(colours.BLACK, x+1, y+1);
+            fillPixel(colours.BLACK, x-1, y+1);
+            fillPixel(colours.BLACK, x-1, y-1);
+            fillPixel(colours.BLACK, x+1, y-1);
+        }
     };
 
     this.erase = function(x, y) {
         fillCheckerboardPiece(x, y);
     };
 
+    this.shiftDrawing = function(heightOffset, widthOffset) {
+        var tempCanvas = createCanvas(canvasWidth, canvasHeight);
+        var tempCtx = tempCanvas[0].getContext("2d");
+        tempCtx.drawImage(this.canvas[0], 0, 0);
+        this.addCheckerboard();
+
+        for (var col = 0; col < pixelWidth; col++) {
+            for (var row = 0; row < pixelHeight; row++) {
+                var pixData = tempCtx.getImageData(col*aspRatio, row*aspRatio, 1, 1);
+                if (pixData.data[0] === 0) {
+                    context.fillStyle = colours.BLACK;
+                    context.fillRect((col+widthOffset)*aspRatio, (row-heightOffset)*aspRatio, aspRatio, aspRatio);
+                }
+            }
+        }
+    };
+
     this.generatePreview = function() {
         previewCanvas = createCanvas(pixelWidth, pixelHeight);
 
         var previewContext = previewCanvas[0].getContext("2d");
-        for (var row = 0; row < pixelWidth; row++) {
-            for (var col = 0; col < pixelHeight; col++) {
-                var pixData = context.getImageData(row*aspRatio, col*aspRatio, 1, 1);
+        for (var col = 0; col < pixelWidth; col++) {
+            for (var row = 0; row < pixelHeight; row++) {
+                var pixData = context.getImageData(col*aspRatio, row*aspRatio, 1, 1);
                 if (pixData.data[0] === 0) {
                     previewContext.fillStyle = colours.BLACK;
                 } else {
                     previewContext.fillStyle = colours.WHITE;
                 }
-                previewContext.fillRect(row, col, 1, 1);
+                previewContext.fillRect(col, row, 1, 1);
             }
         }
         return previewCanvas[0];
     };
 
+    this.getCanvasBounds = function() {
+        var left = pixelWidth + 1;
+        var right = -1;
+        var bottom = -1;
+        var top = pixelHeight + 1;
+        for (var col = 0; col < pixelWidth; col++) {
+            for (var row = 0; row < pixelHeight; row++) {
+                var pixData = context.getImageData(col*aspRatio, row*aspRatio, 1, 1);
+                if (pixData.data[0] === 0) {
+                    if  (col > right) {
+                        right = col;
+                    }
+                    if (col < left) {
+                        left = col;
+                    }
+                    if (row > bottom) {
+                        bottom = row;
+                    }
+                    if (row < top) {
+                        top = row;
+                    }
+                }
+            }
+        }
+        bottom = pixelHeight - (bottom + 1);
+        top = pixelHeight - (top + 1);
+        return ({"left": left, "right": right, "bottom": bottom, "top": top});
+    };
+
     this.addCheckerboard = function() {
-        for (var row = 0; row < pixelHeight; row++) {
-            for (var col = 0; col < pixelHeight; col++) {
-                fillCheckerboardPiece(row, col);
+    for (var col = 0; col < pixelWidth; col++) {
+            for (var row = 0; row < pixelHeight; row++) {
+                fillCheckerboardPiece(col, row);
             }
         }
     };
+
+    this.changeBrushSize = function(newSize) {
+        this.brushSize = newSize;
+    }
 
     /* Private Functions */
     function createCanvas(canvasWidth, canvasHeight){
@@ -283,5 +372,4 @@ function Canvas(pixelWidth, pixelHeight){
             }
         }
     }
-
 }
