@@ -3,11 +3,12 @@
 // CLEAN UP CODE
 // Centre by default on submit
 
-function PixelDrawer(container, width, height, mode, max_labels, uploadURL, csrfToken) {
+function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL, csrfToken) {
     var canvas_object = new Canvas(width, height);
     var canvas = canvas_object.canvas;
-    canvas_object.addCheckerboard();
-    container.append(canvas);
+    var container;
+    var buttons;
+    var slider;
 
     var brushes = {SMALL: 1, MEDIUM: 2, LARGE: 3};
 
@@ -16,13 +17,16 @@ function PixelDrawer(container, width, height, mode, max_labels, uploadURL, csrf
     var tools = {PEN: 0, ERASER: 1};
     var currentTool = tools.PEN;
 
+    createLayout();
+    createSlider();
+
+    canvas_object.addCheckerboard();
+    container.append(canvas);
+
     var clear = appendButton('clear', 'Clear');
     var pen = appendButton('pen', 'Pen');
     var eraser = appendButton('eraser', 'Eraser');
     var centre = appendButton('centre', 'Centre');
-    var small = appendButton('small', 'Small Brush');
-    var medium = appendButton('medium', 'Medium Brush');
-    var large = appendButton('large', 'Large Brush');
 
     var download;
     var train;
@@ -33,7 +37,15 @@ function PixelDrawer(container, width, height, mode, max_labels, uploadURL, csrf
         classes_remaining = max_labels;
         printRemainingClasses();
         download = appendButton('addClass', 'Add Class');
+        createTrainButton();
+        className = appendClassNameInput();
+    } else if (mode == "classify") {
+        download = appendButton('classify', 'Classify');
+    } else {
+        download = appendButton('classify', 'Classify');
+    }
 
+    function createTrainButton() {
         train = appendButton('trainButton', 'Train DBN');
         train.attr("disabled", true);
         train.click(function() {
@@ -52,16 +64,40 @@ function PixelDrawer(container, width, height, mode, max_labels, uploadURL, csrf
                 window.location.href = '/rbm/training/';
             });
         });
-        className = appendClassNameInput();
-    } else if (mode == "classify") {
-        download = appendButton('classify', 'Classify');
-    } else {
-        download = appendButton('classify', 'Classify');
+    }
+
+    function createLayout() {
+        container = $('<div/>', {
+            id: 'canvasContainer',
+        }).appendTo(drawerContainer);
+        buttons = $('<div/>', {
+            id: 'buttons',
+        }).appendTo(drawerContainer);
+        slider = $('<div/>', {
+            id: 'slider',
+        }).appendTo(buttons);
+    }
+
+    function createSlider() {
+        var min = brushes.SMALL;
+        var max = brushes.LARGE;
+        console.log('max is ' + max + ' min is ' + min);
+        slider.slider({
+            min: min,
+            max: max,
+            step: 1,
+            value: 1,
+            stop: function( event, ui ) {
+                var value = slider.slider('value');
+                console.log('value is ' + value);
+                canvas_object.changeBrushSize(value);
+            }
+        });
     }
 
     function appendClassNameInput() {
         var inputBox = $('<input id="className" type="text"/>');
-        container.append(inputBox);
+        buttons.append(inputBox);
         return inputBox;
     }
 
@@ -73,7 +109,7 @@ function PixelDrawer(container, width, height, mode, max_labels, uploadURL, csrf
             type: 'button'
         });
 
-        container.append(button);
+        buttons.append(button);
         return button;
     }
 
@@ -115,18 +151,6 @@ function PixelDrawer(container, width, height, mode, max_labels, uploadURL, csrf
         var heightOffset = Math.round(height/2) - drawHeightCentre;
         var widthOffset = Math.round(width/2) - drawWidthCentre;
         canvas_object.shiftDrawing(heightOffset, widthOffset);
-    });
-
-    small.click(function() {
-        canvas_object.changeBrushSize(brushes.SMALL);
-    });
-
-    medium.click(function() {
-        canvas_object.changeBrushSize(brushes.MEDIUM);
-    });
-
-    large.click(function() {
-        canvas_object.changeBrushSize(brushes.LARGE);
     });
 
     function printRemainingClasses() {
@@ -337,7 +361,9 @@ function Canvas(pixelWidth, pixelHeight){
     };
 
     this.changeBrushSize = function(newSize) {
+        console.log('new size is ' + newSize);
         this.brushSize = newSize;
+        console.log('end size is ' + this.brushSize);
     }
 
     /* Private Functions */
