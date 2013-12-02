@@ -12,6 +12,7 @@ class DBNModel(models.Model):
     width = models.IntegerField(max_length=10)
     labels = models.IntegerField(max_length=10)
     dbn = PickledObjectField()
+    label_values = PickledObjectField()
 
     @staticmethod
     def build_dbn(name, creator, description, height, width, config, labels, learning_rate):

@@ -9,16 +9,29 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.conf import settings
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django import forms
 from rbm_website.apps.rbm.models import DBNModel
 from rbm_website.libs.image_lib import image_processor as imgpr
+from rbm_website.libs.decorators import message_login_required
 
 class DBNListView(ListView):
     model = DBNModel
 
+    @method_decorator(message_login_required)
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(DBNListView, self).dispatch(*args, **kwargs)
+
 class DBNDetailView(DetailView):
     model = DBNModel
+
+    @method_decorator(message_login_required)
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(DBNDetailView, self).dispatch(*args, **kwargs)
 
 
 class DBNForm(forms.Form):
@@ -63,6 +76,8 @@ class DBNForm(forms.Form):
             raise forms.ValidationError("Learning rate must be a positive float!")
         return data
 
+@message_login_required
+@login_required
 def classify(request, dbn_id):
     if request.method == 'POST':
         dbn = get_object_or_404(DBNModel , pk=dbn_id)
@@ -75,8 +90,6 @@ def classify(request, dbn_id):
         for i in range(1,10):
             probs = probs + dbn.dbn.classify([image_data],1)
 
-        
-
         probs = probs[0] / 10
         max_prob = probs.max()
         number = probs.argmax(axis=0)
@@ -86,8 +99,6 @@ def classify(request, dbn_id):
             "max_prob":max_prob,
             "number":number
             })
-
-
 
         return HttpResponse(json_data, mimetype="application/json")
     else:
@@ -100,17 +111,20 @@ def flip_pixels(value):
     else:
         return 1
 
+@message_login_required
+@login_required
 def train(request, dbn_id):
     if request.method == 'POST':
         dbn = get_object_or_404(DBNModel , pk=dbn_id)
         clean_image_directory(dbn.id)
+        label_values = []
 
         for x in range(0, dbn.labels):
             save_image(request.POST['classImages[' + str(x) + '][image_name]'],
                 request.POST['classImages[' + str(x) + '][image_data]'], dbn)
+            label_values.append(request.POST['classImages[' + str(x) + '][image_name]'])
 
-        tasks.train_dbn.delay(dbn)
-
+        tasks.train_dbn.delay(dbn, label_values)
         return redirect('/rbm/training/')
     else:
         dbn = get_object_or_404(DBNModel , pk=dbn_id)
@@ -120,15 +134,16 @@ def clean_image_directory(id):
     path = settings.MEDIA_ROOT + str(id)
     if os.path.exists(path):
         shutil.rmtree(path)
-    os.makedirs(path)
-
+    os.makedirs(path + '/base_images')
 
 def save_image(image_id, image_data, dbn):
     image_data = imgpr.convert_url_to_image(image_data, image_id)
     image = pil.open(image_data).convert("L")
-    image_path = settings.MEDIA_ROOT  + str(dbn.id) + '/' + image_id + '.png'
+    image_path = settings.MEDIA_ROOT  + str(dbn.id) + '/base_images/' + image_id + '.png'
     image.save(image_path)
 
+@message_login_required
+@login_required
 def training(request):
     if request.method == 'POST':
         return render(request, 'rbm/training.html', {})
@@ -136,6 +151,8 @@ def training(request):
         messages.add_message(request, messages.INFO, 'Training the DBN!')
         return render(request, 'rbm/training.html', {})
 
+@message_login_required
+@login_required
 def create(request):
     if request.method == 'POST':
         form = DBNForm(request.POST, layer=request.POST.get('layer_count'))

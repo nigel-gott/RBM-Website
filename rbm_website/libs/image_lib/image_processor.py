@@ -47,7 +47,7 @@ def retrieve_all_images(root_path, height, width):
 		(class_data, class_names) = retrieve_image_class(root_path + '/' + class_dir, height, width)
 		data.append(class_data)
 		names.append(class_names)
-	return (data, names)
+	return ([image for sublist in data for image in sublist], [item for sublist in names for item in sublist])
 
 def __check_image(image, image_path, exp_height, exp_width):
 	if image is None:
