@@ -81,7 +81,6 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
     function createSlider() {
         var min = brushes.SMALL;
         var max = brushes.LARGE;
-        console.log('max is ' + max + ' min is ' + min);
         slider.slider({
             min: min,
             max: max,
@@ -89,7 +88,6 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
             value: 1,
             stop: function( event, ui ) {
                 var value = slider.slider('value');
-                console.log('value is ' + value);
                 canvas_object.changeBrushSize(value);
             }
         });
@@ -162,7 +160,8 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
         imageURL = previewCanvas.toDataURL("image/png");
 
         $.post(uploadURL, {'image_data' : imageURL, csrfmiddlewaretoken : csrfToken}, function(data, textStatus, xhr) {
-           alert(data.number + ' with probability ' + data.max_prob);
+           alert(data.result);
+           alert(data.result + ' with probability ' + data.max_prob);
            console.log(data);
         });
     }
@@ -361,9 +360,7 @@ function Canvas(pixelWidth, pixelHeight){
     };
 
     this.changeBrushSize = function(newSize) {
-        console.log('new size is ' + newSize);
         this.brushSize = newSize;
-        console.log('end size is ' + this.brushSize);
     }
 
     /* Private Functions */

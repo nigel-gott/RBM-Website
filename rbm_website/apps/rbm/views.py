@@ -83,8 +83,8 @@ def classify(request, dbn_id):
         dbn = get_object_or_404(DBNModel , pk=dbn_id)
         save_image("classifyImage", request.POST['image_data'], dbn)
         image_data = imgpr.convert_url_to_array(request.POST['image_data'], "classifyImage")
-        iterator = np.vectorize(flip_pixels)
-        image_data = iterator(image_data)
+        #iterator = np.vectorize(flip_pixels)
+        #image_data = iterator(image_data)
 
         probs = dbn.dbn.classify([image_data],1)
         for i in range(1,10):
@@ -92,12 +92,12 @@ def classify(request, dbn_id):
 
         probs = probs[0] / 10
         max_prob = probs.max()
-        number = probs.argmax(axis=0)
+        result = dbn.label_values[probs.argmax(axis=0)]
 
         json_data = json.dumps({
             "probs":probs.tolist(),
             "max_prob":max_prob,
-            "number":number
+            "result":result
             })
 
         return HttpResponse(json_data, mimetype="application/json")
