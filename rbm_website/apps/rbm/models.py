@@ -7,17 +7,21 @@ from rbm_website.libs.rbm_lib.dbn import DBN
 class DBNModel(models.Model):
     name = models.CharField(max_length=200)
     creator = models.CharField(max_length=100)
+    created = models.DateField(auto_now_add=True)
     description = models.CharField(max_length=1000)
     height = models.IntegerField(max_length=10)
     width = models.IntegerField(max_length=10)
     labels = models.IntegerField(max_length=10)
+    training = models.BooleanField()
+    trained = models.BooleanField()
     dbn = PickledObjectField()
     label_values = PickledObjectField()
 
     @staticmethod
     def build_dbn(name, creator, description, height, width, config, labels, learning_rate):
         dbn = DBN(config, labels, learning_rate)
-        return DBNModel(name=name, creator=creator, description=description, height=height, width=width, labels=labels, dbn=dbn)
+        return DBNModel(name=name, creator=creator, description=description, height=height,
+            width=width, labels=labels, training=False, trained=False, dbn=dbn)
 
     #def train(self, training_data):
     #    self.dbn.train(training_data)

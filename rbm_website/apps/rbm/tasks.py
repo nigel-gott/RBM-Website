@@ -14,6 +14,7 @@ def train_dbn(dbn, label_list):
     print "Processing and training DBN: " + str(dbn.name) + "..."
     print "Saving label_values..."
     dbn.label_values = label_list
+    dbn.training = True
     dbn.save()
     print dbn.label_values
     print "Creating directories..."
@@ -35,6 +36,11 @@ def train_dbn(dbn, label_list):
     print "Training DBN..."
     #training_method(dbn.dbn, train_images, train_labels, test_images, test_labels)
     training_method(dbn.dbn, train_images, train_labels, test_images, test_labels, 1, 50, 1, 50, 1, 1)
+
+    print "Updating DBN status..."
+    dbn.training = False
+    dbn.trained = True
+    dbn.save()
 
     print"---------------------------------------------------------------"
     print"---------FINISHED--------------------TRAINING------------------"

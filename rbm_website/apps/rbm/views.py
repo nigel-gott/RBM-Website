@@ -103,6 +103,12 @@ def classify(request, dbn_id):
         return HttpResponse(json_data, mimetype="application/json")
     else:
         dbn = get_object_or_404(DBNModel , pk=dbn_id)
+
+        if dbn.training:
+            messages.add_message(request, messages.ERROR, 'This DBN is currently being trained!' +
+                ' Please check back shortly to use it!')
+            return redirect('/rbm/training/')
+
         return render(request, 'rbm/classify.html', {'dbn': dbn})
 
 def flip_pixels(value):
@@ -116,6 +122,7 @@ def flip_pixels(value):
 def train(request, dbn_id):
     if request.method == 'POST':
         dbn = get_object_or_404(DBNModel , pk=dbn_id)
+
         clean_image_directory(dbn.id)
         label_values = []
 
@@ -125,9 +132,22 @@ def train(request, dbn_id):
             label_values.append(request.POST['classImages[' + str(x) + '][image_name]'])
 
         tasks.train_dbn.delay(dbn, label_values)
+        messages.add_message(request, messages.INFO, 'Congratulations! Your DBN is training.' +
+            ' Please check back shortly to use it!')
+        print "about to redirect"
         return redirect('/rbm/training/')
     else:
         dbn = get_object_or_404(DBNModel , pk=dbn_id)
+        if dbn.trained:
+            messages.add_message(request, messages.ERROR, 'This DBN has already been trained!' +
+                ' Please create a new DBN to train on new data.')
+            return redirect('/rbm/' + dbn_id + '/')
+
+        if dbn.training:
+            messages.add_message(request, messages.ERROR, 'This DBN is currently being trained!' +
+                ' Please check back shortly to use it!')
+            return redirect('/rbm/training/')
+
         return render(request, 'rbm/train.html', {'dbn': dbn})
 
 def clean_image_directory(id):
@@ -145,10 +165,12 @@ def save_image(image_id, image_data, dbn):
 @message_login_required
 @login_required
 def training(request):
+    print request
+    return render(request, 'rbm/training.html')
     if request.method == 'POST':
         return render(request, 'rbm/training.html', {})
     else:
-        messages.add_message(request, messages.INFO, 'Training the DBN!')
+        print "recieved about to render"
         return render(request, 'rbm/training.html', {})
 
 @message_login_required
