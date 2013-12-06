@@ -56,6 +56,14 @@ TODO:
 - Make HTML pages and elements look nice
 - Document and Comment code
 - Prepare library to download
+- Add a constant file
+
+BUGS:
+==========
+- If no extra layers are passed then there is an index out of bounds error
+- Clean folders properly
+- Format class name input
+- Check no names have been used before
 
 What are all these words, help!
 ===========
