@@ -22,9 +22,3 @@ class DBNModel(models.Model):
         dbn = DBN(config, labels, learning_rate)
         return DBNModel(name=name, creator=creator, description=description, height=height,
             width=width, labels=labels, training=False, trained=False, dbn=dbn)
-
-    #def train(self, training_data):
-    #    self.dbn.train(training_data)
-
-    #def regenerate(self, data):
-    #    return self.dbn.regenerate(data)
