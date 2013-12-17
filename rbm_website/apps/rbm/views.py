@@ -88,7 +88,7 @@ def classify(request, dbn_id):
 
         probs = dbn.dbn.classify([image_data],1)
         for i in range(1,10):
-            probs = probs + dbn.dbn.classify([image_data],1)
+            probs = probs + dbn.dbn.classify_image([image_data],1)
 
         probs = probs[0] / 10
         max_prob = probs.max()
@@ -204,11 +204,3 @@ def create(request):
         form = DBNForm()
 
     return render(request, 'rbm/create.html', { 'form' : form })
-
-def regenerate(request, dbn_id):
-    dbn = get_object_or_404(DBNModel , pk=dbn_id)
-    data = [map(int, request.POST['data'].split(','))]
-    (visible_state, hidden_state) = dbn.regenerate(data)
-    visible_state = np.array_str(visible_state)
-    hidden_state = np.array_str(hidden_state)
-    return render(request, 'rbm/regenerate.html', {'old_data': request.POST['data'], 'dbn': dbn, 'visible_state': visible_state, 'hidden_state': hidden_state})

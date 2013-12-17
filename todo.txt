@@ -1,0 +1,52 @@
+TODO LIST:
+
+Website:
+- Create custom CSS for website
+- Tidy up buttons
+- Add information to each page
+- Create structure for the website
+- Clean and document javascript
+- Figure out messages and loading image (gif?)
+
+Backend:
+- Clean up backend code
+- Send email with account details and when DBN trained
+- Make sure authentication system works well
+- Change classify to a model function
+- Move DBNForm to a new class
+- Find a way to calculate epochs (small/medium/large) given data size and number of images.
+
+Images:
+- Implement a better noise function for the clones
+- Skewing
+- Slight rotation
+- Image magick
+
+Library:
+- Clean up code
+- Make sure everything is easily customisable
+- Document code
+- Bug in layers (out of bounds exception)
+
+Tutorial:
+- Write simple tutorial for how to use library
+- Describe DBNs and their use
+- Write documentation for library
+
+General:
+- Switch to RABBITMQ in production
+- Train on Characters and MNIST properly
+- Host online before end of term to make sure it works
+
+Pages Needed:
+- Home Page (simple) with classifier
+- Library page (info) about how to use it
+- Information about RBMs
+- Create an Account
+- Forgotten password
+- List of My DBNs
+- Global list of DBNs
+- DBN page (information, name, checks session ID for training etc...)
+- Training page
+- Classifying page
+- Waiting page
