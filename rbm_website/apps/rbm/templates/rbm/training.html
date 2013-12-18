@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 
+{%block title%}
+Training...
+{% endblock %}
+
 <a class="btn btn-info" href="{% url 'index' %}" > Your DBN is training... </a>
 
 {% endblock %}

@@ -6,6 +6,7 @@ Website:
 - Add information to each page
 - Create structure for the website
 - Clean and document javascript
+- Replace some bootstrap code, width, font etc...
 - Figure out messages and loading image (gif?)
 
 Backend:
@@ -50,3 +51,4 @@ Pages Needed:
 - Training page
 - Classifying page
 - Waiting page
+- Admin page with user and DBN table

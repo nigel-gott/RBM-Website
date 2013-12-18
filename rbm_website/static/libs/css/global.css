@@ -1,3 +1,58 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    font-family: helvetica;
+    font-size: 14px;
+}
+
+#container-main {
+    height: 100%;
+    position: relative;
+    width: 860px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#header-container {
+    padding-top: 10px;
+}
+
+#message-container {
+}
+
+#content-container {
+    padding-bottom: 25px;
+}
+
+#footer-container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 25px;
+}
+
+.leftcell {
+    width: 33%;
+    text-align: left;
+    font-family: helvetica;
+    font-size: 12;
+}
+
+.centrecell {
+    width: 34%;
+    text-align: center;
+    font-family: helvetica;
+    font-size: 12;
+}
+
+.rightcell {
+    width: 33%;
+    text-align: right;
+    font-family: helvetica;
+    font-size: 12;
+}
+
 ul.errorList {
     color: #981919;
     font-weight: bold;
@@ -30,8 +85,3 @@ label {
     width:150px;
     text-align: right;
 }
-
-body {
-    font-family: helvetica;
-}
-
