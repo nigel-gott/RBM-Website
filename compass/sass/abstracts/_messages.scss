@@ -1,0 +1,28 @@
+.messages {
+    font-weight: bold;
+    list-style-type: none;
+}
+
+.message-template {
+    background-color: $yellow-colour;
+}
+
+.warning {
+    @extend .message-template;
+    color: $warning-colour;
+}
+
+.success {
+    @extend .message-template;
+    color: $success-colour;
+}
+
+.error {
+    @extend .message-template;
+    color: $error-colour;
+}
+
+.info {
+    @extend .message-template;
+    color: $info-colour;
+}

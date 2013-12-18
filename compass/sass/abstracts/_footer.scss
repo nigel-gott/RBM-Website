@@ -1,0 +1,23 @@
+$footer-font: helvetica;
+$footer-fontsize: 12px;
+
+.footer-cell {
+    font-family: $footer-font;
+    font-size: $footer-fontsize;
+    width: $page-width / 3;
+}
+
+.leftcell {
+    @extend .footer-cell;
+    text-align: left;
+}
+
+.centrecell {
+    @extend .footer-cell;
+    text-align: center;
+}
+
+.rightcell {
+    @extend .footer-cell;
+    text-align: right;
+}

@@ -1,0 +1,13 @@
+$error-width: 150px;
+
+ul.errorList {
+    color: $error-colour;
+    font-weight: bold;
+    list-style-type: none;
+}
+
+label {
+    display: inline-block;
+    width: $error-width;
+    text-align: right;
+}

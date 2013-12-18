@@ -1,83 +1,78 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
-{%block title%}
-Create DBN
-{% endblock %}
-
-{% block css %}
-    <link href="{% static 'rbm/css/create.css' %}" rel="stylesheet">
-{% endblock %}
-
 {% block scripts %}
     <script src="{% static 'rbm/js/visualiser.js' %}"></script>
+{% endblock %}
+
+{%block title%}
+Create DBN
 {% endblock %}
 
 {% block content %}
 
 <div id="formContainer">
-<form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.non_field_errors }}
+    <form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
 
-    {% for hidden in form.hidden_fields %}
-        {{ hidden }}
-    {% endfor %}
-
-    <div class="fieldWrapper">
-        <label for="id_name">Name:</label>
-        {{ form.name }}
-        {{ form.name.errors }}
-    </div>
-    <div class="fieldWrapper">
-        <label for="id_description">Description:</label>
-        {{ form.description }}
-        {{ form.description.errors }}
-    </div>
-    <div class="fieldWrapper">
-        <label for="id_learning_rate">Learning Rate:</label>
-        {{ form.learning_rate }}
-        {{ form.learning_rate.errors }}
-    </div>
-    <div class="fieldWrapper">
-        <label for="id_height">Image Height:</label>
-        {{ form.height }}
-        {{ form.height.errors }}
-    </div>
-    <div class="fieldWrapper">
-        <label for="id_width">Image Width:</label>
-        {{ form.width }}
-        {{ form.width.errors }}
-    </div>
-    <div id="layers">
-        {% for field in form.visible_fields %}
-            {% if "Layer" in field.label %}
-                <div class="fieldWrapper">
-                    {{ field.label_tag }} {{ field }}
-                    {{ field.errors }}
-                </div>
-            {% endif %}
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
         {% endfor %}
-    </div>
-    <div class="fieldWrapper">
-        <label for="id_labels">No. Labels:</label>
-        {{ form.labels }}
-        {{ form.labels.errors }}
-    </div>
-    <!--
-    <div class="fieldWrapper">
-        {{ form.training_data.errors }}
-        <label for="id_training_data">Training Data:</label>
-        {{ form.training_data }}
-    </div>
-    -->
 
-    <button type = "button" class="btn" id="add-layer">Add layer</button>
-    <button type = "button" class="btn" id="delete-layer">Delete layer</button>
-    <button type = "button" class="btn" id="preview">Preview</button>
-    <p><input class="btn" type="submit" value="Create DBN" /></p>
-</form>
+        <div class="fieldWrapper">
+            <label for="id_name">Name:</label>
+            {{ form.name }}
+            {{ form.name.errors }}
+        </div>
+        <div class="fieldWrapper">
+            <label for="id_description">Description:</label>
+            {{ form.description }}
+            {{ form.description.errors }}
+        </div>
+        <div class="fieldWrapper">
+            <label for="id_learning_rate">Learning Rate:</label>
+            {{ form.learning_rate }}
+            {{ form.learning_rate.errors }}
+        </div>
+        <div class="fieldWrapper">
+            <label for="id_height">Image Height:</label>
+            {{ form.height }}
+            {{ form.height.errors }}
+        </div>
+        <div class="fieldWrapper">
+            <label for="id_width">Image Width:</label>
+            {{ form.width }}
+            {{ form.width.errors }}
+        </div>
+        <div id="layers">
+            {% for field in form.visible_fields %}
+                {% if "Layer" in field.label %}
+                    <div class="fieldWrapper">
+                        {{ field.label_tag }} {{ field }}
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="fieldWrapper">
+            <label for="id_labels">No. Labels:</label>
+            {{ form.labels }}
+            {{ form.labels.errors }}
+        </div>
+        <!--
+        <div class="fieldWrapper">
+            {{ form.training_data.errors }}
+            <label for="id_training_data">Training Data:</label>
+            {{ form.training_data }}
+        </div>
+        -->
 
+        <button type = "button" class="btn" id="add-layer">Add layer</button>
+        <button type = "button" class="btn" id="delete-layer">Delete layer</button>
+        <button type = "button" class="btn" id="preview">Preview</button>
+        <p><input class="btn" type="submit" value="Create DBN" /></p>
+    </form>
 </div>
 
 <div id="canvasContainer">

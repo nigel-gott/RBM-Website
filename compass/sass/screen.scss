@@ -4,3 +4,20 @@
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
 
 @import "compass/reset";
+
+@import "base";
+/* import mixins here */
+
+@import "boilerplate/global";
+/* import additional boilerplate */
+
+/* import modules here */
+
+@import "abstracts/footer";
+@import "abstracts/form";
+@import "abstracts/messages";
+@import "abstracts/slider";
+/* import additional abstracts */
+
+/* import partials */
+@import "partials/create";

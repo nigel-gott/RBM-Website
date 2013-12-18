@@ -1,0 +1,200 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+/* line 17, ../../../../compass/Gem/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../compass/Gem/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../compass/Gem/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../compass/Gem/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../compass/Gem/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../compass/Gem/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../compass/Gem/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../compass/Gem/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../compass/Gem/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+/* import mixins here */
+/* line 1, ../../../../compass/sass/boilerplate/_global.scss */
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  font-family: helvetica;
+  font-size: 14px;
+}
+
+/* line 9, ../../../../compass/sass/boilerplate/_global.scss */
+#container-main {
+  height: 100%;
+  position: relative;
+  width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* line 17, ../../../../compass/sass/boilerplate/_global.scss */
+#header-container {
+  padding-top: 10px;
+}
+
+/* line 24, ../../../../compass/sass/boilerplate/_global.scss */
+#content-container {
+  padding-bottom: 25px;
+}
+
+/* line 28, ../../../../compass/sass/boilerplate/_global.scss */
+#footer-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 25px;
+}
+
+/* import additional boilerplate */
+/* import modules here */
+/* line 4, ../../../../compass/sass/abstracts/_footer.scss */
+.footer-cell, .leftcell, .centrecell, .rightcell {
+  font-family: helvetica;
+  font-size: 12px;
+  width: 286.66667px;
+}
+
+/* line 10, ../../../../compass/sass/abstracts/_footer.scss */
+.leftcell {
+  text-align: left;
+}
+
+/* line 15, ../../../../compass/sass/abstracts/_footer.scss */
+.centrecell {
+  text-align: center;
+}
+
+/* line 20, ../../../../compass/sass/abstracts/_footer.scss */
+.rightcell {
+  text-align: right;
+}
+
+/* line 3, ../../../../compass/sass/abstracts/_form.scss */
+ul.errorList {
+  color: #981919;
+  font-weight: bold;
+  list-style-type: none;
+}
+
+/* line 9, ../../../../compass/sass/abstracts/_form.scss */
+label {
+  display: inline-block;
+  width: 150px;
+  text-align: right;
+}
+
+/* line 1, ../../../../compass/sass/abstracts/_messages.scss */
+.messages {
+  font-weight: bold;
+  list-style-type: none;
+}
+
+/* line 6, ../../../../compass/sass/abstracts/_messages.scss */
+.message-template, .warning, .success, .error, .info {
+  background-color: #e9ee17;
+}
+
+/* line 10, ../../../../compass/sass/abstracts/_messages.scss */
+.warning {
+  color: #db7a12;
+}
+
+/* line 15, ../../../../compass/sass/abstracts/_messages.scss */
+.success {
+  color: #15841a;
+}
+
+/* line 20, ../../../../compass/sass/abstracts/_messages.scss */
+.error {
+  color: #981919;
+}
+
+/* line 25, ../../../../compass/sass/abstracts/_messages.scss */
+.info {
+  color: #145fa3;
+}
+
+/* line 1, ../../../../compass/sass/abstracts/_slider.scss */
+.ui-slider {
+  width: 200px !important;
+  margin: 20px 0px;
+}
+
+/* import additional abstracts */
+/* import partials */
+/* line 1, ../../../../compass/sass/partials/_create.scss */
+#id_description {
+  height: 100px;
+}
+
+/* line 5, ../../../../compass/sass/partials/_create.scss */
+#canvasContainer {
+  height: 600px;
+  width: 350px;
+  overflow: auto;
+  float: right;
+}
+
+/* line 12, ../../../../compass/sass/partials/_create.scss */
+#formContainer {
+  float: left;
+}
