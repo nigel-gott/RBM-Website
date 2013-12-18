@@ -6,3 +6,5 @@ rbm_website/media/
 *.sqlite3
 local_settings.py
 dbn.pob
+compass/.sass-cache/
+compass/Gem/
