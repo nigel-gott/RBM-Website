@@ -145,7 +145,8 @@ def create(request):
             learning_rate = form.cleaned_data['learning_rate']
             description = form.cleaned_data['description']
             name = form.cleaned_data['name']
-            creator = request.user.username
+            private = form.cleaned_data['private']
+            creator = request.user
             layer_count = form.cleaned_data['layer_count']
 
             topology = []
@@ -153,7 +154,7 @@ def create(request):
             for index in range(layer_count):
                 topology.append(form.cleaned_data['layer_{index}'.format(index=index)])
 
-            dbn = DBNModel.build_dbn(name, creator, description, height, width, topology, labels, learning_rate)
+            dbn = DBNModel.build_dbn(name, creator, description, height, width, topology, labels, private, learning_rate)
             dbn.save()
             messages.add_message(request, messages.INFO, 'Successfully created the DBN!')
             return redirect('index')

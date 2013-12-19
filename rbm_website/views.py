@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.contrib import messages
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import redirect, render
+from rbm_website.apps.rbm.models import DBNModel
+from django.contrib.auth.models import User
 
 # Create your views here.
 def home(request):
@@ -15,4 +17,9 @@ def admin(request):
             "You must have administrator priveliges to access this page!")
         return redirect('home')
     else:
-        return render(request, 'admin.html', {})
+        users = User.objects.values('username', 'email' , 'is_superuser', 'last_login', 'date_joined')
+        dbns = DBNModel.objects.values('name', 'creator', 'created', 'private', 'training', 'trained')
+        for d in dbns:
+            name = User.objects.get(id=d['creator'])
+            d['creator'] = name
+        return render(request, 'admin.html', {'users': users, 'dbns': dbns})

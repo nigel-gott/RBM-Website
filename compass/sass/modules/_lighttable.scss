@@ -1,0 +1,26 @@
+.light-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.light-table td, .light-table th {
+    background-color: #fff;
+    border: 1px #bbb solid;
+    color: #333;
+    font-family: helvetica;
+    font-size: 14px;
+    padding: 10px;
+    vertical-align: top;
+}
+
+.light-table th  {
+    background-color: #ddd;
+    color: #333;
+    font-size: 110%;
+    font-weight: bold;
+}
+
+.light-table tr:hover td  {
+    color: #222;
+    background-color: #FCFBE3;
+}

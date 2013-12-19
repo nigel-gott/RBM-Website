@@ -14,6 +14,7 @@ Backend:
 - Send email with account details and when DBN trained
 - Make sure authentication system works well
 - Change classify to a model function
+- Improve noise generator
 - Move DBNForm to a new class
 - Find a way to calculate epochs (small/medium/large) given data size and number of images.
 
@@ -51,4 +52,7 @@ Pages Needed:
 - Training page
 - Classifying page
 - Waiting page
+- Public/Private DBNs
 - Admin page with user and DBN table
+- Tabs for admin tables
+- On link goes to user/dbn page with extra infor such as delete etc...

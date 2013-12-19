@@ -7,6 +7,7 @@ class DBNForm(forms.Form):
     width = forms.IntegerField(initial=28)
     labels = forms.IntegerField()
     learning_rate = forms.FloatField()
+    private = forms.BooleanField(required=False, help_text='Check if you want a private DBN')
     layer_count = forms.IntegerField(widget = forms.HiddenInput())
 
     def __init__(self, *args, **kwargs):
