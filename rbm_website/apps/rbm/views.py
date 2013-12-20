@@ -1,5 +1,4 @@
 # Create your views here.
-import numpy as np
 import os
 import json
 import shutil

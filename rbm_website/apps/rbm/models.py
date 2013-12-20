@@ -19,6 +19,9 @@ class DBNModel(models.Model):
     dbn = PickledObjectField()
     label_values = PickledObjectField()
 
+    def __unicode__(self):
+        return (self.name + " - " + self.creator.username)
+
     @staticmethod
     def build_dbn(name, creator, description, height, width, config, labels, private, learning_rate):
         dbn = DBN(config, labels, learning_rate)
