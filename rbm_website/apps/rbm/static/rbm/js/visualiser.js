@@ -49,7 +49,7 @@ $(document).ready( function () {
 function preview() {
     $("#previewCanvas").remove();
     var topology = getTopology();
-    drawTopology(topology);
+    drawTopology(topology, layerCount);
 }
 
 function getTopology() {
@@ -62,12 +62,12 @@ function getTopology() {
     return topology;
 }
 
-function drawTopology(topology) {
+function drawTopology(topology, noLayers) {
     var height = 60;
     var gap = 40;
     var textOffset = height + 15;
     var perHeight = height + gap;
-    var canvasHeight = perHeight * (layerCount + 2);
+    var canvasHeight = perHeight * (noLayers + 2);
     var canvasWidth = 300;
     var canvas = $('<canvas />').attr({
         id: "previewCanvas",
@@ -88,12 +88,12 @@ function drawTopology(topology) {
     });
 
     var currentHeight = canvasHeight - perHeight;
-    for (var i = 0; i < layerCount + 2; i++) {
+    for (var i = 0; i < noLayers + 2; i++) {
         fillRandomPixels(ctx, (canvasWidth/2) - widths[i]/2, currentHeight, widths[i], height);
         if (i === 0) {
             ctx.fillText("Input Data: " + topology[0] + " nodes", 0, currentHeight + textOffset);
-        } else if (i == layerCount + 1) {
-            ctx.fillText("Classifier: " + topology[layerCount + 1] + " nodes", 0, currentHeight + textOffset);
+        } else if (i == noLayers + 1) {
+            ctx.fillText("Classifier: " + topology[noLayers + 1] + " nodes", 0, currentHeight + textOffset);
         } else {
             ctx.fillText(("Layer " + (i-1)) + ": " + topology[i] + " nodes", 0, currentHeight + textOffset);
         }

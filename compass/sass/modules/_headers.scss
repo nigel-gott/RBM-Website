@@ -1,0 +1,24 @@
+.header {
+    font-family: $site-font;
+    font-weight: bold;
+}
+
+h1 {
+    @extend .header;
+    font-size: 24px;
+}
+
+h2 {
+    @extend .header;
+    font-size: 20px;
+}
+
+h3 {
+    @extend .header;
+    font-size: 18px;
+}
+
+h4 {
+    @extend .header;
+    font-size: 14px;
+}

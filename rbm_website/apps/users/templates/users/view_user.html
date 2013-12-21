@@ -1,7 +1,35 @@
 {% extends "base.html" %}
+
+{%block scripts%}
+ <script>
+    $(function() {
+        $( "#tabs" ).tabs({
+        collapsible: true
+        });
+    });
+</script>
+{% endblock %}
+
+{%block title%}
+{{ user.username}}'s Profile
+{% endblock %}
+
 {% block content %}
-<h2> Logged in as {{username}} </h2>
+This is {{ user.username }}'s profile page
 
-<a href="{% url 'index' %}"> Index </a>
+<div id="tabs">
+    <ul>
+        <li><a href="#tabs-public">Public DBNs</a></li>
+        <li><a href="#tabs-private">Private DBNs</a></li>
+    </ul>
 
+    <div id="tabs-public">
+        <p><strong>This will hold the information for the public DBNs.</strong></p>
+    </div>
+
+    <div id="tabs-private">
+        <p><strong>This will hold the information for the private DBNs.</strong></p>
+    </div>
+
+</div>
 {% endblock %}

@@ -138,6 +138,32 @@ html, body {
   background-color: #FCFBE3;
 }
 
+/* line 1, ../../../../compass/sass/modules/_headers.scss */
+.header, h1, h2, h3, h4 {
+  font-family: helvetica;
+  font-weight: bold;
+}
+
+/* line 6, ../../../../compass/sass/modules/_headers.scss */
+h1 {
+  font-size: 24px;
+}
+
+/* line 11, ../../../../compass/sass/modules/_headers.scss */
+h2 {
+  font-size: 20px;
+}
+
+/* line 16, ../../../../compass/sass/modules/_headers.scss */
+h3 {
+  font-size: 18px;
+}
+
+/* line 21, ../../../../compass/sass/modules/_headers.scss */
+h4 {
+  font-size: 14px;
+}
+
 /* line 4, ../../../../compass/sass/abstracts/_footer.scss */
 .footer-cell, .leftcell, .centrecell, .rightcell {
   font-family: helvetica;

@@ -1,9 +1,9 @@
-# Create your views here.
 import os
 import json
 import shutil
-from PIL import Image as pil
 import tasks
+
+from PIL import Image as pil
 from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import ListView, DetailView
@@ -91,7 +91,6 @@ def train(request, dbn_id):
         tasks.train_dbn.delay(dbn, label_values)
         messages.add_message(request, messages.INFO, 'Congratulations! Your DBN is training.' +
             ' Please check back shortly to use it!')
-        print "about to redirect"
         return redirect('/rbm/training/')
     else:
         dbn = get_object_or_404(DBNModel , pk=dbn_id)
