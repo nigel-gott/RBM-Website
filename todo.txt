@@ -8,6 +8,7 @@ Website:
 - Clean and document javascript
 - Replace some bootstrap code, width, font etc...
 - Figure out messages and loading image (gif?)
+- Maybe use Namespace for URLs
 
 Backend:
 - Clean up backend code
@@ -47,10 +48,8 @@ Pages Needed:
 - Forgotten password
 - List of My DBNs
 - Global list of DBNs
-- DBN page (information, name, checks session ID for training etc...)
 - Training page
 - Classifying page
 - Waiting page
-- Public/Private DBNs
 - Tabs for admin tables
 - On link goes to user/dbn page with extra infor such as delete etc...

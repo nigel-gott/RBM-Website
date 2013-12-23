@@ -1,4 +1,29 @@
 {% extends "base.html" %}
+{% load staticfiles %}
+
+{% block scripts %}
+    <script src="{% static 'rbm/js/topology.js' %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var topology = getTopology();
+            var layerCount = {{object.dbn.number_layers}}
+            preview(topology, layerCount);
+            prevInterval = setInterval(function() {
+                preview(topology, layerCount);
+            }, 1000);
+        });
+
+        function getTopology() {
+            var topology = new Array();
+            var i = 0;
+            {% for t in topology %}
+                topology[i] = {{ t }};
+                i++
+            {% endfor %}
+            return topology;
+        };
+    </script>
+{% endblock %}
 
 {%block title%}
 {{object.name}}
@@ -6,16 +31,56 @@
 
 {% block content %}
 
-<h1>{{object.name}} </h1>
-<h2>{{object.description}} </h2>
-<h3>Created by: {{object.creator.username}}</h3>
+<div class="profile-details">
 
-<p>
-Layers: {{object.dbn.number_layers}}
-Labels: {{object.dbn.number_labels}}
-</p>
+    <div id="dbn-details">
+        <p class="dbn-title">{{object.name}}</p>
 
-<a href="{% url 'train' object.id %}"> Train </a>
-<a href="{% url 'classify' object.id %}"> Classify </a>
+        <p class="dbn-creator">
+            Created by <a href="{% url 'view_user' object.creator.username %}">{{ object.creator.username }}</a>
+            {% if object.private %}
+                (<span class="private-dbn">Private</span>)
+            {% else %}
+                (<span class="public-dbn">Public</span>)
+            {% endif %}
+            on <span class="dbn-date">{{object.created}}</span>
+        </p>
+
+        <p class="dbn-description">{{object.description}}</p>
+
+        <p class="dbn-status">
+            {% if object.trained %}
+                This DBN has been trained and is ready to classify <a href="{% url 'classify' object.id %}">here</a>!
+            {% else %}
+                {% if object.training %}
+                    This DBN is currently training! Please check back shortly to use it.
+                    <div class="centre-div" style="width: 150px; margin-top: 50px;">
+                        <img src="{% static 'libs/img/smallLoader.GIF' %}" alt="Loading GIF">
+                    </div>
+                {% else %}
+                    This DBN has not started training yet, please check back later to see if the creator has trained it.
+                {% endif %}
+            {% endif %}
+        </p>
+
+        {% if object.trained %}
+            <p class="dbn-config">
+                This DBN takes images of size {{object.width}}x{{object.height}} and classifies them into one of the following {{object.labels}} labels.
+
+                {{object.label_values}}
+            </p>
+        {% endif %}
+
+        {% if object.creator.username == user.username %}
+            <p class="dbn-options">
+                {{object.creator.username}}, as the creator of this DBN you can edit, delete or train this DBN.
+                <a href="{% url 'train' object.id %}"> Train </a>
+            </p>
+        {% endif %}
+    </div>
+</div>
+
+<div id="canvasContainer" class="preview-canvas">
+</div>
 
 {% endblock %}

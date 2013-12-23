@@ -14,12 +14,16 @@
 /* import modules here */
 @import "modules/lighttable";
 @import "modules/headers";
+@import "modules/text";
+@import "modules/layouts";
 
 @import "abstracts/footer";
 @import "abstracts/form";
 @import "abstracts/messages";
 @import "abstracts/slider";
+@import "abstracts/preview";
 /* import additional abstracts */
 
 /* import partials */
 @import "partials/create";
+@import "partials/dbndetail";

@@ -1,0 +1,44 @@
+.profile-details {
+    float: left;
+    width: 400px;
+}
+
+.dbn-title {
+    font-size: 30px;
+    font-weight: bolder;
+    margin: 5px 0;
+}
+
+.dbn-description {
+    font-size: 16px;
+    margin: 20px 0;
+}
+
+.dbn-creator {
+    font-size: 13px;
+    margin: 5px 0;
+}
+
+.dbn-options {
+    font-size: 13px;
+    margin: 20px 0;
+}
+
+.dbn-date {
+    font-weight: bold;
+}
+
+.dbn-status {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.private-dbn {
+    color: #AB0505;
+    font-weight: bold;
+}
+
+.public-dbn {
+    color: #108511;
+    font-weight: bold;
+}

@@ -10,6 +10,7 @@ from django.views.generic import ListView, DetailView
 from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 from django.contrib import messages
 from rbm_website.apps.rbm.forms import DBNForm
 from rbm_website.apps.rbm.models import DBNModel
@@ -26,6 +27,11 @@ class DBNListView(ListView):
 
 class DBNDetailView(DetailView):
     model = DBNModel
+
+    def get_context_data(self, **kwargs):
+        context = super(DBNDetailView, self).get_context_data(**kwargs)
+        context['topology'] = self.object.get_topology()
+        return context
 
     @method_decorator(message_login_required)
     @method_decorator(login_required)
@@ -155,8 +161,8 @@ def create(request):
             dbn = DBNModel.build_dbn(name, creator, description, height, width, topology, labels, private, learning_rate)
             dbn.save()
             messages.add_message(request, messages.INFO, 'Successfully created the DBN!')
-            return redirect('index')
-
+            url = reverse('view', kwargs={'pk': dbn.id})
+            return redirect(url)
     else:
         form = DBNForm()
 
