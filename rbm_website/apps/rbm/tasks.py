@@ -3,10 +3,8 @@ import shutil
 import numpy as np
 from djcelery import celery
 from django.conf import settings
-from rbm_website.apps.rbm.models import DBNModel
 from rbm_website.libs.image_lib import image_processor as imgpr
 from rbm_website.libs.image_lib import noise
-from rbm_website.libs.rbm_lib import dbn as dbnlib
 
 # ADD CHECKING AND ERROR OUTPUTTING AFTER TRAINING
 
