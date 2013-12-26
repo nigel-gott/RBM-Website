@@ -1,0 +1,27 @@
+.draw-btn {
+    padding: 1px;
+    background-color: #000000;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+
+.draw-btn img {
+    width: 36px;
+    height: 36px;
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
+    border-radius: 1px;
+}
+
+#drawerContainer {
+    float: left;
+}
+
+#pixelDrawerContainer {
+    float: left;
+}
+
+#commands {
+    float: right;
+}

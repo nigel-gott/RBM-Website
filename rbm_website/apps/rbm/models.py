@@ -25,6 +25,9 @@ class DBNModel(models.Model):
     def get_topology(self):
         return self.dbn.get_topology()
 
+    def classify_image(self, image_data, samples):
+        return self.dbn.classify(image_data, samples)
+
     @staticmethod
     def build_dbn(name, creator, description, height, width, config, labels, private, learning_rate):
         dbn = DBN(config, labels, learning_rate)

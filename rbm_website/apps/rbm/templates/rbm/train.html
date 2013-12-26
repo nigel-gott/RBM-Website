@@ -11,16 +11,70 @@
 
 {% block content %}
 
-<h2> {{dbn.name}} </h2>
+<h1> {{dbn.name}} </h1>
 
 
-<div id="pixelDrawerContainer">
+<div id="drawerContainer">
+    <div id="pixelDrawerContainer">
+    </div>
+
+    <div id="commands">
+        <div id="brushContainer">
+            <button id="brush" class="btn draw-btn" type="button">
+                <img src="{% static 'libs/img/brush.png' %}" alt="BRUSH">
+            </button>
+        </div>
+        <div id="eraserContainer">
+            <button id="eraser" class="btn draw-btn" type="button">
+                <img src="{% static 'libs/img/eraser.png' %}" alt="ERASER">
+            </button>
+        </div>
+        <div id="smallContainer">
+            <button id="small" class="btn draw-btn" type="button">
+                <img src="{% static 'libs/img/small.png' %}" alt="SMALL">
+            </button>
+        </div>
+        <div id="mediumContainer">
+            <button id="medium" class="btn draw-btn" type="button">
+                <img src="{% static 'libs/img/medium.png' %}" alt="MEDIUM">
+            </button>
+        </div>
+        <div id="largeContainer">
+            <button id="large" class="btn draw-btn" type="button">
+                <img src="{% static 'libs/img/large.png' %}" alt="LARGE">
+            </button>
+        </div>
+        <div id="clearContainer">
+            <button id="clear" class="btn draw-btn" type="button">
+                <img src="{% static 'libs/img/clear.png' %}" alt="CLEAR">
+            </button>
+        </div>
+        <div id="centreContainer">
+            <button id="centre" class="btn draw-btn" type="button">
+                <img src="{% static 'libs/img/centre.png' %}" alt="CENTRE">
+            </button>
+        </div>
+    </div>
 </div>
 
-<div id="classesRemainingDisplay">
-</div>
+<div id="controlContainer">
+    <div id="classNameContainer">
+        <input id="className" type="text" maxlength="22"/>
 
-<div id="imageClasses">
+        <button id="addClass" class="btn draw-btn" type="button">
+            <img src="{% static 'libs/img/add.png' %}" alt="ADD">
+        </button>
+    </div>
+
+    <div id="imageClasses">
+    </div>
+
+    <div id="classesRemainingDisplay">
+    </div>
+
+    <div id="trainButtonContainer">
+        <button id="trainButton" class="btn" type="button">TRAIN</button>
+    </div>
 </div>
 
 <script>

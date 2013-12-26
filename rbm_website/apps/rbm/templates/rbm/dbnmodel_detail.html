@@ -54,8 +54,15 @@
             {% else %}
                 {% if object.training %}
                     This DBN is currently training! Please check back shortly to use it.
-                    <div class="centre-div" style="width: 150px; margin-top: 50px;">
-                        <img src="{% static 'libs/img/smallLoader.GIF' %}" alt="Loading GIF">
+                    <div class="centre-div" style="width: 100px; margin-top: 50px; text-align: center;">
+                        <div class="bubblingGSmall">
+                            <span id="bubblingGSmall_1">
+                            </span>
+                            <span id="bubblingGSmall_2">
+                            </span>
+                            <span id="bubblingGSmall_3">
+                            </span>
+                        </div>
                     </div>
                 {% else %}
                     This DBN has not started training yet, please check back later to see if the creator has trained it.
@@ -65,9 +72,16 @@
 
         {% if object.trained %}
             <p class="dbn-config">
-                This DBN takes images of size {{object.width}}x{{object.height}} and classifies them into one of the following {{object.labels}} labels.
-
-                {{object.label_values}}
+                This DBN takes images of size {{object.width}}x{{object.height}} and classifies them into one of the following {{object.labels}}
+                {% if object.labels == 1 %}
+                    label!
+                {% else %}
+                    labels!
+                {% endif %}
+                <br>
+                {% for o in object.label_values %}
+                    {{o}}
+                {% endfor %}
             </p>
         {% endif %}
 

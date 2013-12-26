@@ -1,4 +1,5 @@
 import os
+import shutil
 import numpy as np
 from djcelery import celery
 from django.conf import settings
@@ -42,8 +43,12 @@ def train_dbn(dbn, label_list):
     dbn.trained = True
     dbn.save()
 
+    print "Cleaning up files..."
+    shutil.rmtree(train_path)
+    shutil.rmtree(test_path)
+
     print"---------------------------------------------------------------"
-    print"---------FINISHED--------------------TRAINING------------------"
+    print"------------FINISHED--------------------TRAINING---------------"
     print"---------------------------------------------------------------"
 
 def training_method(dbn, train_img, train_lbl, test_img, test_lbl, pre_epoch=5,

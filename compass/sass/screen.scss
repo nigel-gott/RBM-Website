@@ -16,14 +16,19 @@
 @import "modules/headers";
 @import "modules/text";
 @import "modules/layouts";
+@import "modules/smallloader";
+@import "modules/largeloader";
+@import "modules/messagebar";
 
 @import "abstracts/footer";
 @import "abstracts/form";
 @import "abstracts/messages";
 @import "abstracts/slider";
 @import "abstracts/preview";
+@import "abstracts/drawer";
 /* import additional abstracts */
 
 /* import partials */
 @import "partials/create";
 @import "partials/dbndetail";
+@import "partials/trainer";

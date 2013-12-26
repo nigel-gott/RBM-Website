@@ -49,20 +49,20 @@ def classify(request, dbn_id):
         #iterator = np.vectorize(flip_pixels)
         #image_data = iterator(image_data)
 
-        probs = dbn.dbn.classify([image_data],1)
+        probs = dbn.classify_image([image_data], 1)
         for i in range(1,10):
-            probs = probs + dbn.dbn.classify_image([image_data],1)
+            probs = probs + dbn.classify_image([image_data], 1)
 
         probs = probs[0] / 10
         max_prob = probs.max()
         result = dbn.label_values[probs.argmax(axis=0)]
 
         json_data = json.dumps({
+            "label_values": dbn.label_values,
             "probs":probs.tolist(),
             "max_prob":max_prob,
             "result":result
-            })
-
+        })
         return HttpResponse(json_data, mimetype="application/json")
     else:
         dbn = get_object_or_404(DBNModel , pk=dbn_id)

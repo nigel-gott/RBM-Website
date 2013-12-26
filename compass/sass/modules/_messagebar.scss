@@ -1,0 +1,17 @@
+.topBar {
+    border-bottom: solid 2px #EEE;
+    padding: 3px 0;
+    text-align: center;
+}
+
+.errorBar {
+    @extend .topBar;
+    background: #990000;
+    color: white;
+}
+
+.messageBar {
+    @extend .topBar;
+    background: #0F88C0;
+    color: white;
+}

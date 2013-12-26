@@ -1,52 +1,136 @@
-// TODO: Prevent duplicate class names, use dictionary?
-// CHANGE BRUSH SIZE TO JQUERY UI SLIDER
 // CLEAN UP CODE
-// Centre by default on submit
+// Centre by default on submit WARNING MESSAGE
 
 function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL, csrfToken) {
     var canvas_object = new Canvas(width, height);
     var canvas = canvas_object.canvas;
     var container;
-    var buttons;
-    var slider;
 
     var brushes = {SMALL: 1, MEDIUM: 2, LARGE: 3};
-
     var currentlyDrawing = false;
     var blank = true;
     var tools = {PEN: 0, ERASER: 1};
     var currentTool = tools.PEN;
 
     createLayout();
-    createSlider();
-
     canvas_object.addCheckerboard();
     container.append(canvas);
 
-    var clear = appendButton('clear', 'Clear');
-    var pen = appendButton('pen', 'Pen');
-    var eraser = appendButton('eraser', 'Eraser');
-    var centre = appendButton('centre', 'Centre');
-
+    var usedClassNames = new Array();
     var download;
     var train;
-    var className;
     var classes_remaining;
 
     if (mode == "train") {
         classes_remaining = max_labels;
         printRemainingClasses();
-        download = appendButton('addClass', 'Add Class');
+        download = $('#addClass');
+        download.click(function() {
+            addClass();
+        });
         createTrainButton();
-        className = appendClassNameInput();
     } else if (mode == "classify") {
-        download = appendButton('classify', 'Classify');
+        download = $('#classifyButton');
+        download.click(function() {
+            classify();
+        });
     } else {
-        download = appendButton('classify', 'Classify');
+
+    }
+
+    var className = $('#className');
+    var pen = $('#brush');
+    var clear = $('#clear');
+    var eraser = $('#eraser');
+    var small = $('#small');
+    var medium = $('#medium');
+    var large = $('#large');
+    var centre = $('#centre');
+
+    pen.attr("disabled", true);
+    clear.attr("disabled", true);
+    small.attr("disabled", true);
+
+    clear.click(function() {
+        clearCanvas();
+    });
+
+    pen.click(function() {
+        currentTool = tools.PEN;
+        canvas_object.changeBrushSize(brushes.SMALL);
+        pen.attr("disabled", true);
+        eraser.attr("disabled", false);
+        small.attr("disabled", true);
+        medium.attr("disabled", false);
+        large.attr("disabled", false);
+    });
+
+    eraser.click(function() {
+        currentTool = tools.ERASER;
+        eraser.attr("disabled", true);
+        pen.attr("disabled", false);
+        small.attr("disabled", true);
+        medium.attr("disabled", true);
+        large.attr("disabled", true);
+    });
+
+    small.click(function() {
+        canvas_object.changeBrushSize(brushes.SMALL);
+        small.attr("disabled", true);
+        medium.attr("disabled", false);
+        large.attr("disabled", false);
+    });
+
+    medium.click(function() {
+        canvas_object.changeBrushSize(brushes.MEDIUM);
+        small.attr("disabled", false);
+        medium.attr("disabled", true);
+        large.attr("disabled", false);
+    });
+
+    large.click(function() {
+        canvas_object.changeBrushSize(brushes.LARGE);
+        small.attr("disabled", false);
+        medium.attr("disabled", false);
+        large.attr("disabled", true);
+    });
+
+    centre.click(function() {
+        var bounds = canvas_object.getCanvasBounds();
+        var drawHeight = bounds["top"] - bounds["bottom"];
+        var drawWidth = bounds["right"] - bounds["left"];
+        var drawHeightCentre = bounds["bottom"] + Math.round(drawHeight/2);
+        var drawWidthCentre = bounds["left"] + Math.round(drawWidth/2);
+        var heightOffset = Math.round(height/2) - drawHeightCentre;
+        var widthOffset = Math.round(width/2) - drawWidthCentre;
+        canvas_object.shiftDrawing(heightOffset, widthOffset);
+    });
+
+   function createLayout() {
+        container = $('<div/>', {
+            id: 'canvasContainer',
+        }).appendTo(drawerContainer);
+    }
+
+    function printRemainingClasses() {
+        $('#classesRemainingDisplay').empty().prepend(classes_remaining + ' out of ' + max_labels + ' classes remaining!');
+    }
+
+    function classify() {
+        previewCanvas = canvas_object.generatePreview();
+        imageURL = previewCanvas.toDataURL("image/png");
+
+        $.post(uploadURL, {'image_data' : imageURL, csrfmiddlewaretoken : csrfToken}, function(data, textStatus, xhr) {
+           $('#maxProbContainer').text(data.result);
+           for (var i = 0; i < max_labels; i++) {
+               $('#' + data.label_values[i] + 'LabelContainer').text(data.probs[i]);
+           };
+           console.log(data);
+        });
     }
 
     function createTrainButton() {
-        train = appendButton('trainButton', 'Train DBN');
+        train = $('#trainButton');
         train.attr("disabled", true);
         train.click(function() {
             var images = [];
@@ -66,117 +150,22 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
         });
     }
 
-    function createLayout() {
-        container = $('<div/>', {
-            id: 'canvasContainer',
-        }).appendTo(drawerContainer);
-        buttons = $('<div/>', {
-            id: 'buttons',
-        }).appendTo(drawerContainer);
-        slider = $('<div/>', {
-            id: 'slider',
-        }).appendTo(buttons);
-    }
-
-    function createSlider() {
-        var min = brushes.SMALL;
-        var max = brushes.LARGE;
-        slider.slider({
-            min: min,
-            max: max,
-            step: 1,
-            value: 1,
-            stop: function( event, ui ) {
-                var value = slider.slider('value');
-                canvas_object.changeBrushSize(value);
-            }
-        });
-    }
-
-    function appendClassNameInput() {
-        var inputBox = $('<input id="className" type="text"/>');
-        buttons.append(inputBox);
-        return inputBox;
-    }
-
-    function appendButton(name, value){
-        var button = $('<button />', {
-            class : 'btn',
-            id: name,
-            text: value,
-            type: 'button'
-        });
-
-        buttons.append(button);
-        return button;
-    }
-
-    pen.attr("disabled", true);
-    clear.attr("disabled", true);
-
-    clear.click(function() {
-        clearCanvas();
-    });
-
-    pen.click(function() {
-        currentTool = tools.PEN;
-        pen.attr("disabled", true);
-        eraser.attr("disabled", false);
-    });
-
-    eraser.click(function() {
-        currentTool = tools.ERASER;
-        eraser.attr("disabled", true);
-        pen.attr("disabled", false);
-    });
-
-    download.click(function() {
-        if (mode == "train") {
-            addClass();
-        } else if (mode == "classify") {
-            classify();
-        } else {
-            classify();
-        }
-    });
-
-    centre.click(function() {
-        var bounds = canvas_object.getCanvasBounds();
-        var drawHeight = bounds["top"] - bounds["bottom"];
-        var drawWidth = bounds["right"] - bounds["left"];
-        var drawHeightCentre = bounds["bottom"] + Math.round(drawHeight/2);
-        var drawWidthCentre = bounds["left"] + Math.round(drawWidth/2);
-        var heightOffset = Math.round(height/2) - drawHeightCentre;
-        var widthOffset = Math.round(width/2) - drawWidthCentre;
-        canvas_object.shiftDrawing(heightOffset, widthOffset);
-    });
-
-    function printRemainingClasses() {
-        $('#classesRemainingDisplay').empty().prepend('You have ' + classes_remaining + ' out of ' + max_labels + ' image classes remaining!');
-    }
-
-    function classify() {
-        previewCanvas = canvas_object.generatePreview();
-        imageURL = previewCanvas.toDataURL("image/png");
-
-        $.post(uploadURL, {'image_data' : imageURL, csrfmiddlewaretoken : csrfToken}, function(data, textStatus, xhr) {
-           alert(data.result);
-           alert(data.result + ' with probability ' + data.max_prob);
-           console.log(data);
-        });
-    }
-
     function addClass() {
-        previewCanvas = canvas_object.generatePreview();
-        imageURL = previewCanvas.toDataURL("image/png");
-        imageID = className.val();
+        var previewCanvas = canvas_object.generatePreview();
+        var imageURL = previewCanvas.toDataURL("image/png");
+        var imageID = className.val();
+        var index = $.inArray(imageID, usedClassNames);
 
         if (imageID === "") {
-            alert("Please enter a class name before adding a class!");
+            topBar("Please enter a class name before adding a class!", 5000, 'error');
+        } else if (index != -1) {
+            topBar("The class name \'" + imageID + "\' has already been used!", 5000, 'error');
         } else {
             image = $('<img id="' + imageID + '" src="' +  imageURL + '" >');
             deleteButton = $('<input type="button" value="-" />');
             deleteButton.click(function() {
+                var index = usedClassNames.indexOf(imageID);
+                usedClassNames.splice(index, 1);
                 classes_remaining++;
                 if (classes_remaining == 1) {
                     $('#trainButton').attr("disabled", true);
@@ -192,9 +181,11 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
             div.append('  ');
             div.append(image);
             div.append(' - ' + imageID);
+
             clearCanvas();
             className.val('');
             classes_remaining--;
+            usedClassNames.push(imageID);
             div.hide().appendTo('#imageClasses').fadeIn(400);
             printRemainingClasses();
             if (classes_remaining === 0) {
