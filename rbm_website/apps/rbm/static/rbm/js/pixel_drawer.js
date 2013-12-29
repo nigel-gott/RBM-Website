@@ -1,6 +1,3 @@
-// CLEAN UP CODE
-// Centre by default on submit WARNING MESSAGE
-
 function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL, csrfToken) {
     var canvas_object = new Canvas(width, height);
     var canvas = canvas_object.canvas;
@@ -121,11 +118,10 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
         imageURL = previewCanvas.toDataURL("image/png");
 
         $.post(uploadURL, {'image_data' : imageURL, csrfmiddlewaretoken : csrfToken}, function(data, textStatus, xhr) {
-           $('#maxProbContainer').text(data.result);
-           for (var i = 0; i < max_labels; i++) {
-               $('#' + data.label_values[i] + 'LabelContainer').text(data.probs[i]);
-           };
-           console.log(data);
+            $('#maxProbContainer').text(data.result);
+            for (var i = 0; i < max_labels; i++) {
+                $('#' + data.label_values[i] + 'LabelContainer').text(data.probs[i]);
+            };
         });
     }
 

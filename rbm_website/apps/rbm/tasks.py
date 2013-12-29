@@ -11,11 +11,13 @@ from rbm_website.libs.image_lib import noise
 @celery.task
 def train_dbn(dbn, label_list):
     print "Processing and training DBN: " + str(dbn.name) + "..."
+
     print "Saving label_values..."
     dbn.label_values = label_list
     dbn.training = True
     dbn.save()
     print dbn.label_values
+
     print "Creating directories..."
     class_path = settings.MEDIA_ROOT + str(dbn.id)
     base_path = class_path + '/base_images'

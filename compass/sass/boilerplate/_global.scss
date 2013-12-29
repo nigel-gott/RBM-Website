@@ -4,6 +4,7 @@ html, body {
     height: 100%;
     font-family: $site-font;
     font-size: $site-fontsize;
+    background-color: $background-colour;
 }
 
 #container-main {
@@ -12,6 +13,7 @@ html, body {
     width: $page-width;
     margin-left: auto;
     margin-right: auto;
+    background-color: $container-colour;
 }
 
 #header-container {

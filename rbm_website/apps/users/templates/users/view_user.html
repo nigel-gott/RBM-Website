@@ -3,7 +3,7 @@
 {%block scripts%}
  <script>
     $(function() {
-        $( "#tabs" ).tabs({
+        $( "#user-tabs" ).tabs({
         collapsible: true
         });
 
@@ -20,7 +20,7 @@
 
 {% block content %}
 
-<div class="user-profile" style="float: left; width: 250px;">
+<div class="user-profile">
     This is {{ prof_user.username }}'s profile page. {{ prof_user.username }} joined this DBN website on {{ prof_user.date_joined|date:"D d M Y" }}.
     <br>
     <br>
@@ -32,7 +32,7 @@
     {% endif %}
 </div>
 
-<div id="tabs" style="width:600px; float: right;">
+<div id="user-tabs">
     <ul>
         <li><a href="#tabs-public">Public DBNs</a></li>
         {% if user.username == prof_user.username %}
@@ -43,7 +43,7 @@
     <div id="tabs-public">
         <div id="public-dbns-table">
             <div class="public-dbns-table-head">
-                <table class="light-table" style="width: 535px" cellpadding="0" cellspacing="0">
+                <table class="light-table dbn-light-head" cellpadding="0" cellspacing="0">
                   <tr>
                     <th width="40%"><b>Name</b></th>
                     <th width="20%"><b>Created</b></th>
@@ -53,15 +53,15 @@
                 </table>
             </div>
 
-            <div style="overflow-x: hidden; overflow-y: scroll;height: 260px; width: 550px;">
+            <div class="dbn-overflow">
                 <div class="public-dbns-table-data">
-                    <table class="light-table" style="width: 535px;border: thin solid black;border-collapse:collapse;" cellpadding="0" cellspacing="0">
+                    <table class="light-table dbn-light-table" cellpadding="0" cellspacing="0">
                     {% for d in public_dbns %}
                         <tr class="dbnClickRow" dbnURL="{% url 'view' d.id %}" style="cursor: pointer;">
-                            <td style="border: thin solid black; border-collapse: collapse;" width="40%">{{ d.name }}</td>
-                            <td style="border: thin solid black; border-collapse: collapse;" width="20%">{{ d.created }}</td>
-                            <td style="border: thin solid black; border-collapse: collapse;" width="20%">{{ d.trained }}</td>
-                            <td style="border: thin solid black; border-collapse: collapse;" width="20%">{{ d.training }}</td>
+                            <td style="border-collapse: collapse;" width="40%">{{ d.name }}</td>
+                            <td style="border-collapse: collapse;" width="20%">{{ d.created }}</td>
+                            <td style="border-collapse: collapse;" width="20%">{{ d.trained }}</td>
+                            <td style="border-collapse: collapse;" width="20%">{{ d.training }}</td>
                         </tr>
                     {% endfor %}
                     </table>
@@ -74,7 +74,7 @@
     <div id="tabs-private">
         <div id="private-dbns-table">
             <div class="private-dbns-table-head">
-                <table class="light-table" style="width: 535px" cellpadding="0" cellspacing="0">
+                <table class="light-table dbn-light-head" cellpadding="0" cellspacing="0">
                   <tr>
                     <th width="40%"><b>Name</b></th>
                     <th width="20%"><b>Created</b></th>
@@ -84,15 +84,15 @@
                 </table>
             </div>
 
-            <div style="overflow-x: hidden; overflow-y: scroll;height: 260px; width: 550px;">
+            <div class="dbn-overflow">
                 <div class="private-dbns-table-data">
-                    <table class="light-table" style="width: 535px;border: thin solid black;border-collapse:collapse;" cellpadding="0" cellspacing="0">
+                    <table class="light-table dbn-light-table" cellpadding="0" cellspacing="0">
                     {% for d in private_dbns %}
                         <tr class="dbnClickRow" dbnURL="{% url 'view' d.id %}" style="cursor: pointer;">
-                            <td style="border: thin solid black; border-collapse: collapse;" width="40%">{{ d.name }}</td>
-                            <td style="border: thin solid black; border-collapse: collapse;" width="20%">{{ d.created }}</td>
-                            <td style="border: thin solid black; border-collapse: collapse;" width="20%">{{ d.trained }}</td>
-                            <td style="border: thin solid black; border-collapse: collapse;" width="20%">{{ d.training }}</td>
+                            <td style="border-collapse: collapse;" width="40%">{{ d.name }}</td>
+                            <td style="border-collapse: collapse;" width="20%">{{ d.created }}</td>
+                            <td style="border-collapse: collapse;" width="20%">{{ d.trained }}</td>
+                            <td style="border-collapse: collapse;" width="20%">{{ d.training }}</td>
                         </tr>
                     {% endfor %}
                     </table>

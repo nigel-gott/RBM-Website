@@ -73,30 +73,32 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: helvetica;
+  font-family: "Ubuntu", sans-serif;
   font-size: 14px;
+  background-color: #cee3f6;
 }
 
-/* line 9, ../../../../compass/sass/boilerplate/_global.scss */
+/* line 10, ../../../../compass/sass/boilerplate/_global.scss */
 #container-main {
   min-height: 100%;
   position: relative;
   width: 860px;
   margin-left: auto;
   margin-right: auto;
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
-/* line 17, ../../../../compass/sass/boilerplate/_global.scss */
+/* line 19, ../../../../compass/sass/boilerplate/_global.scss */
 #header-container {
   padding-top: 10px;
 }
 
-/* line 24, ../../../../compass/sass/boilerplate/_global.scss */
+/* line 26, ../../../../compass/sass/boilerplate/_global.scss */
 #content-container {
   padding-bottom: 20px;
 }
 
-/* line 28, ../../../../compass/sass/boilerplate/_global.scss */
+/* line 30, ../../../../compass/sass/boilerplate/_global.scss */
 #footer-container {
   position: absolute;
   bottom: 0;
@@ -139,7 +141,7 @@ html, body {
 
 /* line 1, ../../../../compass/sass/modules/_headers.scss */
 .header, h1, h2, h3, h4 {
-  font-family: helvetica;
+  font-family: "Ubuntu", sans-serif;
   font-weight: bold;
 }
 
@@ -486,24 +488,23 @@ h4 {
   color: white;
 }
 
-/* line 4, ../../../../compass/sass/abstracts/_footer.scss */
+/* line 3, ../../../../compass/sass/abstracts/_footer.scss */
 .footer-cell, .leftcell, .centrecell, .rightcell {
-  font-family: helvetica;
   font-size: 12px;
   width: 286.66667px;
 }
 
-/* line 10, ../../../../compass/sass/abstracts/_footer.scss */
+/* line 8, ../../../../compass/sass/abstracts/_footer.scss */
 .leftcell {
   text-align: left;
 }
 
-/* line 15, ../../../../compass/sass/abstracts/_footer.scss */
+/* line 13, ../../../../compass/sass/abstracts/_footer.scss */
 .centrecell {
   text-align: center;
 }
 
-/* line 20, ../../../../compass/sass/abstracts/_footer.scss */
+/* line 18, ../../../../compass/sass/abstracts/_footer.scss */
 .rightcell {
   text-align: right;
 }
@@ -608,6 +609,12 @@ label {
 }
 
 /* line 5, ../../../../compass/sass/partials/_create.scss */
+#layers {
+  height: 80px;
+  overflow: auto;
+}
+
+/* line 10, ../../../../compass/sass/partials/_create.scss */
 #formContainer {
   float: left;
 }
@@ -666,6 +673,18 @@ label {
   font-weight: bold;
 }
 
+/* line 46, ../../../../compass/sass/partials/_dbndetail.scss */
+#detail-spinner {
+  width: 100px;
+  margin-top: 50px;
+  text-align: center;
+}
+
+/* line 52, ../../../../compass/sass/partials/_dbndetail.scss */
+.detail-preview-canvas {
+  padding: 50px 0;
+}
+
 /* line 1, ../../../../compass/sass/partials/_trainer.scss */
 .imageClass {
   padding: 2px;
@@ -689,4 +708,42 @@ label {
 /* line 18, ../../../../compass/sass/partials/_trainer.scss */
 #classesRemainingDisplay {
   margin: 3px 0px;
+}
+
+/* line 1, ../../../../compass/sass/partials/_training.scss */
+#training-spinner {
+  width: 250px;
+  margin-top: 120px;
+  text-align: center;
+}
+
+/* line 1, ../../../../compass/sass/partials/_userprofiles.scss */
+.user-profile {
+  float: left;
+  width: 250px;
+}
+
+/* line 6, ../../../../compass/sass/partials/_userprofiles.scss */
+#user-tabs {
+  width: 600px;
+  float: right;
+}
+
+/* line 11, ../../../../compass/sass/partials/_userprofiles.scss */
+.dbn-light-head {
+  width: 535px;
+}
+
+/* line 15, ../../../../compass/sass/partials/_userprofiles.scss */
+.dbn-light-table {
+  width: 535px;
+  border-collapse: collapse;
+}
+
+/* line 20, ../../../../compass/sass/partials/_userprofiles.scss */
+.dbn-overflow {
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 260px;
+  width: 550px;
 }

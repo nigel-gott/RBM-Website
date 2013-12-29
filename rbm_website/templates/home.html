@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 {%block title%}Home{% endblock %}
 {% block content %}
-This is the DBN Home page. Try the default DBN, download the library or create an account and make and use your own!
+
+<div class="centre-div" style="width: 500px;">
+    This is the DBN Home page. Try the default DBN, download the library or create an account and make and use your own!
+
+    <div style="margin: 50px 0">
+        <a href="{% url 'registration_register' %}" class="btn btn-lg btn-success"> Sign Up <span class="glyphicon glyphicon-ok-sign"></span></a>
+    </div>
+</div>
 {% endblock %}

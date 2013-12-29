@@ -54,7 +54,7 @@
             {% else %}
                 {% if object.training %}
                     This DBN is currently training! Please check back shortly to use it.
-                    <div class="centre-div" style="width: 100px; margin-top: 50px; text-align: center;">
+                    <div id="detail-spinner" class="centre-div">
                         <div class="bubblingGSmall">
                             <span id="bubblingGSmall_1">
                             </span>
@@ -78,7 +78,7 @@
                 {% else %}
                     labels!
                 {% endif %}
-                <br>
+
                 {% for o in object.label_values %}
                     {{o}}
                 {% endfor %}
@@ -94,7 +94,7 @@
     </div>
 </div>
 
-<div id="canvasContainer" class="preview-canvas">
+<div id="canvasContainer" class="preview-canvas detail-preview-canvas">
 </div>
 
 {% endblock %}

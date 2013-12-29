@@ -31,6 +31,9 @@ class DBNDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(DBNDetailView, self).get_context_data(**kwargs)
         context['topology'] = self.object.get_topology()
+
+        # Add the base images to the detail view
+        # convert to data urls
         return context
 
     @method_decorator(message_login_required)
@@ -46,6 +49,8 @@ def classify(request, dbn_id):
         dbn = get_object_or_404(DBNModel , pk=dbn_id)
         save_image("classifyImage", request.POST['image_data'], dbn)
         image_data = imgpr.convert_url_to_array(request.POST['image_data'], "classifyImage")
+
+        # SORT OUT FOR main DBN
         #iterator = np.vectorize(flip_pixels)
         #image_data = iterator(image_data)
 
@@ -63,6 +68,7 @@ def classify(request, dbn_id):
             "max_prob":max_prob,
             "result":result
         })
+
         return HttpResponse(json_data, mimetype="application/json")
     else:
         dbn = get_object_or_404(DBNModel , pk=dbn_id)
@@ -70,7 +76,8 @@ def classify(request, dbn_id):
         if dbn.training:
             messages.add_message(request, messages.ERROR, 'This DBN is currently being trained!' +
                 ' Please check back shortly to use it!')
-            return redirect('/rbm/training/')
+            url = reverse('view', kwargs={'pk': dbn.id})
+            return redirect(url)
 
         return render(request, 'rbm/classify.html', {'dbn': dbn})
 
@@ -103,12 +110,14 @@ def train(request, dbn_id):
         if dbn.trained:
             messages.add_message(request, messages.ERROR, 'This DBN has already been trained!' +
                 ' Please create a new DBN to train on new data.')
-            return redirect('/rbm/' + dbn_id + '/')
+            url = reverse('view', kwargs={'pk': dbn.id})
+            return redirect(url)
 
         if dbn.training:
             messages.add_message(request, messages.ERROR, 'This DBN is currently being trained!' +
                 ' Please check back shortly to use it!')
-            return redirect('/rbm/training/')
+            url = reverse('view', kwargs={'pk': dbn.id})
+            return redirect(url)
 
         return render(request, 'rbm/train.html', {'dbn': dbn})
 

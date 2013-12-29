@@ -2,10 +2,13 @@
 import os
 import djcelery
 
+# Loads up celery
 djcelery.setup_loader()
 
+# The root of the project
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
+# Debug settings
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -13,10 +16,12 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
+# The celery worker broker
 BROKER_URL = "django://"
 
 MANAGERS = ADMINS
 
+# The database used by the models
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -125,6 +130,7 @@ TEMPLATE_DIRS = (
 
 LOGIN_REDIRECT_URL = '/rbm'
 
+# Django applications used by the website
 INSTALLED_APPS = (
     'registration_defaults',
     'django.contrib.auth',
@@ -134,8 +140,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'rbm_website.apps.rbm',

@@ -59,7 +59,7 @@
 <div id="controlContainer">
     <div id="classifyButtonContainer" style="margin:20px 0px;">
         <button id="classifyButton" class="btn" type="button">CLASSIFY</button>
-        MOST LIKELY: <span id="maxProbContainer"></span>
+        Most Likely Class: <span id="maxProbContainer" style="color: #0E9A25; font-weight: bold"></span>
     </div>
 
     <div id="results">
@@ -74,15 +74,15 @@
                     </table>
                 </div>
 
-                <div style="overflow-x: hidden; overflow-y: scroll;height: 150px; width: 315px;">
+                <div style="overflow-x: hidden; overflow-y: auto;height: 150px; width: 315px;">
                     <div class="probs-table-data">
-                        <table class="light-table" style="width: 300px;border: thin solid black;border-collapse:collapse;" cellpadding="0" cellspacing="0">
+                        <table class="light-table" style="width: 300px;border-collapse:collapse;" cellpadding="0" cellspacing="0">
 
                         {% for label in dbn.label_values %}
                             {% with divName=label|add:"LabelContainer" %}
                             <tr>
-                                <td style="border: thin solid black; border-collapse: collapse;" width="40%">{{ label }}</td>
-                                <td style="border: thin solid black; border-collapse: collapse;" width="60%"><span id="{{divName}}"></span></td>
+                                <td style="border-collapse: collapse;" width="40%">{{ label }}</td>
+                                <td style="border-collapse: collapse;" width="60%"><span id="{{divName}}"></span></td>
                             </tr>
                             {% endwith %}
                         {% endfor %}
