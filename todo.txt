@@ -10,6 +10,7 @@ NEW:
 - Make homepage (Sassy buttons?)
 - Comment everything
 - Document code
+- dropdown login
 - Clean up code
 - Check for training bugs
 - Set up email/lost/reset password

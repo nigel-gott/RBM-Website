@@ -1,0 +1,29 @@
+#loginContainer {
+    width: 300px;
+    height: 200px;
+    margin: auto;
+    border-radius: 8px;
+    border: 1px solid #000000;
+}
+
+label[for="id_username"] {
+    color: #5c5c5c;
+    text-align: left;
+    width: auto;
+}
+
+label[for="id_password"] {
+    color: #5c5cdd;
+    text-align: left;
+    width: auto;
+}
+
+#id_username, #id_password {
+    padding: 0 4px;
+    width: 120px;
+}
+
+.inputContainer{
+    text-align: left;
+    margin: 10px 0;
+}

@@ -10,5 +10,6 @@ urlpatterns = patterns('',
     url(r'^rbm/', include('rbm_website.apps.rbm.urls')),
     url(r'^users/', include('rbm_website.apps.users.urls')),
     url(r'^accounts/logout/', 'rbm_website.apps.users.views.user_logout'),
+    url(r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name': 'users/login.html'}),
     url(r'^accounts/', include('registration.backends.simple.urls'))
 )

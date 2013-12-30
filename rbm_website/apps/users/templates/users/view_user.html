@@ -60,8 +60,20 @@
                         <tr class="dbnClickRow" dbnURL="{% url 'view' d.id %}" style="cursor: pointer;">
                             <td style="border-collapse: collapse;" width="40%">{{ d.name }}</td>
                             <td style="border-collapse: collapse;" width="20%">{{ d.created }}</td>
-                            <td style="border-collapse: collapse;" width="20%">{{ d.trained }}</td>
-                            <td style="border-collapse: collapse;" width="20%">{{ d.training }}</td>
+                            <td style="border-collapse: collapse;" width="20%">
+                            {% if d.trained %}
+                                <span style="color: #4BBD04;" class="glyphicon glyphicon-ok-sign"></span>
+                            {% else %}
+                                <span style="color: #DB0408;" class="glyphicon glyphicon-minus-sign"></span>
+                            {% endif %}
+                            </td>
+                            <td style="border-collapse: collapse;" width="20%">
+                            {% if d.training %}
+                                <span style="color: #4BBD04;" class="glyphicon glyphicon-ok-sign"></span>
+                            {% else %}
+                                <span style="color: #DB0408;" class="glyphicon glyphicon-minus-sign"></span>
+                            {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                     </table>
@@ -91,8 +103,20 @@
                         <tr class="dbnClickRow" dbnURL="{% url 'view' d.id %}" style="cursor: pointer;">
                             <td style="border-collapse: collapse;" width="40%">{{ d.name }}</td>
                             <td style="border-collapse: collapse;" width="20%">{{ d.created }}</td>
-                            <td style="border-collapse: collapse;" width="20%">{{ d.trained }}</td>
-                            <td style="border-collapse: collapse;" width="20%">{{ d.training }}</td>
+                            <td style="border-collapse: collapse;" width="20%">
+                            {% if d.trained %}
+                                <span style="color: #4BBD04;" class="glyphicon glyphicon-ok-sign"></span>
+                            {% else %}
+                                <span style="color: #DB0408;" class="glyphicon glyphicon-minus-sign"></span>
+                            {% endif %}
+                            </td>
+                            <td style="border-collapse: collapse;" width="20%">
+                            {% if d.training %}
+                                <span style="color: #4BBD04;" class="glyphicon glyphicon-ok-sign"></span>
+                            {% else %}
+                                <span style="color: #DB0408;" class="glyphicon glyphicon-minus-sign"></span>
+                            {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                     </table>

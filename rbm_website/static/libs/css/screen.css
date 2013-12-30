@@ -747,3 +747,38 @@ label {
   height: 260px;
   width: 550px;
 }
+
+/* line 1, ../../../../compass/sass/partials/_login.scss */
+#loginContainer {
+  width: 300px;
+  height: 200px;
+  margin: auto;
+  border-radius: 8px;
+  border: 1px solid #000000;
+}
+
+/* line 9, ../../../../compass/sass/partials/_login.scss */
+label[for="id_username"] {
+  color: #5c5c5c;
+  text-align: left;
+  width: auto;
+}
+
+/* line 15, ../../../../compass/sass/partials/_login.scss */
+label[for="id_password"] {
+  color: #5c5cdd;
+  text-align: left;
+  width: auto;
+}
+
+/* line 21, ../../../../compass/sass/partials/_login.scss */
+#id_username, #id_password {
+  padding: 0 4px;
+  width: 120px;
+}
+
+/* line 26, ../../../../compass/sass/partials/_login.scss */
+.inputContainer {
+  text-align: left;
+  margin: 10px 0;
+}
