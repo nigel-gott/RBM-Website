@@ -79,9 +79,24 @@
                     labels!
                 {% endif %}
 
-                {% for o in object.label_values %}
-                    {{o}}
-                {% endfor %}
+                <div class="class-image-container" style="margin: 10px 0; overflow-y: auto; height: 180px;">
+                    <table style="margin: 0 auto;">
+                        {% for label, image in image_data.items %}
+                            <tr>
+                                <td>
+                                    {{ label }}
+                                </td>
+                                <td>
+                                    &nbsp - &nbsp
+                                </td>
+                                <td>
+                                    <img alt="Thumbnail" style="border: 1px solid #000000;" width="{{object.width}}" height="{{object.height}}" src="data:image/png;base64,{{image}}"/>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+
             </p>
         {% endif %}
 

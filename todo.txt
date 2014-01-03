@@ -11,6 +11,7 @@ NEW:
 - Comment everything
 - Document code
 - dropdown login
+- add user settings and link to profile once loggged in
 - Clean up code
 - Check for training bugs
 - Set up email/lost/reset password

@@ -157,7 +157,7 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
         } else if (index != -1) {
             topBar("The class name \'" + imageID + "\' has already been used!", 5000, 'error');
         } else {
-            image = $('<img id="' + imageID + '" src="' +  imageURL + '" >');
+            image = $('<img style="border: 1px solid #000000;" id="' + imageID + '" src="' +  imageURL + '" >');
             deleteButton = $('<input type="button" value="-" />');
             deleteButton.click(function() {
                 var index = usedClassNames.indexOf(imageID);

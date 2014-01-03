@@ -1,6 +1,7 @@
 import numpy as np
 import cStringIO as cst
 import re
+import base64
 from PIL import Image as pil
 import os
 
@@ -48,6 +49,17 @@ def retrieve_all_images(root_path, height, width):
 		data.append(class_data)
 		names.append(class_names)
 	return ([image for sublist in data for image in sublist], [item for sublist in names for item in sublist])
+
+def retrieve_images_base64(path):
+    image_data = []
+    image_names = []
+    for image_name in os.listdir(path):
+    	with open(path + '/' + image_name, "rb") as image_file:
+    		encoded_image = base64.b64encode(image_file.read())
+    		image_data.append(encoded_image)
+
+        image_names.append(os.path.splitext(image_name)[0])
+    return (image_data, image_names)
 
 def __check_image(image, image_path, exp_height, exp_width):
 	if image is None:

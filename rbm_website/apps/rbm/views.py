@@ -2,6 +2,7 @@ import os
 import json
 import shutil
 import tasks
+import urllib
 
 from PIL import Image as pil
 from django.http import HttpResponse
@@ -32,8 +33,15 @@ class DBNDetailView(DetailView):
         context = super(DBNDetailView, self).get_context_data(**kwargs)
         context['topology'] = self.object.get_topology()
 
-        # Add the base images to the detail view
-        # convert to data urls
+        if self.object.trained:
+            class_path = settings.MEDIA_ROOT + str(self.object.id)
+            base_path = class_path + '/base_images'
+
+            (images, labels) = imgpr.retrieve_images_base64(base_path)
+
+            dictionary = dict(zip(labels, images))
+            context['image_data'] = dictionary
+
         return context
 
     @method_decorator(message_login_required)
@@ -61,6 +69,8 @@ def classify(request, dbn_id):
         probs = probs[0] / 10
         max_prob = probs.max()
         result = dbn.label_values[probs.argmax(axis=0)]
+
+        os.remove(settings.MEDIA_ROOT + str(dbn.id) + '/base_images/classifyImage.png')
 
         json_data = json.dumps({
             "label_values": dbn.label_values,
