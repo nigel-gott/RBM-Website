@@ -641,14 +641,14 @@ label {
 
 /* line 6, ../../../../compass/sass/partials/_dbndetail.scss */
 .dbn-title {
-  font-size: 30px;
+  font-size: 25px;
   font-weight: bolder;
   margin: 5px 0;
 }
 
 /* line 12, ../../../../compass/sass/partials/_dbndetail.scss */
 .dbn-description {
-  font-size: 16px;
+  font-size: 14px;
   margin: 20px 0;
 }
 
@@ -671,7 +671,7 @@ label {
 
 /* line 31, ../../../../compass/sass/partials/_dbndetail.scss */
 .dbn-status {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
 }
 

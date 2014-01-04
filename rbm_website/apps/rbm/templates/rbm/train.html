@@ -11,9 +11,10 @@
 
 {% block content %}
 
-<h1> {{dbn.name}} </h1>
+<p class="dbn-title">DBN Name: {{dbn.name}}</p><br>
 
 <div id="drawerContainer">
+<br>
     <div id="pixelDrawerContainer">
     </div>
 
@@ -58,6 +59,7 @@
 
 <div id="controlContainer">
     <div id="classNameContainer">
+        <h4>Label Name:</h4>
         <input id="className" type="text" maxlength="22"/>
 
         <button id="addClass" class="btn draw-btn" type="button">
@@ -72,7 +74,7 @@
     </div>
 
     <div id="trainButtonContainer">
-        <button id="trainButton" class="btn" type="button">TRAIN</button>
+        <br><button id="trainButton" class="btn-success" type="button">TRAIN</button>
     </div>
 </div>
 
