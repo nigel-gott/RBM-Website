@@ -13,5 +13,6 @@ urlpatterns = patterns('',
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^accounts/', include('registration.backends.simple.urls')),
     url(r'^terms/$', 'rbm_website.views.terms', name='terms'),
-    url(r'^privacy/$', 'rbm_website.views.privacy', name='privacy')
+    url(r'^privacy/$', 'rbm_website.views.privacy', name='privacy'),
+    url(r'^tutorial/$', 'rbm_website.views.tutorial', name='tutorial')
 )

@@ -46,6 +46,7 @@
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
               <li><a href="{% url 'home' %}">Home</a></li>
+              <li><a href="{% url 'tutorial' %}">Tutorial</a></li>
               {% if user.is_authenticated %}
               <li><a href="{% url 'index' %}">{% trans "DBN List" %}</a></li>
               <li><a href="{% url 'create' %}">{% trans "Create DBN" %}</a></li>
