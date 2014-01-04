@@ -14,6 +14,12 @@ html, body {
     background-color: $container-colour;
 }
 
+
+#title-container {
+    text-align:center;                                                               
+    left: 0;
+}
+
 #header-container {
     padding-top: $top-padding;
 }
@@ -34,7 +40,7 @@ html, body {
 }
 
 #footer {
-    background: #FFFFFF;                                                             
+    background: #E3E4FC;                                                             
     color: #BCB1E3;                                                                  
     font-size: .8em;                                                                 
     text-align:center;                                                               

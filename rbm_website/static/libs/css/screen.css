@@ -75,7 +75,7 @@ html, body {
   height: 100%;
   font-family: "Ubuntu", sans-serif;
   font-size: 14px;
-  background-color: #cee3f6;
+  background-color: #e6f4f5;
 }
 
 /* line 10, ../../../../compass/sass/boilerplate/_global.scss */
@@ -83,20 +83,26 @@ html, body {
   min-height: 100%;
   position: relative;
   width: 860px;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(227, 228, 255, 0.9);
 }
 
-/* line 17, ../../../../compass/sass/boilerplate/_global.scss */
+/* line 18, ../../../../compass/sass/boilerplate/_global.scss */
+#title-container {
+  text-align: center;
+  left: 0;
+}
+
+/* line 23, ../../../../compass/sass/boilerplate/_global.scss */
 #header-container {
   padding-top: 10px;
 }
 
-/* line 24, ../../../../compass/sass/boilerplate/_global.scss */
+/* line 30, ../../../../compass/sass/boilerplate/_global.scss */
 #content-container {
   padding-bottom: 20px;
 }
 
-/* line 28, ../../../../compass/sass/boilerplate/_global.scss */
+/* line 34, ../../../../compass/sass/boilerplate/_global.scss */
 #footer-container {
   position: absolute;
   bottom: 0;
@@ -105,9 +111,9 @@ html, body {
   height: 20px;
 }
 
-/* line 36, ../../../../compass/sass/boilerplate/_global.scss */
+/* line 42, ../../../../compass/sass/boilerplate/_global.scss */
 #footer {
-  background: #FFFFFF;
+  background: #E3E4FC;
   color: #BCB1E3;
   font-size: .8em;
   text-align: center;
