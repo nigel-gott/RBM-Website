@@ -6,9 +6,12 @@ List
 
 {% block content %}
 
+<br>
+<h4>Currently stored public DBNs:</h4>
+<br>
 <ul>
 {% for dbn in object_list %}
-<li> <a href="{% url 'view' dbn.id %}"> {{dbn.name}} </a> created by {{dbn.creator.username}} </li>
+<li> <a href="{% url 'view' dbn.id %}"> {{dbn.name}} </a> owned by <a href="{% url 'view_user' dbn.creator.username %}">{{dbn.creator.username}}</a></li>
 {% endfor %}
 </ul>
 

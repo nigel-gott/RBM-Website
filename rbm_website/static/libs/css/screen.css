@@ -734,13 +734,13 @@ label {
 /* line 1, ../../../../compass/sass/partials/_userprofiles.scss */
 .user-profile {
   float: left;
-  width: 250px;
+  width: 400px;
 }
 
 /* line 6, ../../../../compass/sass/partials/_userprofiles.scss */
 #user-tabs {
   width: 600px;
-  float: right;
+  float: left;
 }
 
 /* line 11, ../../../../compass/sass/partials/_userprofiles.scss */
