@@ -3,6 +3,18 @@
 
 <html  lang="en">
 
+<style type="text/css">
+
+
+#footer {
+  background: #FFFFFF;
+  color: #BCB1E3;
+  font-size: .8em;
+  text-align:center;
+} 
+
+</style>
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- CSS Files -->
@@ -96,21 +108,30 @@
         </div>
 
         <div id="footer-container">
-            <table width="100%">
-                <tr>
-                    <td class="leftcell">James, Maciek, Nigel, Pierre, Tiffany and Will</td>
-                    <td class="centrecell">
-                        <a href="{% url 'about' %}">About</a>
-                         | <a href="{% url 'home' %}">Home</a>
-                         | <a  href="{% url 'admin:index' %}">Admin</a>
-                    </td>
-                    <td class="rightcell">Imperial College Computing</td>
-                </tr>
-            </table>
+        <div id="footer">
+          <table width="100%">
+          <tr>
+            <td class="leftcell">
+              <p class="text-left">
+              Copyright 2014, Imperial College Computing
+              <br><a href="{% url 'home' %}">About Us</a>
+              </p>
+            </td>
+            <td class="rightcell">
+              <p class="text-right">
+              <a href="{% url 'about' %}">Terms &amp; Conditions</a>
+              <br><a href="{% url 'home' %}">Privacy</a>
+              </p>
+            </td>
+          </tr>
+          </table>
+        </div>
         </div>
 
     </div>
 
+
 </body>
+
 
 </html>
