@@ -9,13 +9,15 @@
     top: 25%;
     text-align: center;
 }
+
 .fieldWrapper label {
-    color: #5c5cdd;
+    color: #000000;
     text-align: left;
     width: auto;
 }
 
 .fieldWrapper input {
+    text-align: left;
     padding: 0 4px;
     width: 120px;
     border: 2px solid #dadada;
@@ -23,6 +25,7 @@
 }
 
 .fieldWrapper input:focus {
+    text-align: left;
     outline: none;
     border-color: #9ecaed;
     box-shadow: 0 0 10px #9ecaed;

@@ -623,12 +623,13 @@ label {
 
 /* line 5, ../../../../compass/sass/partials/_create.scss */
 #layers {
-  height: 80px;
+  height: 60px;
   overflow: auto;
 }
 
 /* line 10, ../../../../compass/sass/partials/_create.scss */
 #formContainer {
+  height: 700px;
   float: left;
 }
 
@@ -774,23 +775,25 @@ label {
   text-align: center;
 }
 
-/* line 12, ../../../../compass/sass/partials/_login.scss */
+/* line 13, ../../../../compass/sass/partials/_login.scss */
 .fieldWrapper label {
-  color: #5c5cdd;
+  color: #000000;
   text-align: left;
   width: auto;
 }
 
-/* line 18, ../../../../compass/sass/partials/_login.scss */
+/* line 19, ../../../../compass/sass/partials/_login.scss */
 .fieldWrapper input {
+  text-align: left;
   padding: 0 4px;
   width: 120px;
   border: 2px solid #dadada;
   border-radius: 5px;
 }
 
-/* line 25, ../../../../compass/sass/partials/_login.scss */
+/* line 27, ../../../../compass/sass/partials/_login.scss */
 .fieldWrapper input:focus {
+  text-align: left;
   outline: none;
   border-color: #9ecaed;
   box-shadow: 0 0 10px #9ecaed;
