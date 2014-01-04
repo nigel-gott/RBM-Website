@@ -3,19 +3,6 @@
 
 <html  lang="en">
 
-<style type="text/css">
-
-
-#footer {
-  background: #FFFFFF;
-  color: #BCB1E3;
-  font-size: .8em;
-  text-align:center;
-  position:bottom;
-} 
-
-</style>
-
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- CSS Files -->
@@ -85,14 +72,9 @@
         </div>
       </div>
 
-    <div id="container-main">
-            <h3 class="text-muted">DBN Website
-                {% if user.is_authenticated %} -
-                    {{ user.username }}
-                {% endif %}
-            </h3>
-
-        <hr>
+    <div class="container">
+    <div class="container" id="container-main">
+        <br><br><br><br><br>
 
         <div id="message-container">
           {% if messages %}
@@ -103,11 +85,9 @@
              </ul>
           {% endif %}
         </div>
-
         <div id="content-container">
             {% block content %}{% endblock %}
         </div>
-
         <div id="footer-container">
         <div id="footer">
           <table width="100%">
@@ -128,7 +108,7 @@
           </table>
         </div>
         </div>
-
+    </div>
     </div>
 
 

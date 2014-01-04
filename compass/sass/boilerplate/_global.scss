@@ -11,8 +11,6 @@ html, body {
     min-height: 100%;
     position: relative;
     width: $page-width;
-    margin-left: auto;
-    margin-right: auto;
     background-color: $container-colour;
 }
 
@@ -33,4 +31,12 @@ html, body {
     left: 0;
     width: 100%;
     height: $footer-height;
+}
+
+#footer {
+    background: #FFFFFF;                                                             
+    color: #BCB1E3;                                                                  
+    font-size: .8em;                                                                 
+    text-align:center;                                                               
+    position:bottom; 
 }
