@@ -34,7 +34,7 @@
 <div class="profile-details">
 
     <div id="dbn-details">
-        <p class="dbn-title">{{object.name}}</p>
+        <p class="dbn-title">DBN Name: {{object.name}}</p>
 
         <p class="dbn-creator">
             Created by <a href="{% url 'view_user' object.creator.username %}">{{ object.creator.username }}</a>
@@ -46,7 +46,9 @@
             on <span class="dbn-date">{{object.created}}</span>
         </p>
 
-        <p class="dbn-description">{{object.description}}</p><br>
+        <br>
+        <div class="dbn-description">{{object.description}}</div>
+        <br>
 
         <p class="dbn-status">
             {% if object.trained %}
@@ -65,14 +67,14 @@
                         </div>
                     </div>
                 {% else %}
-                    This DBN has not started training yet, please check back later to see if the creator has trained it.
+                    This DBN has not started training yet, please check back later to see if its owner has trained it.
                 {% endif %}
             {% endif %}
-        </p>
+        </p><br>
 
         {% if object.trained %}
             <p class="dbn-config">
-                This DBN takes images of size {{object.width}}x{{object.height}} and classifies them into one of the following {{object.labels}}
+                This DBN takes pictures of size {{object.width}}x{{object.height}} and classifies them into one of the following {{object.labels}}
                 {% if object.labels == 1 %}
                     label!
                 {% else %}
@@ -102,7 +104,7 @@
 
         {% if object.creator.username == user.username %}
             <p class="dbn-options">
-                {{object.creator.username}}, as the creator of this DBN you can edit, delete or train this DBN.
+                {{object.creator.username}}, as the creator of this DBN you can edit, delete or train this DBN.<br><br>
                 <a href="{% url 'train' object.id %}"> Train </a>
             </p>
         {% endif %}

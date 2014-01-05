@@ -15,21 +15,24 @@
 {% endblock %}
 
 {%block title%}
-{{ prof_user.username}}'s Profile
+{{ prof_user.username}}
 {% endblock %}
 
 {% block content %}
 
 <div class="user-profile">
-    This is {{ prof_user.username }}'s profile page. {{ prof_user.username }} joined this DBN website on {{ prof_user.date_joined|date:"D d M Y" }}.
+    Welcome to {{ prof_user.username }}'s profile page.<br> {{ prof_user.username }} joined the DBN Project on {{ prof_user.date_joined|date:"D d M Y" }}.
     <br>
     <br>
-    Please look at and try out {{ prof_user.username }}'s {{ public_dbns|length }} public
+    {{ prof_user.username }} has created {{ public_dbns|length }} public
     {% if public_dbns|length == 1 %}
         DBN!
     {% else %}
         DBNs!
     {% endif %}
+    <br><br>
+    <h4>{{ prof_user.username }}'s DBNs</h4>
+    <br>
 </div>
 
 <div id="user-tabs">

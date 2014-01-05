@@ -2,11 +2,21 @@
 {%block title%}Home{% endblock %}
 {% block content %}
 
-<div class="centre-div" style="width: 500px;">
-    This is the DBN Home page. Try the default DBN, download the library or create an account and make and use your own!
+<div class="jumbotron">
+Welcome to the DBN Project Homepage.<br> Create, train, configure and share Deep Belief Networks.
+</div>
+<div class="container" style="width: 500px;">
+We aim to provide an intuitive interface for the creation and training of the Deep Belief Networks of your dreams.
+<br><br>
+We offer you the possibility to specify the configuration of a DBN based on Restricted Boltzmann Machines as well as creating your own training data.
 
+    
+
+    {% if user.is_authenticated %}
+    {% else %}
     <div style="margin: 50px 0">
         <a href="{% url 'registration_register' %}" class="btn btn-lg btn-success"> Sign Up <span class="glyphicon glyphicon-ok-sign"></span></a>
     </div>
+    {% endif %}
 </div>
 {% endblock %}

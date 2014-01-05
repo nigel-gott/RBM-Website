@@ -3,12 +3,14 @@
 
 {% block content %}
 
-<div id="loginContainer">
-    {% if form.errors %}
-    <p>Your username and password didn't match. Please try again.</p>
-    {% endif %}
-
-    <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+  <div class="container">
+    <div id="loginContainer">
+      <h2>Sign in to DBN Project</h2>
+      {% if form.errors %}
+      <p>Your username and password didn't match. Please try again.</p>
+      {% endif %}
+    
+      <form class="login-form" method="post" action="{% url 'django.contrib.auth.views.login' %}">
         {% csrf_token %}
         <table style="margin: 20px 0;">
         <tr>
@@ -40,14 +42,15 @@
             </div>
         </tr>
         </table>
-
+    
         <div>
-            <button type="submit" class="btn btn-sm btn-info">Login <span class="glyphicon glyphicon-share-alt"></span></button>
-            <a href="{% url 'registration_register' %}" class="btn btn-sm btn-info">Sign Up <span class="glyphicon glyphicon-ok-sign"></span></a>
-            <a href="#">Forgot details?</a>
+            <button type="submit" class="btn btn-success">Login <span class="glyphicon glyphicon-share-alt"></span></button>
+            <a href="{% url 'registration_register' %}" class="btn btn-success">Sign Up <span class="glyphicon glyphicon-ok-sign"></span></a>
+            <a href="#">Forgot your details?</a>
             <input type="hidden" name="next" value="{{ next }}" />
         </div>
-    </form>
-</div>
+      </form>
+    </div>
+  </div>
 
 {% endblock %}
