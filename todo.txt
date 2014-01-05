@@ -21,11 +21,10 @@ NEW:
 - Use drop down box
 - Clear up user forms create/new etc...
 - add google fonts
-- get images from base images to display on detail view
 - Put main DBN on homepage
-- Use ticks/crosses instead of true/false
 - Train numbers + letters
 - DBN tutorial
+- Try using rabbitMQ for broker messages
 - Listing homepage (way to show DBNs)
 - Some sort of ranking to make work (hot, new, top etc...)
 - Do experiment on optimal topology

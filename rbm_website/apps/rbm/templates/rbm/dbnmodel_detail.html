@@ -46,7 +46,7 @@
             on <span class="dbn-date">{{object.created}}</span>
         </p>
 
-        <p class="dbn-description">{{object.description}}</p>
+        <p class="dbn-description">{{object.description}}</p><br>
 
         <p class="dbn-status">
             {% if object.trained %}
@@ -90,7 +90,7 @@
                                     &nbsp - &nbsp
                                 </td>
                                 <td>
-                                    <img alt="Thumbnail" style="border: 1px solid #000000;" width="{{object.width}}" height="{{object.height}}" src="data:image/png;base64,{{image}}"/>
+                                    <img alt="Thumbnail" style="margin: 5px 0; border: 1px solid #000000;" width="{{object.width}}" height="{{object.height}}" src="data:image/png;base64,{{image}}"/>
                                 </td>
                             </tr>
                         {% endfor %}
