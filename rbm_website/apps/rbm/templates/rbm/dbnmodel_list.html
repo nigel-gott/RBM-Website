@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {%block title%}
 List
@@ -7,13 +8,29 @@ List
 {% block content %}
 
 <br>
-<h4>Currently stored public DBNs:</h4>
+<h2>Recently added deep belief networks:</h2>
 <br>
-<ul>
-{% for dbn in object_list %}
-<li> <a href="{% url 'view' dbn.id %}"> {{dbn.name}} </a> owned by <a href="{% url 'view_user' dbn.creator.username %}">{{dbn.creator.username}}</a></li>
+
+<table class="dbn-list-table">
+{% for dbn, image in dbns %}
+    <tr>
+        <td>
+            {{dbn.id}}:
+        </td>
+        <td>
+            {% if image == "notTrained" %}
+                <img height="40" width="40" src="{% static 'libs/img/notTrained.png' %}" alt="NOTTRAINED">
+            {% else %}
+                <img alt="Thumbnail" width="40" height="40" src="data:image/png;base64,{{image}}"/>
+            {% endif %}
+        </td>
+        <td>
+            <a href="{% url 'view' dbn.id %}"> {{dbn.name}} </a> created by <a href="{% url 'view_user' dbn.creator.username %}">{{dbn.creator.username}}</a>
+            Created on {{dbn.created}}
+        </td>
+    </tr>
 {% endfor %}
-</ul>
+</table>
 
 
 {% endblock %}

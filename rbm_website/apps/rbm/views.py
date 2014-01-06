@@ -49,6 +49,23 @@ class DBNDetailView(DetailView):
     def dispatch(self, *args, **kwargs):
         return super(DBNDetailView, self).dispatch(*args, **kwargs)
 
+@message_login_required
+@login_required
+def dbn_list(request):
+    recent_dbns = DBNModel.objects.order_by('-created')[:10]
+    dbn_images = []
+    for dbn in recent_dbns:
+        if dbn.trained:
+            class_path = settings.MEDIA_ROOT + str(dbn.id)
+            image_path = class_path + '/base_images/' + dbn.label_values[0] + '.png'
+
+            image = imgpr.retrieve_image_base64(image_path)
+            dbn_images.append(image)
+        else:
+            dbn_images.append('notTrained')
+    dbn_info = zip(recent_dbns, dbn_images)
+    return render(request, 'rbm/dbnmodel_list.html', {'dbns': dbn_info})
+
 
 @message_login_required
 @login_required

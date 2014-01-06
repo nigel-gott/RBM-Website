@@ -1,4 +1,9 @@
 TODO LIST:
+- Make registration pages changeable
+- Add email functionality
+- Proper DBN list and search
+- Allow users to change their password
+- Improve noise function
 
 OPEN TERMINALS:
 - Main for runserver

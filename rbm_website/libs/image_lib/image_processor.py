@@ -61,6 +61,11 @@ def retrieve_images_base64(path):
         image_names.append(os.path.splitext(image_name)[0])
     return (image_data, image_names)
 
+def retrieve_image_base64(path):
+    with open(path, "rb") as image_file:
+        encoded_image = base64.b64encode(image_file.read())
+        return encoded_image
+
 def __check_image(image, image_path, exp_height, exp_width):
 	if image is None:
 		print("Warning: %s is not a valid image!" % (image_path))
