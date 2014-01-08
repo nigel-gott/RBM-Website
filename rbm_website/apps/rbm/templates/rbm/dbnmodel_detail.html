@@ -104,7 +104,7 @@
 
         {% if object.creator.username == user.username %}
             <p class="dbn-options">
-                {{object.creator.username}}, as the creator of this DBN you can edit, delete or train this DBN.<br><br>
+                {{object.creator.username}}, as the creator of this DBN you can delete or<a href="{% url 'train' object.id %}"> train </a>this DBN.<br><br>
                 <a href="{% url 'train' object.id %}"> Train </a>
             </p>
         {% endif %}

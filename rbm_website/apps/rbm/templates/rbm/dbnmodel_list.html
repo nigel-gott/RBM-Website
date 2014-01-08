@@ -5,11 +5,37 @@
 List
 {% endblock %}
 
+{% block scripts %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var clicked = false;
+            $('#id_criteria').click(function () {
+                if (!clicked) {
+                    clicked = true;
+                    $('#id_criteria').val('');
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
 
 <br>
-<h2>Recently added deep belief networks:</h2>
+<h2>List of Deep Belief Networks:</h2>
 <br>
+
+<p style="margin: 10px 0">
+By default, this list shows the ten most recently added DBNs along with an image from their training sets if they are trained. You can search for specific DBNs using the search bar. Your criteria will be matched against the name of the DBN, the creator and it's unique ID number.
+</p>
+
+<form method="post" action=".">
+    {% csrf_token %}
+    {{ searchForm.criteria }}
+    {{ searchForm.errors }}
+
+    <input type="submit" value="Submit" />
+</form>
 
 <table class="dbn-list-table">
 {% for dbn, image in dbns %}

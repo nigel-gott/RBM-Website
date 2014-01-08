@@ -3,19 +3,20 @@
 
 {% block content %}
 
+
   <div class="container">
     <div id="loginContainer">
-      <h2>Sign in to DBN Project</h2>
+      <h2>Sign in to Project DBN</h2>
       {% if form.errors %}
-      <p>Your username and password didn't match. Please try again.</p>
+      <p style="color: #920202; font-size: 12px; font-weight: bold;">Your username and password didn't match. Please try again.</p>
       {% endif %}
-    
+
       <form class="login-form" method="post" action="{% url 'django.contrib.auth.views.login' %}">
         {% csrf_token %}
-        <table style="margin: 20px 0;">
+        <table id="login-table" style="margin: 20px auto;">
         <tr>
                 <td align="right">
-                    <div class="fieldWrapper" style="margin-right: 10px;">
+                    <div class="fieldWrapper" style="font-weight: bold; margin-right: 10px;">
                         {{ form.username.label_tag }}
                     </div>
                 </td>
@@ -29,7 +30,7 @@
         <tr>
             <div class="fieldWrapper">
                 <td align="right">
-                    <div class="fieldWrapper" style="margin-right: 10px;">
+                    <div class="fieldWrapper" style="font-weight: bold; margin-right: 10px;">
                         {{ form.password.label_tag }}
                     </div>
                 </td>
@@ -42,11 +43,11 @@
             </div>
         </tr>
         </table>
-    
+
         <div>
             <button type="submit" class="btn btn-success">Login <span class="glyphicon glyphicon-share-alt"></span></button>
             <a href="{% url 'registration_register' %}" class="btn btn-success">Sign Up <span class="glyphicon glyphicon-ok-sign"></span></a>
-            <a href="#">Forgot your details?</a>
+            <a style="font-size: 12px;" href="#">Forgot your details?</a>
             <input type="hidden" name="next" value="{{ next }}" />
         </div>
       </form>

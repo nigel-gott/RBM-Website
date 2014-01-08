@@ -1,5 +1,8 @@
 from django import forms
 
+class SearchForm(forms.Form):
+    criteria = forms.CharField(initial='Enter search criteria...', max_length=200)
+
 class DBNForm(forms.Form):
     name =  forms.CharField(max_length=200)
     description = forms.CharField(max_length=1000, widget=forms.Textarea)
