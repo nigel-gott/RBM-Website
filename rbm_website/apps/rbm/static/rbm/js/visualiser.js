@@ -32,16 +32,22 @@ $(document).ready( function () {
         }
     });
 
-    var prevInterval;
+    preview();
+    var prevInterval = setInterval ("preview()", 1000);
+
     $("#preview").click( function() {
-        if ($(this).html() == "Preview") {
+        if ($(this).find("#previewStatus").html() == "Preview") {
             preview();
             prevInterval = setInterval ("preview()", 1000);
-            $(this).html("Stop");
+            $(this).find("#previewStatus").html("Stop preview");
+            $(this).find("#previewIcon").removeClass("glyphicon-play");
+            $(this).find("#previewIcon").addClass("glyphicon-stop");
         } else {
             clearInterval(prevInterval);
             $("#previewCanvas").remove();
-            $(this).html("Preview");
+            $(this).find("#previewStatus").html("Preview");
+            $(this).find("#previewIcon").removeClass("glyphicon-stop");
+            $(this).find("#previewIcon").addClass("glyphicon-play");
         }
     });
 });

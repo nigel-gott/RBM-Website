@@ -1,3 +1,15 @@
 .dbn-list-table td {
     padding: 3px 3px;
 }
+
+.search-labels {
+    font-weight: bold;
+}
+
+#search-form input, select {
+    text-align: left;
+    margin-right: 10px;
+    padding: 0 10px;
+    border: 2px solid #dadada;
+    border-radius: 5px;
+}

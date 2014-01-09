@@ -79,30 +79,35 @@ html, body {
 }
 
 /* line 10, ../../../../compass/sass/boilerplate/_global.scss */
+textarea {
+  resize: none;
+}
+
+/* line 14, ../../../../compass/sass/boilerplate/_global.scss */
 #container-main {
   min-height: 100%;
   position: relative;
-  width: 860px;
+  width: 950px;
   background-color: rgba(227, 228, 255, 0.9);
 }
 
-/* line 18, ../../../../compass/sass/boilerplate/_global.scss */
+/* line 21, ../../../../compass/sass/boilerplate/_global.scss */
 #title-container {
   text-align: center;
   left: 0;
 }
 
-/* line 23, ../../../../compass/sass/boilerplate/_global.scss */
+/* line 26, ../../../../compass/sass/boilerplate/_global.scss */
 #header-container {
   padding-top: 10px;
 }
 
-/* line 30, ../../../../compass/sass/boilerplate/_global.scss */
+/* line 33, ../../../../compass/sass/boilerplate/_global.scss */
 #content-container {
   padding-bottom: 20px;
 }
 
-/* line 34, ../../../../compass/sass/boilerplate/_global.scss */
+/* line 37, ../../../../compass/sass/boilerplate/_global.scss */
 #footer-container {
   position: absolute;
   bottom: 0;
@@ -111,7 +116,7 @@ html, body {
   height: 20px;
 }
 
-/* line 42, ../../../../compass/sass/boilerplate/_global.scss */
+/* line 45, ../../../../compass/sass/boilerplate/_global.scss */
 #footer {
   background: #E3E4FC;
   color: #BCB1E3;
@@ -141,7 +146,7 @@ html, body {
 
 /* line 16, ../../../../compass/sass/modules/_lighttable.scss */
 .light-table th {
-  background-color: #A8C3EC;
+  background-color: #e6f4f5;
   color: #333;
   font-weight: bold;
 }
@@ -504,7 +509,7 @@ h4 {
 /* line 3, ../../../../compass/sass/abstracts/_footer.scss */
 .footer-cell, .leftcell, .centrecell, .rightcell {
   font-size: 12px;
-  width: 286.66667px;
+  width: 316.66667px;
 }
 
 /* line 8, ../../../../compass/sass/abstracts/_footer.scss */
@@ -575,7 +580,7 @@ label {
 
 /* line 1, ../../../../compass/sass/abstracts/_preview.scss */
 .preview-canvas {
-  height: 400px;
+  height: 500px;
   width: 350px;
   overflow: auto;
   float: right;
@@ -623,7 +628,7 @@ label {
 
 /* line 5, ../../../../compass/sass/partials/_create.scss */
 #layers {
-  height: 60px;
+  max-height: 150px;
   overflow: auto;
 }
 
@@ -704,6 +709,20 @@ label {
   padding: 3px 3px;
 }
 
+/* line 5, ../../../../compass/sass/partials/_dbnlist.scss */
+.search-labels {
+  font-weight: bold;
+}
+
+/* line 9, ../../../../compass/sass/partials/_dbnlist.scss */
+#search-form input, select {
+  text-align: left;
+  margin-right: 10px;
+  padding: 0 10px;
+  border: 2px solid #dadada;
+  border-radius: 5px;
+}
+
 /* line 1, ../../../../compass/sass/partials/_trainer.scss */
 .imageClass {
   padding: 2px;
@@ -769,37 +788,75 @@ label {
 
 /* line 1, ../../../../compass/sass/partials/_login.scss */
 #loginContainer {
+  background-color: #e6f4f5;
   width: 400px;
-  height: 200px;
-  border-radius: 4px;
+  height: 220px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
   border: 1px solid #000000;
-  position: absolute;
+  -webkit-box-shadow: 0 0 10px #47BFFA;
+  -moz-box-shadow: 0 0 10px #47BFFA;
+  box-shadow: 0 0 10px #47BFFA;
   padding: 10px;
-  left: 21%;
-  top: 25%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 200px;
   text-align: center;
 }
 
-/* line 17, ../../../../compass/sass/partials/_login.scss */
+/* line 23, ../../../../compass/sass/partials/_login.scss */
 .fieldWrapper label {
   color: #000000;
   text-align: left;
   width: auto;
 }
 
-/* line 23, ../../../../compass/sass/partials/_login.scss */
+/* line 29, ../../../../compass/sass/partials/_login.scss */
 .fieldWrapper input {
   text-align: left;
   padding: 0 4px;
-  width: 120px;
+  width: 200px;
   border: 2px solid #dadada;
   border-radius: 5px;
 }
 
-/* line 31, ../../../../compass/sass/partials/_login.scss */
+/* line 37, ../../../../compass/sass/partials/_login.scss */
+.fieldWrapper textarea {
+  text-align: left;
+  padding: 0 4px;
+  border: 2px solid #dadada;
+  border-radius: 5px;
+}
+
+/* line 44, ../../../../compass/sass/partials/_login.scss */
 .fieldWrapper input:focus {
   text-align: left;
   outline: none;
   border-color: #9ecaed;
   box-shadow: 0 0 10px #9ecaed;
+}
+
+/* line 1, ../../../../compass/sass/partials/_register.scss */
+#registerContainer {
+  background-color: #e6f4f5;
+  width: 400px;
+  min-height: 350px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  border: 1px solid #000000;
+  -webkit-box-shadow: 0 0 10px #47BFFA;
+  -moz-box-shadow: 0 0 10px #47BFFA;
+  box-shadow: 0 0 10px #47BFFA;
+  padding: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+  text-align: center;
+}
+
+/* line 19, ../../../../compass/sass/partials/_register.scss */
+#register-table tr, td {
+  padding: 10px 0;
 }

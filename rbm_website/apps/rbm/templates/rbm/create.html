@@ -11,7 +11,27 @@ Create DBN
 
 {% block content %}
 
+<h1>Create a DBN!</h1>
+<hr style="background-color: #000000;border-color: #000000"/>
+<p>
+Here, you can create your own deep belief network! To do so, please fill in the form below with the appropriate data.
+We have set the values for the learning rate, image height and image width to appropriate defaults but feel free to change
+them to suit your project.
+</p>
+<br>
+<br>
+<p>
+Don't forget to add additional layers to make sure your DBN can classify effectively. If you are unsure of what values to use,
+you can read up about the layers in our tutorial section. A good topology to use is <span style="font-weight: bold">(Input <-> 500 <-> 500 <-> 2000 <-> Labels)</span>
+but again, feel free to use your own. You can preview your topology which will adjust automatically according to your values.
+</p>
+<hr style="background-color: #000000;border-color: #000000"/>
+<br>
+<br>
+
 <div id="formContainer">
+    <h3>DBN Attributes:</h3>
+    <br>
     <form class="form-horizontal" action="{% url 'create' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.non_field_errors }}
@@ -35,6 +55,12 @@ Create DBN
         </div>
         <br>
         <div class="fieldWrapper">
+            <label for="id_private">Private DBN:</label>
+            {{ form.private }}
+            {{ form.private.errors }}
+        </div>
+        <br>
+        <div class="fieldWrapper">
             <label for="id_learning_rate">Learning Rate:</label>
             <br>
             {{ form.learning_rate }}
@@ -55,20 +81,8 @@ Create DBN
             {{ form.width.errors }}
         </div>
         <br>
-        <div class="fieldWrapper">
-            <label for="id_labels">No. Labels:</label>
-            <br>
-            {{ form.labels }}
-            {{ form.labels.errors }}
-        </div>
-        <br>
-        <div class="fieldWrapper">
-            <label for="id_private">Private DBN:</label>
-            {{ form.private }}
-            {{ form.private.errors }}
-        </div>
-        <br>
         <div id="layers">
+            <h4>Layers:</h4>
             {% for field in form.visible_fields %}
                 {% if "Layer" in field.label %}
                     <div class="fieldWrapper">
@@ -79,25 +93,27 @@ Create DBN
                 {% endif %}
             {% endfor %}
         </div>
-        <!--
+        <br>
         <div class="fieldWrapper">
-            {{ form.training_data.errors }}
-            <label for="id_training_data">Training Data:</label>
-            {{ form.training_data }}
+            <label for="id_labels">No. Labels:</label>
+            <br>
+            {{ form.labels }}
+            {{ form.labels.errors }}
         </div>
-        -->
 
         <br><br>
-        <button type = "button" class="btn-success" id="add-layer">Add layer</button>
-        <button type = "button" class="btn-success" id="delete-layer">Delete layer</button>
-        <br><br>
-        <button type = "button" class="btn-success" id="preview">Preview</button>
-        <br><br>
-        <p><input class="btn-success" type="submit" value="Create DBN" /></p>
+        <button type = "button" id="add-layer" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add Layer</button>
+        <button type = "button" id="delete-layer" class="btn btn-primary"><span class="glyphicon glyphicon-minus"></span> Delete Layer</button>
+        <button type = "button" id="preview" class="btn btn-info"><span id="previewIcon" class="glyphicon glyphicon-stop"></span> <span id="previewStatus">Stop preview<span></button>
+        <br>
+        <br>
+        <button class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Create DBN</button>
     </form>
 </div>
 
 <div id="canvasContainer" class="preview-canvas">
+    <h3>Topology Preview:</h3>
+    <br>
 </div>
 
 {% endblock %}

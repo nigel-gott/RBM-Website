@@ -7,11 +7,74 @@ Register
 
 {% block content %}
 
-<form method="post" action=".">
-    {% csrf_token %}
-    {{ form.as_p }}
+<div id="registerContainer">
+  <h2>Create an account with Project DBN</h2>
+  <br>
+  <p>
+  Once you have your own account, you can create your own deep belief networks and view other peoples creations!
+  </p>
 
-    <input type="submit" value="Submit" />
-</form>
+  <form class="login-form" method="post" action=".">
+    {% csrf_token %}
+    <table id="register-table" style="margin: 20px auto;">
+    <tr>
+        <td align="right">
+            <div class="fieldWrapper" style="font-weight: bold; margin-right: 10px;">
+                {{ form.username.label_tag }}
+            </div>
+        </td>
+        <td align="left">
+            <div class="fieldWrapper">
+                {{ form.username }}
+                {{ form.username.errors }}
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">
+            <div class="fieldWrapper" style="font-weight: bold; margin-right: 10px;">
+                {{ form.email.label_tag }}
+            </div>
+        </td>
+        <td align="left">
+            <div class="fieldWrapper">
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">
+            <div class="fieldWrapper" style="font-weight: bold; margin-right: 10px;">
+                {{ form.password1.label_tag }}
+            </div>
+        </td>
+        <td align="left">
+            <div class="fieldWrapper">
+                {{ form.password1 }}
+                {{ form.password1.errors }}
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">
+            <div class="fieldWrapper" style="font-weight: bold; margin-right: 10px;">
+                {{ form.password2.label_tag }}
+            </div>
+        </td>
+        <td align="left">
+            <div class="fieldWrapper">
+                {{ form.password2 }}
+                {{ form.password2.errors }}
+            </div>
+        </td>
+    </tr>
+    </table>
+
+    <div>
+        <button type="submit" class="btn btn-success">Create Account <span class="glyphicon glyphicon-ok-sign"></span></button>
+    </div>
+  </form>
+</div>
 
 {% endblock %}

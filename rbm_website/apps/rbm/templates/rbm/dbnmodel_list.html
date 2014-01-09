@@ -26,17 +26,35 @@ List
 <br>
 
 <p style="margin: 10px 0">
-By default, this list shows the ten most recently added DBNs along with an image from their training sets if they are trained. You can search for specific DBNs using the search bar. Your criteria will be matched against the name of the DBN, the creator and it's unique ID number.
+By default, this list shows the ten most recently added DBNs along with an image from their training sets if they are trained.
+<br>
+<br>
+You can search for specific DBNs using the search bar. Your criteria will be matched against the name of the DBN, the creator and it's unique ID number.
+<br>
+<br>
+<span style="font-weight: bold">Note:</span> Private DBNs will not appear in the list!
 </p>
-
+<hr style="background-color: #000000;border-color: #000000"/>
+<br>
 <form method="post" action=".">
-    {% csrf_token %}
-    {{ searchForm.criteria }}
-    {{ searchForm.errors }}
+    <div id="search-form">
+        {% csrf_token %}
 
-    <input type="submit" value="Submit" />
+        {{ searchForm.criteria }}
+
+        <span class="search-labels">Ordered by:</span> {{ searchForm.order_by }}
+
+        <span class="search-labels">Trained DBNs Only:</span> {{ searchForm.trained }}
+
+        <div style="margin-top: 15px">
+            <button class="btn btn-sm">Search <i class="glyphicon glyphicon-search"></i></button>
+        </div>
+    </div>
 </form>
-
+<hr style="background-color: #000000;border-color: #000000"/>
+<br>
+<h2>Search Results:</h2>
+<br>
 <table class="dbn-list-table">
 {% for dbn, image in dbns %}
     <tr>

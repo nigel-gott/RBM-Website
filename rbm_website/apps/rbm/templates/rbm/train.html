@@ -10,11 +10,27 @@
 {% endblock %}
 
 {% block content %}
+<h1> {{dbn.name}} Trainer </h1>
+<hr style="background-color: #000000;border-color: #000000"/>
+<div style="margin: 20px 0">
+    On this page you can draw the base images for each of your classes. These will be uploaded to our servers where we will create duplicates
+    and add specially designed noise to them in order to create a full training set. Your DBN will then be trained on these images.
+    <br><br>
+    Please use our drawing tool below to create your images. To achieve the best results, make sure the images are clear and easily differentiable
+    between classes. It may also be wise to use the centre tool to ensure all images are in the centre of the canvas.
+    <br><br>
+    <span style="font-weight: bold">Note:</span> All class names must be different and each image must have a class name. You must draw an image
+    for each class specified when you created the DBN.
+    <br><br>
+    <span style="font-weight: bolder">Beware:</span> Once a DBN has been trained, it cannot be edited. Please make sure you have created the correct
+    classes or you may have to create a new DBN! You may however, delete any class on this page before you click Train.
+</div>
 
-<p class="dbn-title">DBN Name: {{dbn.name}}</p><br>
+<hr style="background-color: #000000;border-color: #000000"/>
+
 
 <div id="drawerContainer">
-<br>
+    <h2>Drawing Tool:</h2>
     <div id="pixelDrawerContainer">
     </div>
 
@@ -58,6 +74,7 @@
 </div>
 
 <div id="controlContainer">
+    <h2>Classes and their base images:</h2>
     <div id="classNameContainer">
         <h4>Label Name:</h4>
         <input id="className" type="text" maxlength="22"/>
@@ -74,7 +91,8 @@
     </div>
 
     <div id="trainButtonContainer">
-        <br><button id="trainButton" class="btn-success" type="button">TRAIN</button>
+        <br>
+        <button id="trainButton" type="button" class="btn btn-success">Train DBN <i class="glyhpicon glyphicon-upload"></i></button>
     </div>
 </div>
 

@@ -7,6 +7,10 @@ html, body {
     background-color: $background-colour;
 }
 
+textarea {
+    resize: none;
+}
+
 #container-main {
     min-height: 100%;
     position: relative;
@@ -14,9 +18,8 @@ html, body {
     background-color: $container-colour;
 }
 
-
 #title-container {
-    text-align:center;                                                               
+    text-align:center;
     left: 0;
 }
 
@@ -40,9 +43,9 @@ html, body {
 }
 
 #footer {
-    background: #E3E4FC;                                                             
-    color: #BCB1E3;                                                                  
-    font-size: .8em;                                                                 
-    text-align:center;                                                               
-    position:bottom; 
+    background: #E3E4FC;
+    color: #BCB1E3;
+    font-size: .8em;
+    text-align:center;
+    position:bottom;
 }

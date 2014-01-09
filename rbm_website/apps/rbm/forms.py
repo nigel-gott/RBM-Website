@@ -2,6 +2,14 @@ from django import forms
 
 class SearchForm(forms.Form):
     criteria = forms.CharField(initial='Enter search criteria...', max_length=200)
+    trained = forms.BooleanField(required=False)
+    SORTS = (
+        ("namedesc", ("Name (A-Z)")),
+        ("nameasc", ("Name (Z-A)")),
+        ("timedesc", ("Date Added (Recent)")),
+        ("timeasc", ("Data Added (Oldest)")),
+    )
+    order_by = forms.ChoiceField(choices=SORTS)
 
 class DBNForm(forms.Form):
     name =  forms.CharField(max_length=200)
@@ -9,7 +17,7 @@ class DBNForm(forms.Form):
     height = forms.IntegerField(initial=28)
     width = forms.IntegerField(initial=28)
     labels = forms.IntegerField()
-    learning_rate = forms.FloatField()
+    learning_rate = forms.FloatField(initial=0.1)
     private = forms.BooleanField(required=False, help_text='Check if you want a private DBN')
     layer_count = forms.IntegerField(widget = forms.HiddenInput())
 

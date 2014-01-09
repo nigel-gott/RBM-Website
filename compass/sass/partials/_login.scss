@@ -1,12 +1,18 @@
 #loginContainer {
+    background-color: #e6f4f5;
     width: 400px;
-    height: 200px;
-    border-radius: 4px;
+    height: 220px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
     border: 1px solid #000000;
-    position: absolute;
+    -webkit-box-shadow:0 0 10px #47BFFA;
+    -moz-box-shadow: 0 0 10px #47BFFA;
+    box-shadow:0 0 10px #47BFFA;
     padding: 10px;
-    left: 21%;
-    top: 25%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:200px;
     text-align: center;
 }
 
@@ -23,7 +29,14 @@
 .fieldWrapper input {
     text-align: left;
     padding: 0 4px;
-    width: 120px;
+    width: 200px;
+    border: 2px solid #dadada;
+    border-radius: 5px;
+}
+
+.fieldWrapper textarea {
+    text-align: left;
+    padding: 0 4px;
     border: 2px solid #dadada;
     border-radius: 5px;
 }
