@@ -2,6 +2,7 @@ import os
 import json
 import shutil
 import tasks
+import numpy as np
 
 from PIL import Image as pil
 from django.http import HttpResponse
@@ -152,8 +153,11 @@ def classify(request, dbn_id):
         image_data = imgpr.convert_url_to_array(request.POST['image_data'], "classifyImage")
 
         # SORT OUT FOR main DBN
-        #iterator = np.vectorize(flip_pixels)
-        #image_data = iterator(image_data)
+	if dbn.id == 12:
+		iterator = np.vectorize(flip_pixels)
+		image_data = iterator(image_data)
+		print "flipping pixels"
+
 
         probs = dbn.classify_image([image_data], 1)
         for i in range(1,10):
