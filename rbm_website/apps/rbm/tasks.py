@@ -31,11 +31,12 @@ def train_dbn(dbn, label_list):
     noise.create_noisy_images(base_path, test_path, 200)
 
     print "Retrieving and formatting images..."
-    (train_images, train_labels) = retrieve_images(train_path, dbn.height, dbn.width, label_list)
+    train_tuples  = zip(*retrieve_images(train_path, dbn.height, dbn.width, label_list))
     (test_images, test_labels) = retrieve_images(test_path, dbn.height, dbn.width, label_list)
+    train_tuples = np.random.permutation(train_tuples)
+    (train_images, train_labels) = zip(*train_tuples)
 
     print "Training DBN..."
-    #training_method(dbn.dbn, train_images, train_labels, test_images, test_labels)
     training_method(dbn.dbn, train_images, train_labels, test_images, test_labels, 1, 50, 1, 50, 1, 1)
 
     print "Updating DBN status..."
