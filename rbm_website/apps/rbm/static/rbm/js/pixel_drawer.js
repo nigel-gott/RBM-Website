@@ -120,7 +120,14 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
         $.post(uploadURL, {'image_data' : imageURL, csrfmiddlewaretoken : csrfToken}, function(data, textStatus, xhr) {
             $('#maxProbContainer').text(data.result);
             for (var i = 0; i < max_labels; i++) {
-                $('#' + data.label_values[i] + 'LabelContainer').text(data.probs[i]);
+		var rounded_number = (parseFloat(data.probs[i]) * 100 ).toFixed(3);
+		if(data.label_values[i] == data.result){
+			$('#' + data.label_values[i] + 'LabelContainer').parent().css('background-color', '#4cae4c');
+		} else {
+			$('#' + data.label_values[i] + 'LabelContainer').parent().css('background-color', 'white');
+		}
+
+                $('#' + data.label_values[i] + 'LabelContainer').text(rounded_number + '%');
             };
         });
     }
