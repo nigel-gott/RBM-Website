@@ -239,12 +239,9 @@ def save_image(image_id, image_data, dbn):
 @message_login_required
 @login_required
 def training(request):
-    print request
-    return render(request, 'rbm/training.html')
     if request.method == 'POST':
         return render(request, 'rbm/training.html', {})
     else:
-        print "recieved about to render"
         return render(request, 'rbm/training.html', {})
 
 @message_login_required
