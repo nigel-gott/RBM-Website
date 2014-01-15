@@ -168,7 +168,14 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
                 images.push(data);
             });
 
-            $.post(uploadURL, {classImages: images, csrfmiddlewaretoken: csrfToken}, function(data, textStatus, xhr) {
+            $.post(uploadURL, {
+                classImages: images, 
+                pre_epoch: $('#pre_epoch').val(),
+                train_epoch: $('#train_epoch').val(),
+                train_loop: $('#train_loop').val(),
+
+                csrfmiddlewaretoken: csrfToken
+            }, function(data, textStatus, xhr) {
                 window.location.href = '/rbm/training/';
             });
         });
