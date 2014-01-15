@@ -143,6 +143,24 @@ def dbn_list(request):
     else:
         return render(request, 'rbm/dbnmodel_list.html', {})
 
+@message_login_required
+@login_required
+def delete(request, dbn_id):
+    if request.method == 'GET':
+        dbn = get_object_or_404(DBNModel , pk=dbn_id)
+
+        if dbn.creator == request.user:
+            dbn.delete()
+            messages.add_message(request, messages.INFO, 'Your DBN was successfully deleted!')
+            url = reverse('home')
+            return redirect(url)
+        else:
+            messages.add_message(request, messages.INFO, 'You do not have permission to delete this DBN!')
+            url = reverse('view', kwargs={'pk': dbn.id})
+            return redirect(url)
+    else:
+        url = reverse('home')
+        return redirect(url)
 
 @message_login_required
 @login_required
@@ -153,11 +171,9 @@ def classify(request, dbn_id):
         image_data = imgpr.convert_url_to_array(request.POST['image_data'], "classifyImage")
 
         # SORT OUT FOR main DBN
-	if dbn.id == 12:
-		iterator = np.vectorize(flip_pixels)
-		image_data = iterator(image_data)
-		print "flipping pixels"
-
+        if dbn.id == 12:
+            iterator = np.vectorize(flip_pixels)
+            image_data = iterator(image_data)
 
         probs = dbn.classify_image([image_data], 1)
         for i in range(1,10):
