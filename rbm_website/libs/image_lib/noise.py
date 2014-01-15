@@ -17,7 +17,7 @@ def add_noise(image):
   (height, width) = noisy_image.shape
   for i, row in enumerate(noisy_image):
     for j, pixel in enumerate(row):
-      if noisy_image[i][j] == 0:
+      if noisy_image[i][j] == 0 and random.random() > 0.8:
           numrand = random.randrange(0, 4)
           for x in xrange(0, numrand):
             xrand = random.randrange(0, 3) - 1
