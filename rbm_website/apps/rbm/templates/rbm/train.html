@@ -4,8 +4,10 @@
 {% block scripts %}
     <script src="{% static 'rbm/js/pixel_drawer.js' %}"></script>
     <script>
-        $('.range').on('change', function(){
-            $(this).next().text($(this).val());
+        $(function(){
+            $('.range').on('change', function(){
+                $(this).next().text($(this).val());
+            });
         });
 
     </script>
