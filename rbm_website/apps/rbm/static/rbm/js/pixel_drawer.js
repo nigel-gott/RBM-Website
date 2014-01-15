@@ -98,9 +98,30 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
         var drawWidth = bounds["right"] - bounds["left"];
         var drawHeightCentre = bounds["bottom"] + Math.round(drawHeight/2);
         var drawWidthCentre = bounds["left"] + Math.round(drawWidth/2);
-        var heightOffset = Math.round(height/2) - drawHeightCentre;
-        var widthOffset = Math.round(width/2) - drawWidthCentre;
-        canvas_object.shiftDrawing(heightOffset, widthOffset);
+        var heightCentre = Math.round(height/2);
+        var widthCentre = Math.round(width/2);
+
+        var blackPixels = 0;
+        var totalWidth = 0;
+        var totalHeight = 0;
+        var context = canvas_object.canvas[0].getContext('2d');
+        var aspRatio = canvas_object.aspRatio;
+        for (var col = 0; col < canvas_object.pixelWidth; col++) {
+            for (var row = 0; row < canvas_object.pixelHeight; row++) {
+                var pixData = context.getImageData(col*aspRatio, row*aspRatio, 1, 1);
+                if (pixData.data[0] === 0) {
+		    blackPixels++;
+                    totalHeight += row;
+                    totalWidth += col;
+                }
+            }
+        }
+	
+        heightCog = Math.floor(totalHeight/blackPixels);
+        widthCog  = Math.floor(totalWidth/blackPixels);
+        heightOffset = heightCentre - heightCog;
+        widthOffset  = widthCentre  - widthCog;
+        canvas_object.shiftDrawing(-heightOffset, widthOffset);
     });
 
    function createLayout() {
@@ -247,6 +268,8 @@ function Canvas(pixelWidth, pixelHeight){
     var aspRatio = 10;
     this.aspRatio = aspRatio;
     this.brushSize = 1;
+    this.pixelWidth = pixelWidth
+    this.pixelHeight = pixelHeight
 
     var colours = {GREY: "#DEDDDC", BLACK: "#000000", WHITE:"#FFFFFF"};
     var size = {SMALL: 1, MEDIUM: 2, LARGE: 3};
