@@ -58,7 +58,7 @@ def training_method(dbn, train_img, train_lbl, test_img, test_lbl, pre_epoch=5,
     for i in xrange(0, train_loop):
         dbn.train_labels(train_img, train_lbl, train_epoch, train_batch)
         test_class = dbn.classify(test_img, samples)
-        print 'Iteration {0}: Error over test data: {1}'.format(i, 1 - (test_class*test_lbl).mean() * 10)
+        print 'Iteration {0}: Error over test data: {1}'.format(i, 1 - (test_class*test_lbl).mean() * dbn.number_labels)
 
 def retrieve_images(path, height, width, label_list):
     (images, labels) = imgpr.retrieve_all_images(path, height, width)
