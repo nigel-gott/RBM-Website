@@ -20,18 +20,29 @@
 
 {% block content %}
 
-<div class="user-profile">
-    Welcome to {{ prof_user.username }}'s profile page.<br> {{ prof_user.username }} joined the DBN Project on {{ prof_user.date_joined|date:"D d M Y" }}.
+<div class="user-profile" style="width: auto;">
+    <h1>Welcome to {{ prof_user.username }}'s profile page.</h1>
+
+    <br>
+    <h2>{{ prof_user.username }} joined Project DBN on {{ prof_user.date_joined|date:"D d M Y" }}.</h2>
     <br>
     <br>
-    {{ prof_user.username }} has created {{ public_dbns|length }} public
+    {{ prof_user.username }} has so far created {{ public_dbns|length }} public
     {% if public_dbns|length == 1 %}
         DBN!
     {% else %}
         DBNs!
     {% endif %}
+    Please feel free to check them out and see how they work!
+    <br>
+    <br>
+    {% if prof_user.username == user.username %}
+        <h4>Your Profile:</h4>
+        {{ prof_user.username }}, your private DBNs are also available in the table below. Don't worry, only you are able to see them though! If you want to share your creations with others, make your future creations public so that any user can use them!
+    {% endif %}
     <br><br>
     <h4>{{ prof_user.username }}'s DBNs</h4>
+    <br>
     <br>
 </div>
 

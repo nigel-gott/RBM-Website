@@ -47,7 +47,11 @@
         </p>
 
         <br>
-        <div class="dbn-description">{{object.description}}</div>
+        <div class="dbn-description">
+            <h4>Description:</h4>
+            <br>
+            {{object.description}}
+        </div>
         <br>
 
         <p class="dbn-status">
@@ -67,7 +71,7 @@
                         </div>
                     </div>
                 {% else %}
-                    This DBN has not started training yet, please check back later to see if its owner has trained it.
+                    This DBN has not started training yet, please check back later to see if its owner has trained it. Until then feel free to search for a trained DBN to test and use!
                 {% endif %}
             {% endif %}
         </p><br>
@@ -98,15 +102,17 @@
         {% endif %}
 
         {% if object.creator.username == user.username %}
+            <h4>DBN Options:</h4>
             <p class="dbn-options">
-                {{object.creator.username}}, as the creator of this DBN you can delete or<a href="{% url 'train' object.id %}"> train </a>this DBN.<br><br>
-                <a href="{% url 'train' object.id %}"> Train </a>
+                {{object.creator.username}}, as the creator of this DBN you can <a href="{% url 'delete' object.id %}">delete</a> or <a href="{% url 'train' object.id %}">train</a> this DBN.<br><br>
             </p>
         {% endif %}
     </div>
 </div>
 
 <div id="canvasContainer" class="preview-canvas detail-preview-canvas">
+    <h3>Topology Preview:</h3>
+    <br>
 </div>
 
 {% endblock %}

@@ -40,11 +40,11 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{% url 'faq' %}">Project DBN</a>
+            <a class="navbar-brand" href="{% url 'home' %}">Project DBN</a>
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li><a href="{% url 'home' %}">Home</a></li>
+              <li><a href="{% url 'faq' %}">FAQ</a></li>
               <li><a href="{% url 'tutorial' %}">Tutorial</a></li>
               {% if user.is_authenticated %}
               <li><a href="{% url 'index' %}">{% trans "DBN List" %}</a></li>

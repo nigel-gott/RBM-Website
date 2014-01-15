@@ -63,9 +63,9 @@ You can search for specific DBNs using the search bar. Your criteria will be mat
         </td>
         <td>
             {% if image == "notTrained" %}
-                <img height="40" width="40" src="{% static 'libs/img/notTrained.png' %}" alt="NOTTRAINED">
+                <img height="40" width="40" style="border-style:solid; border-width:1px; border-color:#000;" src="{% static 'libs/img/notTrained.png' %}" alt="NOTTRAINED">
             {% else %}
-                <img alt="Thumbnail" width="40" height="40" src="data:image/png;base64,{{image}}"/>
+                <img alt="Thumbnail" width="40" height="40" style="border-style:solid; border-width:1px; border-color:#000;" src="data:image/png;base64,{{image}}"/>
             {% endif %}
         </td>
         <td>
