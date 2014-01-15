@@ -82,21 +82,16 @@
                 {% endif %}
 
                 <div class="class-image-container" style="margin: 10px 0; overflow-y: auto; height: 180px;">
-                    <table style="margin: 0 auto;">
                         {% for label, image in image_data.items %}
-                            <tr>
-                                <td>
+			    <div class="class-image-row" style="width: 150px;">
+                                <div class="class-image-label">
                                     {{ label }}
-                                </td>
-                                <td>
-                                    &nbsp - &nbsp
-                                </td>
-                                <td>
+                                </div>
+                                <div class=class-image>
                                     <img alt="Thumbnail" style="margin: 5px 0; border: 1px solid #000000;" width="{{object.width}}" height="{{object.height}}" src="data:image/png;base64,{{image}}"/>
-                                </td>
-                            </tr>
+                                </div>
+                            </div>
                         {% endfor %}
-                    </table>
                 </div>
 
             </p>

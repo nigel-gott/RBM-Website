@@ -9,7 +9,7 @@ echo "Spawning celery terminal..."
 
 # Starts the running website
 echo "Running website..."
-sudo python manage.py runserver 0.0.0.0:80
+python manage.py runserver 0.0.0.0:8000
 
 # Prints on close
 echo "Closed..."

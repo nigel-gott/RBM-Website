@@ -208,7 +208,11 @@ def train(request, dbn_id):
                 request.POST['classImages[' + str(x) + '][image_data]'], dbn)
             label_values.append(request.POST['classImages[' + str(x) + '][image_name]'])
 
-        tasks.train_dbn.delay(dbn, label_values)
+	
+	pre_epoch = int(request.POST.get('pre_epoch'))
+	train_epoch = int(request.POST.get('train_epoch'))
+	train_loop = int(request.POST.get('train_loop'))
+        tasks.train_dbn.delay(dbn, label_values, pre_epoch, train_epoch, train_loop)
         messages.add_message(request, messages.INFO, 'Congratulations! Your DBN is training.' +
             ' Please check back shortly to use it!')
         return redirect('/rbm/training/')

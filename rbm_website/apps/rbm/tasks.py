@@ -9,7 +9,7 @@ from rbm_website.libs.image_lib import noise
 # ADD CHECKING AND ERROR OUTPUTTING AFTER TRAINING
 
 @celery.task
-def train_dbn(dbn, label_list):
+def train_dbn(dbn, label_list, pre_epoch, train_epoch, train_loop):
     print "Processing and training DBN: " + str(dbn.name) + "..."
 
     print "Saving label_values..."
@@ -37,7 +37,7 @@ def train_dbn(dbn, label_list):
     (train_images, train_labels) = zip(*train_tuples)
 
     print "Training DBN..."
-    training_method(dbn.dbn, train_images, train_labels, test_images, test_labels, 1, 50, 1, 50, 1, 1)
+    training_method(dbn.dbn, train_images, train_labels, test_images, test_labels, pre_epoch, 50, train_epoch, 50, train_loop, 1)
 
     print "Updating DBN status..."
     dbn.training = False
