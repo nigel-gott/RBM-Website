@@ -85,7 +85,6 @@
                     labels!
                 {% endif %}
 
-
                 <div class="class-image-container" style="width: 400px;">
                         {% for label, image in image_data.items %}
 			    <div class="class-image-row" style="width: 50%; float: {% cycle 'left' 'right' %};">
@@ -99,15 +98,16 @@
                         {% endfor %}
                 </div>
 
+            </p>
         {% endif %}
 
         {% if object.creator.username == user.username %}
-	<div class="dbn2">
+            <div class="dbn-2" style="float: left">
             <h4>DBN Options:</h4>
             <p class="dbn-options">
                 {{object.creator.username}}, as the creator of this DBN you can <a href="{% url 'delete' object.id %}">delete</a> or <a href="{% url 'train' object.id %}">train</a> this DBN.<br><br>
             </p>
-	</div>
+            </div>
         {% endif %}
     </div>
 </div>

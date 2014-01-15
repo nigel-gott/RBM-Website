@@ -191,7 +191,9 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
             topBar("Please enter a class name before adding a class!", 5000, 'error');
         } else if (index != -1) {
             topBar("The class name \'" + imageID + "\' has already been used!", 5000, 'error');
-        } else {
+        } else if (imageID.indexOf(' ') >= 0) {
+	    topBar("Class names cannot contains spaces! Please re-write it!", 5000, 'error');
+	} else {
             image = $('<img style="border: 1px solid #000000;" id="' + imageID + '" src="' +  imageURL + '" >');
             deleteButton = $('<input type="button" value="-" />');
             deleteButton.click(function() {
