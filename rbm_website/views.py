@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from rbm_website.apps.rbm.models import DBNModel
 
 def home(request):
-    return render(request, 'home.html', {})
+    dbn = get_object_or_404(DBNModel , pk=12)
+    return render(request, 'home.html', {'dbn' : dbn})
 
 def faq(request):
     return render(request, 'faq.html', {})

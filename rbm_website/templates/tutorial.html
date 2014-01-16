@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {%block title%}
 Tutorial
@@ -6,26 +7,112 @@ Tutorial
 
 {% block content %}
 
-<br>
-<h4>Code Location</h4>
-<br>
-All of our code is open source and is currently hosted on GitHub.<br>
-<a href="https://github.com/fleurette/RBM">Our implementation of DBN based on RBM.</a>
-<br>
-<br>
+<div class="justified-text">
+    <br>
+    <h1>Our Implementation:</h1>
+    <br>
+    <h2>Introduction:</h2>
+    <br>
+    All of our DBN/RBM library code is open source and is currently hosted on <a href="https://github.com/RBMLibrary/DBN-Library">Github</a>. Please feel free to look through it all and if you think there should be any changes or you want to add new features, fork it and issue a pull request!
+    <br>
+    <br>
 
-<h4>Ressources</h4>
-<br>
-The following articles and videos will prove a great help during your journey through DBNs and RBMs:
-<br><br>
-<ul>
-<li><a href="http://www.youtube.com/watch?v=AyzOUbkUf3M">The Next Generation of Neural Networks</a></li>
-<li><a href="http://en.wikipedia.org/wiki/Restricted_Boltzmann_machine">Wikipedia Article on RBMs</a></li>
-<li><a href="http://blog.echen.me/2011/07/18/introduction-to-restricted-boltzmann-machines/">Introduction to RBMs</a></li>
-<li><a href="www.cs.toronto.edu/~hinton/absps/guideTR.pdf">Guide to Training RBMs</a></li>
-<li><a href="http://www.youtube.com/watch?v=oHg5SJYRHA0">Great Video on Stacking RBMs</a></li>
-<li><a href="http://www.scholarpedia.org/article/Deep_belief_networks">Some resources on Deep Belief Networks</a></li>
+    <h2>Code Walkthrough:</h2>
+    <br>
 
+    This our implementation of a Deep Belief Network and Restricted Boltzmann Machine library. It also contains a file to extract images from the MNIST database as well as an example of how to run the DBN. Note: Numpy is required
+    <br>
+    <br>
+    <h4>rbm.py</h4>
+    Implements a Restricted Boltzmann Machine in python. Can be used on its own but is most effective when used in a DBN.
+    <br>
+    <br>
+    <h4>dbn.py</h4>
+    Implements a Deep Belief Network in python. Contains a list of RBMs that form a network with a classifier on the top. Image Data should be passed as a list of NUMPY arrays. Image labels should be in the same order as the Image data and should be a list of NUMPY arrays with a 1 in the corresponding index for that label. E.g. A label for class 3 of 5 would be [0 0 1 0 0].
+    <br>
+    <br>
+    <h4>data.py</h4>
+    Looks for a MNIST file in the current directory and extracts the appropriate labels and images and returns them as NUMPY arrays. Look at this for an idea of how to organise the data
+    <br>
+    <br>
+    <h4>example.py</h4>
+    An example of how to use the DBN. Creating a training set. Bulding a DBN. Pre-training, fine tuning and then outputting the error message.
+    <br>
+    <br>
+    <h4>tasks.py</h4>
+    A simplified version of the processing task we use to train our DBNs. Note that this is just for reference and will not run. You need to create a function that retrieves images from a directory.
+    <br>
+    <br>
+    <br>
+    <h1>Brief Introduction to DBNs and RBMs:</h1>
+    Please read the following for a very brief overview of Restricted Boltzmann Machines and Deep Belief Networks. Other guides offer more comphrensive explanations complete with Mathematical equations, diagrams and implementations. We have listed some of them below.
+    <br>
+    <br>
+    <h2>Introduction to RBMs:</h2>
+    <br>
+    The Restricted Boltzmann Machine is a stochastic and generative neural
+    network capable of capturing, reproducing and identifying the
+    statistical properties and trends of a set of input data. These
+    applications have been used in a variety of circumstances,
+    particularly that of classifying data such as handwritten digits and
+    other varying sets of input data.
+    <br>
+    <br>
+    <h2>How RBMs Work:</h2>
+    <br>
+    A Restricted Boltzmann Machine consists of a layer of visible
+    binary units, a layer of hidden binary units and a bias unit which
+    accounts for patterns in the data. In
+    our case the layer of visible binary units correspond to the black and
+    white pixels in the input image.
+    Each visible unit is connected to all the hidden units in an
+    undirected manner so each hidden unit is also connected to all
+    the visible units. The bias unit is connected to all the visible
+    units and all the hidden units.
+    <br>
+    Each connection between units has a weight attached to it. Simply put,
+    if the weight is strongly positive the two units like to be in
+    the same state, if one activates, the probability of the
+    other activating increases. If the weight is strongly negative the
+    units like
+    to be in opposite states. If the weight is near 0 however, the units
+    have little to no
+    influence on one another.
+    <br>
+    <br>
+    <img src="{% static 'libs/img/rbm-echen.png' %}" style="display: block; margin: 0 auto;" width="50%" alt="Diagram of an RBM">
+    <br>
+    <br>
+    <h2>How DBNs Work:</h2>
+    <br>
+    Deep belief networks are probabilistic generative models that are composed
+    of multiple layers of simple learning modules that are, in our case,
+    Restricted Boltzmann Machines.
+    <br>
+    <br>
+    <img src="http://deeplearning.net/tutorial/_images/DBN3.png" style="display: block; margin: 0 auto;" alt="Diagram of a DBN">
+    <br>
+    <br>
+    The way Deep Belief Networks are trained is by learning one layer at a
+    time by treating the hidden nodes of one layer as the visible (input)
+    nodes to the next layer. Each layer is trained on the data from its
+    proceeding layer so it can recognise trends in each of the layers of
+    data, improving accuracy.
+    <br>
+    <br>
+    <h1>External Resources and Information Sources:</h1>
+    <br>
+    The following articles and videos will prove a great help during your journey through DBNs and RBMs:
+    <br><br>
+    <ul>
+    <li><a href="http://www.youtube.com/watch?v=AyzOUbkUf3M">http://www.youtube.com/watch?v=AyzOUbkUf3M</a> - The Next Generation of Neural Networks Youtube video</li>
+    <li><a href="http://en.wikipedia.org/wiki/Restricted_Boltzmann_machine">http://en.wikipedia.org/wiki/Restricted_Boltzmann_machine</a> - Wikipedia Article on RBMs</li>
+    <li><a href="http://blog.echen.me/2011/07/18/introduction-to-restricted-boltzmann-machines/">http://blog.echen.me/2011/07/18/introduction-to-restricted-boltzmann-machines/</a> - Introduction to RBMs by Edwin Chen</li>
+    <li><a href="http://deeplearning.net/tutorial/DBN.html">http://deeplearning.net/tutorial/DBN.html</a> - A guide to DBNs and implementing them</li>
+    <li><a href="www.cs.toronto.edu/~hinton/absps/guideTR.pdf">www.cs.toronto.edu/~hinton/absps/guideTR.pdf</a> - Guide to training RBMs by Geoffrey Hinton</li>
+    <li><a href="http://www.scholarpedia.org/article/Deep_belief_networks">http://www.scholarpedia.org/article/Deep_belief_networks</a> - Some resources on Deep Belief Networks</li>
+    </ul>
+</div>
 
 
 {% endblock %}

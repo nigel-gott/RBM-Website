@@ -162,8 +162,6 @@ def delete(request, dbn_id):
         url = reverse('home')
         return redirect(url)
 
-@message_login_required
-@login_required
 def classify(request, dbn_id):
     if request.method == 'POST':
         dbn = get_object_or_404(DBNModel , pk=dbn_id)
@@ -194,15 +192,20 @@ def classify(request, dbn_id):
 
         return HttpResponse(json_data, mimetype="application/json")
     else:
-        dbn = get_object_or_404(DBNModel , pk=dbn_id)
-
-        if dbn.training:
-            messages.add_message(request, messages.ERROR, 'This DBN is currently being trained!' +
-                ' Please check back shortly to use it!')
-            url = reverse('view', kwargs={'pk': dbn.id})
+        if not request.user.is_authenticated():
+            messages.add_message(request, messages.ERROR, "You must be logged in to access this content!")
+            url = reverse('home', kwargs={})
             return redirect(url)
+        else:
+            dbn = get_object_or_404(DBNModel , pk=dbn_id)
 
-        return render(request, 'rbm/classify.html', {'dbn': dbn})
+            if dbn.training:
+                messages.add_message(request, messages.ERROR, 'This DBN is currently being trained!' +
+                    ' Please check back shortly to use it!')
+                url = reverse('view', kwargs={'pk': dbn.id})
+                return redirect(url)
+
+            return render(request, 'rbm/classify.html', {'dbn': dbn})
 
 def flip_pixels(value):
     if value == 1:
@@ -224,7 +227,7 @@ def train(request, dbn_id):
                 request.POST['classImages[' + str(x) + '][image_data]'], dbn)
             label_values.append(request.POST['classImages[' + str(x) + '][image_name]'])
 
-	
+
 	pre_epoch = int(request.POST.get('pre_epoch'))
 	train_epoch = int(request.POST.get('train_epoch'))
 	train_loop = int(request.POST.get('train_loop'))
