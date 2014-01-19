@@ -1,7 +1,10 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+
+# The Django Admin URLs
 admin.autodiscover()
 
+# All the URLs available to the application
 urlpatterns = patterns('',
     url(r'^$', 'rbm_website.views.home', name='home'),
     url(r'^admin/', include(admin.site.urls)),
@@ -12,7 +15,5 @@ urlpatterns = patterns('',
     url(r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name': 'users/login.html'}),
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^accounts/', include('registration.backends.simple.urls')),
-    url(r'^terms/$', 'rbm_website.views.terms', name='terms'),
-    url(r'^privacy/$', 'rbm_website.views.privacy', name='privacy'),
     url(r'^tutorial/$', 'rbm_website.views.tutorial', name='tutorial')
 )

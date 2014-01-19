@@ -1,4 +1,5 @@
 #!/bin/bash
+# Git hook used to install the new requirements
 
 if [[ "$VIRTUAL_ENV" != "" ]]
 then

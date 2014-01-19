@@ -5,13 +5,15 @@
 
 @import "compass/reset";
 
+// Imports the base variables
 @import "base";
 /* import mixins here */
 
+// Imports the global styling
 @import "boilerplate/global";
 /* import additional boilerplate */
 
-/* import modules here */
+// Imports all of the modules used (Non-application specific CSS)
 @import "modules/lighttable";
 @import "modules/headers";
 @import "modules/text";
@@ -20,6 +22,7 @@
 @import "modules/largeloader";
 @import "modules/messagebar";
 
+// Imports all of the abstracts used (Application specific CSS)
 @import "abstracts/footer";
 @import "abstracts/form";
 @import "abstracts/messages";
@@ -28,7 +31,7 @@
 @import "abstracts/drawer";
 /* import additional abstracts */
 
-/* import partials */
+// Import partial styling (Styling for individual pages)
 @import "partials/create";
 @import "partials/dbndetail";
 @import "partials/dbnlist";

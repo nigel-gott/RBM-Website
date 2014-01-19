@@ -1,11 +1,16 @@
+// Sass file for styling the forms
+
+// Width of an error message
 $error-width: 150px;
 
+// The styling of the error list produced by a forms
 ul.errorList {
     color: $error-colour;
     font-weight: bold;
     list-style-type: none;
 }
 
+// Styling of labels used by forms, may be overridden
 label {
     display: inline-block;
     width: $error-width;

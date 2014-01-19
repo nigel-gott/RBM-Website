@@ -1,20 +1,27 @@
+// Sass file to handle the styling of the footer
+
+// Size of the footer font
 $footer-fontsize: 12px;
 
+// Styling of each cell in the footer
 .footer-cell {
     font-size: $footer-fontsize;
     width: $page-width / 3;
 }
 
+// Left cell styling
 .leftcell {
     @extend .footer-cell;
     text-align: left;
 }
 
+// Centre cell styling
 .centrecell {
     @extend .footer-cell;
     text-align: center;
 }
 
+// Right cell styling
 .rightcell {
     @extend .footer-cell;
     text-align: right;

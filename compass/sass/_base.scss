@@ -1,19 +1,27 @@
+// Sass files containing all the parameters
+
+// Width of the page
 $page-width: 950px;
 
+// Font details
 $site-font: 'Roboto', sans-serif;
 $site-fontsize: 14px;
 
+// Padding for the page
 $footer-height: 20px;
 $top-padding: 10px;
 
+// Colouring scheme
 $background-colour: rgba(230, 244, 245, 1);
 $container-colour: rgba(227,228,255,0.9);
 
+// Message colours
 $error-colour: #981919;
 $warning-colour: #DB7A12;
 $info-colour: #145FA3;
 $success-colour: #15841A;
 $yellow-colour: #E9EE17;
 
+// Height of the preview container
 $preview-height: 500px;
 $preview-width: 350px;

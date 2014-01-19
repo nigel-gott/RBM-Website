@@ -1,3 +1,6 @@
+// Sass file for the register page
+
+// Container for the register element
 #registerContainer {
     background-color: #e6f4f5;
     width: 400px;
@@ -16,6 +19,7 @@
     text-align: center;
 }
 
+// The table used to contain the form
 #register-table tr,td {
     padding: 10px 0;
 }

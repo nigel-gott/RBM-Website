@@ -1,3 +1,6 @@
+// Sass file for the styling of the login page
+
+// The container for the login element
 #loginContainer {
     background-color: #e6f4f5;
     width: 400px;
@@ -20,12 +23,14 @@
 
 }
 
+// Labels for login fields
 .fieldWrapper label {
     color: #000000;
     text-align: left;
     width: auto;
 }
 
+// Input element for the login form
 .fieldWrapper input {
     text-align: left;
     padding: 0 4px;
@@ -34,6 +39,7 @@
     border-radius: 5px;
 }
 
+// Text area for the login form
 .fieldWrapper textarea {
     text-align: left;
     padding: 0 4px;
@@ -41,6 +47,7 @@
     border-radius: 5px;
 }
 
+// On focus of a login input
 .fieldWrapper input:focus {
     text-align: left;
     outline: none;

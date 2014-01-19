@@ -1,11 +1,16 @@
+// The Sass file for the styling of a list of DBNs
+
+// Table of elements
 .dbn-list-table td {
     padding: 3px 3px;
 }
 
+// Labels of the search function
 .search-labels {
     font-weight: bold;
 }
 
+// The form used for searching
 #search-form input, select {
     text-align: left;
     margin-right: 10px;

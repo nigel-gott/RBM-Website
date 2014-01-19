@@ -1,4 +1,6 @@
 #!/bin/bash
+# Installs everything required by the project
+
 # Sets up the environment for developing
 echo "Creating virtual env folder in venv..."
 virtualenv venv

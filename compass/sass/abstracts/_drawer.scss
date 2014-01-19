@@ -1,3 +1,6 @@
+// Sass File for the pixel drawer
+
+// Drawing button containers
 .draw-btn {
     padding: 1px;
     background-color: #000000;
@@ -6,6 +9,7 @@
     border-radius: 0px;
 }
 
+// Images within the drawing buttons
 .draw-btn img {
     width: 36px;
     height: 36px;
@@ -14,14 +18,17 @@
     border-radius: 1px;
 }
 
+// Position of the entire drawer application
 #drawerContainer {
     float: left;
 }
 
+// Position of the pixel drawer canvas itself
 #pixelDrawerContainer {
     float: left;
 }
 
+// Position for the palette and commands
 #commands {
     float: right;
 }

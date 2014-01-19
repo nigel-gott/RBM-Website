@@ -1,7 +1,11 @@
+// The Sass styling for the trainer page
+
+// Image classes used in the trainer
 .imageClass {
     padding: 2px;
 }
 
+// The control element
 #controlContainer {
     width: 400px;
     float: right;
@@ -9,12 +13,14 @@
     padding: 0px 20px;
 }
 
+// The image classes container
 #imageClasses {
     height: 200px;
     overflow: auto;
     text-align: left;
 }
 
+// The remaining classes display
 #classesRemainingDisplay {
     margin: 3px 0px;
 }

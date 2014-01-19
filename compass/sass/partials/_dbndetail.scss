@@ -1,54 +1,67 @@
+// Sass file for the preview page of a DBN
+
+// The details of the DBN
 .profile-details {
     float: left;
     width: 400px;
 }
 
+// Title styling
 .dbn-title {
     font-size: 25px;
     font-weight: bolder;
     margin: 5px 0;
 }
 
+// Description styling
 .dbn-description {
     font-size: 14px;
     margin: 20px 0;
 }
 
+// Creator styling
 .dbn-creator {
     font-size: 13px;
     margin: 5px 0;
 }
 
+// Options styling
 .dbn-options {
     font-size: 13px;
     margin: 20px 0;
 }
 
+// DBN creation data styling
 .dbn-date {
     font-weight: bold;
 }
 
+// Status of the DBN
 .dbn-status {
     font-size: 14px;
     font-weight: bold;
 }
 
+// Private DBN styling
 .private-dbn {
     color: #AB0505;
     font-weight: bold;
 }
 
+// Public styling of the DBN
 .public-dbn {
     color: #108511;
     font-weight: bold;
 }
 
+// The container for the spinner of the DBN
 #detail-spinner {
     width: 100px;
     margin-top: 50px;
     text-align: center;
 }
 
+// The preview canvas container
 .detail-preview-canvas {
     padding: 50px 0;
 }

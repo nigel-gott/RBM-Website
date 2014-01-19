@@ -1,5 +1,6 @@
 #!/bin/bash
 # compass/install.sh - install Compass under the "./Gem" directory
+# Provided by http://rhodesmill.org/brandon/2011/adding-compass/ to help set up compass
 
 if ! which gem >/dev/null ;then
     echo 'Error: no "gem" command available!'

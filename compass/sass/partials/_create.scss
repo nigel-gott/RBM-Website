@@ -1,12 +1,17 @@
+// Sass file for the create a DBN page
+
+// Description element
 #id_description {
     height: 100px;
 }
 
+// The layers container
 #layers {
     max-height: 150px;
     overflow: auto;
 }
 
+// The form container
 #formContainer {
     height: 700px;
     float: left;

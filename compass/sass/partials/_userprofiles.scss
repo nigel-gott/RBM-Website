@@ -1,13 +1,18 @@
+// The styling for the user profiles page
+
+// A user profile details
 .user-profile {
     float: left;
     width: 400px;
 }
 
+// The tabs to contain the users DBNs
 #user-tabs {
     width: 600px;
     float: left;
 }
 
+// The DBN table
 .dbn-light-head {
     width: 535px;
 }
@@ -17,6 +22,7 @@
     border-collapse: collapse;
 }
 
+// Make sure the DBN table overflows properly
 .dbn-overflow {
     overflow-x: hidden;
     overflow-y: auto;

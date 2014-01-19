@@ -1,9 +1,10 @@
 #!/bin/bash
+# Git hook used to update the requirements file
 
 if [[ "$VIRTUAL_ENV" != "" ]]
 then
     $VIRTUAL_ENV/bin/pip freeze > requirements.txt
     git add requirements.txt
 else
-    echo "WARNING: Virtualenv not activated, did not automatically save pip requirements to requirements.txt" 
+    echo "WARNING: Virtualenv not activated, did not automatically save pip requirements to requirements.txt"
 fi

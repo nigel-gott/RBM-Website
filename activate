@@ -1,4 +1,6 @@
 #!/bin/bash
+# Bash script to activate the virtual environment
+
 # Create a temporary file
 TMPFILE=$(mktemp)
 
@@ -8,5 +10,5 @@ echo "source venv/bin/activate" >> $TMPFILE
 echo "rm -f $TMPFILE" >> $TMPFILE
 
 
-# Start the new bash shell 
+# Start the new bash shell
 bash --rcfile $TMPFILE

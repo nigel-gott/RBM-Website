@@ -41,29 +41,6 @@ hooks/            - Git hooks
   post-merge      - Install all requirements in requirements.txt (someone else might have added new packages)
 install.sh        - Sets up virtual enviroment, project requirements, git hooks, submodules.
 requirements.txt  - Required python packages, use pip freeze to see what is currently installed in your venv. 
-```
-
-TODO:
-===========
-- Add page authentication
-- Complete celery training
-- Add information page
-- Train static DBNs (Digits, Characters)
-- Add classifier on home page
-- Setup RabbitMQ for celery
-- Find a better way of storing files
-- Clean up javascript/python
-- Make HTML pages and elements look nice
-- Document and Comment code
-- Prepare library to download
-- Add a constant file
-
-BUGS:
-==========
-- If no extra layers are passed then there is an index out of bounds error
-- Clean folders properly
-- Format class name input
-- Check no names have been used before
 
 What are all these words, help!
 ===========

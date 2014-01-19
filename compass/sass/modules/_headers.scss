@@ -1,26 +1,33 @@
+// Sass files for the headers in the page
+
+// Styling for th header element
 .header {
     font-family: $site-font;
     font-weight: bold;
 }
 
+// Extends the header
 h1 {
     @extend .header;
     font-size: 24px;
     margin: 5px 0;
 }
 
+// Extends the header
 h2 {
     @extend .header;
     font-size: 20px;
     margin: 4px 0;
 }
 
+// Extends the header
 h3 {
     @extend .header;
     font-size: 18px;
     margin: 3px 0;
 }
 
+// Extends the header
 h4 {
     @extend .header;
     font-size: 14px;

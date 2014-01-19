@@ -1,8 +1,12 @@
+// Sass file for the styling of messages
+
+// Generic styling for the messages container
 .messages {
     font-weight: bold;
     list-style-type: none;
 }
 
+// Template style for a message
 .message-template {
     background-color: #e6f4f5;
     border-radius: 3px;
@@ -12,21 +16,25 @@
     font-size: 1.5em;
 }
 
+// Extends the template and changes the text colour for a warning
 .warning {
     @extend .message-template;
     color: $warning-colour;
 }
 
+// Extends the template and changes the text colour for a success
 .success {
     @extend .message-template;
     color: $success-colour;
 }
 
+// Extends the template and changes the text colour for an error
 .error {
     @extend .message-template;
     color: $error-colour;
 }
 
+// Extends the template and changes the text colour for an info message
 .info {
     @extend .message-template;
     color: $info-colour;
