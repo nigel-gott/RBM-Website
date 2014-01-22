@@ -47,6 +47,8 @@ hooks/            - Git hooks
   post-merge      - Install all requirements in requirements.txt (someone else might have added new packages)
 install.sh        - Sets up virtual enviroment, project requirements, git hooks, submodules.
 requirements.txt  - Required python packages, use pip freeze to see what is currently installed in your venv. 
+```
+
 
 What are all these words, help!
 ===========
