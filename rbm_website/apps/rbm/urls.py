@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from rbm_website.apps.rbm import views
 
+# URLs for the RBM website
 urlpatterns = patterns('',
     url(r'^$', views.dbn_list, name='index'),
     url(r'^create/$', views.create, name='create'),

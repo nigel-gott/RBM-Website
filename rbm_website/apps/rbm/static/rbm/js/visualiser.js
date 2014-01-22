@@ -1,7 +1,12 @@
+// The visualiser used on the create a DBN page
 var layerCount = 0;
+
+// Loaded when ready by the JQuery file
 $(document).ready( function () {
+    // Gets the layer count
     layerCount = parseInt($("[name=layer_count]").val());
 
+    // Adds a layer to the DBN including the size and div
     $("#add-layer").click(function() {
         input = $('<input type="text">');
         input.attr('name', 'layer_' + layerCount);
@@ -22,6 +27,8 @@ $(document).ready( function () {
         $("[name=layer_count]").val(layerCount);
     });
 
+    // Deletes a layer from the DBN confid
+    // Only deletes the recently added layer
     $("#delete-layer").click(function() {
         if (layerCount > 0) {
             layerCount --;
@@ -32,9 +39,11 @@ $(document).ready( function () {
         }
     });
 
+    // Calls preview repeatedly
     preview();
     var prevInterval = setInterval ("preview()", 1000);
 
+    // The preview button which changes context
     $("#preview").click( function() {
         if ($(this).find("#previewStatus").html() == "Preview") {
             preview();
@@ -52,12 +61,15 @@ $(document).ready( function () {
     });
 });
 
+// Gets the topology and draws it on the canvas
 function preview() {
     $("#previewCanvas").remove();
     var topology = getTopology();
     drawTopology(topology, layerCount);
 }
 
+// Gets the topology of the DBN
+// Gets the size of the layer values and stores them in an array
 function getTopology() {
     var topology = new Array();
     topology[0] = $("#id_height").val()*$("#id_width").val();
@@ -68,7 +80,10 @@ function getTopology() {
     return topology;
 }
 
+// Draws the topology of the DBN
+// Uses specific values and parameters to draw the features
 function drawTopology(topology, noLayers) {
+    // Dimensions
     var height = 60;
     var gap = 40;
     var textOffset = height + 15;
@@ -82,6 +97,7 @@ function drawTopology(topology, noLayers) {
     });
     canvas.appendTo('#canvasContainer');
 
+    // Clears the canvas and calculates the sizes
     var ctx = $("#previewCanvas")[0].getContext("2d");
     ctx.clearRect(0,0,canvasWidth,canvasHeight);
     ctx.fillStyle = "#000000";
@@ -93,6 +109,8 @@ function drawTopology(topology, noLayers) {
         return Math.round(ratio*n);
     });
 
+    // Loops through each layer, drawing it in as appropriate
+    // Makes sure each layer fits in the canvas
     var currentHeight = canvasHeight - perHeight;
     for (var i = 0; i < noLayers + 2; i++) {
         fillRandomPixels(ctx, (canvasWidth/2) - widths[i]/2, currentHeight, widths[i], height);
@@ -107,6 +125,7 @@ function drawTopology(topology, noLayers) {
     }
 }
 
+// Fills the preview with random pixels
 function fillRandomPixels(ctx,xcoord,ycoord,width,height, pixels) {
     for (var x = 0; x < width; x++) {
         for (var y = 0; y < height; y++) {

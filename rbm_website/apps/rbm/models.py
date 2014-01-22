@@ -1,10 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 from picklefield.fields import PickledObjectField
-
 from rbm_website.libs.rbm_lib.dbn import DBN
 
-# Create your models here.
+# The DBN model object
+# Contains the name and other key details
+# Contains a pickled object of the dbn
+# Contains the list of labels
+# Provides some methods for manipulation
 class DBNModel(models.Model):
     name = models.CharField(max_length=200)
     creator = models.ForeignKey(User, related_name='dbns')
@@ -19,15 +22,19 @@ class DBNModel(models.Model):
     dbn = PickledObjectField()
     label_values = PickledObjectField()
 
+    # The string representation of the DBN
     def __unicode__(self):
         return (self.name + " - " + self.creator.username)
 
+    # Gets the DBN topology
     def get_topology(self):
         return self.dbn.get_topology()
 
+    # Classifies an image using the DBN
     def classify_image(self, image_data, samples):
         return self.dbn.classify(image_data, samples)
 
+    # Creates a DBN with given parameters
     @staticmethod
     def build_dbn(name, creator, description, height, width, config, labels, private, learning_rate):
         dbn = DBN(config, labels, learning_rate)

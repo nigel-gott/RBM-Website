@@ -3,7 +3,6 @@ import json
 import shutil
 import tasks
 import numpy as np
-
 from PIL import Image as pil
 from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
@@ -20,6 +19,7 @@ from rbm_website.apps.rbm.models import DBNModel
 from rbm_website.libs.image_lib import image_processor as imgpr
 from rbm_website.libs.decorators import message_login_required
 
+# Generic view for a list of DBNs
 class DBNListView(ListView):
     model = DBNModel
 
@@ -28,6 +28,7 @@ class DBNListView(ListView):
     def dispatch(self, *args, **kwargs):
         return super(DBNListView, self).dispatch(*args, **kwargs)
 
+# Generic view for the profile of a DBN
 class DBNDetailView(DetailView):
     model = DBNModel
 
@@ -35,17 +36,17 @@ class DBNDetailView(DetailView):
         context = super(DBNDetailView, self).get_context_data(**kwargs)
         context['topology'] = self.object.get_topology()
 
+        # Gets the base images if trained
         if self.object.trained:
             class_path = settings.MEDIA_ROOT + str(self.object.id)
             base_path = class_path + '/base_images'
-
             (images, labels) = imgpr.retrieve_images_base64(base_path)
-
             dictionary = dict(zip(labels, images))
             context['image_data'] = dictionary
 
         return context
 
+    # Checks to make sure that only those allowed can access the DBN
     @method_decorator(message_login_required)
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -57,6 +58,10 @@ class DBNDetailView(DetailView):
         else:
             return super(DBNDetailView, self).dispatch(*args, **kwargs)
 
+# Gets a list of DBNs
+# By default, returns the 10 most recent DBNs
+# Otherwise allows the user to search and sort DBNs
+# Provides the base image or a default image if not trained
 @message_login_required
 @login_required
 def dbn_list(request):
@@ -68,7 +73,6 @@ def dbn_list(request):
             if dbn.trained:
                 class_path = settings.MEDIA_ROOT + str(dbn.id)
                 image_path = class_path + '/base_images/' + dbn.label_values[0] + '.png'
-
                 image = imgpr.retrieve_image_base64(image_path)
                 dbn_images.append(image)
             else:
@@ -81,7 +85,6 @@ def dbn_list(request):
             criteria = form.cleaned_data['criteria']
             order = form.cleaned_data['order_by']
             trained_only = form.cleaned_data['trained']
-            print form.cleaned_data
             terms = criteria.split()
             result_dbns = []
             dbn_images = []
@@ -120,14 +123,11 @@ def dbn_list(request):
             elif order == "namedesc":
                 result_dbns.sort(key=lambda x: x.name)
             elif order == "timeasc":
-                print "by timedesc"
                 result_dbns.sort(key=lambda x: x.created)
             elif order == "timedesc":
-                print "by timeasc"
                 result_dbns.sort(key=lambda x: x.created, reverse=True)
 
             for dbn in result_dbns:
-                print dbn.created
                 if dbn.trained:
                     class_path = settings.MEDIA_ROOT + str(dbn.id)
                     image_path = class_path + '/base_images/' + dbn.label_values[0] + '.png'
@@ -143,6 +143,8 @@ def dbn_list(request):
     else:
         return render(request, 'rbm/dbnmodel_list.html', {})
 
+# Deletes a DBN from the database
+# Checks to make sure only the creator can delete the DBN
 @message_login_required
 @login_required
 def delete(request, dbn_id):
@@ -162,14 +164,19 @@ def delete(request, dbn_id):
         url = reverse('home')
         return redirect(url)
 
+# Classifies an image using the DBN
+# Flips the pixels if required
+# Gets the image posted
+# Classifies it and then returns the probability via a JSON
+# Used as an AJAX request
+# Otherwise just returns the classify page
 def classify(request, dbn_id):
     if request.method == 'POST':
         dbn = get_object_or_404(DBNModel , pk=dbn_id)
         save_image("classifyImage", request.POST['image_data'], dbn)
         image_data = imgpr.convert_url_to_array(request.POST['image_data'], "classifyImage")
 
-        # SORT OUT FOR main DBN
-        if dbn.id == 12:
+        if dbn.id in settings.FLIPPED_DBNS:
             iterator = np.vectorize(flip_pixels)
             image_data = iterator(image_data)
 
@@ -207,12 +214,17 @@ def classify(request, dbn_id):
 
             return render(request, 'rbm/classify.html', {'dbn': dbn})
 
+# Flips a pixel
 def flip_pixels(value):
     if value == 1:
         return 0
     else:
         return 1
 
+# Trains the DBN
+# Gets the images and labels posted
+# Starts the celery task to train in the background
+# Otherwise returns the training page to begin training
 @message_login_required
 @login_required
 def train(request, dbn_id):
@@ -251,18 +263,21 @@ def train(request, dbn_id):
 
         return render(request, 'rbm/train.html', {'dbn': dbn})
 
+# Cleans up the directory for training
 def clean_image_directory(id):
     path = settings.MEDIA_ROOT + str(id)
     if os.path.exists(path):
         shutil.rmtree(path)
     os.makedirs(path + '/base_images')
 
+# Saves a URL specified image to a directory
 def save_image(image_id, image_data, dbn):
     image_data = imgpr.convert_url_to_image(image_data, image_id)
     image = pil.open(image_data).convert("L")
     image_path = settings.MEDIA_ROOT  + str(dbn.id) + '/base_images/' + image_id + '.png'
     image.save(image_path)
 
+# A training page for after training begins
 @message_login_required
 @login_required
 def training(request):
@@ -271,6 +286,9 @@ def training(request):
     else:
         return render(request, 'rbm/training.html', {})
 
+# Used to create a DBN
+# Sets up the form with all the details
+# Otherwise sorts out a completed form to create a DBN
 @message_login_required
 @login_required
 def create(request):

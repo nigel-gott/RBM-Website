@@ -1,9 +1,13 @@
+// The function that creates the preview of the DBN
 function preview(topology, layerCount) {
     $("#previewCanvas").remove();
     drawTopology(topology, layerCount);
 }
 
+// Draws the topology of the DBN
+// Uses specific values and parameters to draw the features
 function drawTopology(topology, noLayers) {
+    // Dimensions
     var height = 60;
     var gap = 40;
     var textOffset = height + 15;
@@ -17,6 +21,7 @@ function drawTopology(topology, noLayers) {
     });
     canvas.appendTo('#canvasContainer');
 
+    // Clears the canvas and calculates the sizes
     var ctx = $("#previewCanvas")[0].getContext("2d");
     ctx.clearRect(0,0,canvasWidth,canvasHeight);
     ctx.fillStyle = "#000000";
@@ -28,6 +33,8 @@ function drawTopology(topology, noLayers) {
         return Math.round(ratio*n);
     });
 
+    // Loops through each layer, drawing it in as appropriate
+    // Makes sure each layer fits in the canvas
     var currentHeight = canvasHeight - perHeight;
     for (var i = 0; i < noLayers + 2; i++) {
         fillRandomPixels(ctx, (canvasWidth/2) - widths[i]/2, currentHeight, widths[i], height);
@@ -42,6 +49,7 @@ function drawTopology(topology, noLayers) {
     }
 }
 
+// Fills the layer with random pixels for visual effect
 function fillRandomPixels(ctx,xcoord,ycoord,width,height, pixels) {
     for (var x = 0; x < width; x++) {
         for (var y = 0; y < height; y++) {

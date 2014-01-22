@@ -1,8 +1,11 @@
+// The pixel drawer javascript element that allows users to draw images
 function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL, csrfToken) {
+    // The canvas
     var canvas_object = new Canvas(width, height);
     var canvas = canvas_object.canvas;
     var container;
 
+    // The drawing tools
     var brushes = {SMALL: 1, MEDIUM: 2, LARGE: 3};
     var currentlyDrawing = false;
     var blank = true;
@@ -13,11 +16,15 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
     canvas_object.addCheckerboard();
     container.append(canvas);
 
+    // Variables to store elements
     var usedClassNames = new Array();
     var download;
     var train;
     var classes_remaining;
 
+    // If on the training page
+    // Use the button to add classes
+    // Otherwise use it to classify
     if (mode == "train") {
         classes_remaining = max_labels;
         printRemainingClasses();
@@ -35,6 +42,7 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
 
     }
 
+    // The drawing function elements and tools
     var className = $('#className');
     var pen = $('#brush');
     var clear = $('#clear');
@@ -44,14 +52,17 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
     var large = $('#large');
     var centre = $('#centre');
 
+    // Disables certain attributes to start with
     pen.attr("disabled", true);
     clear.attr("disabled", true);
     small.attr("disabled", true);
 
+    // Clears the canvas button
     clear.click(function() {
         clearCanvas();
     });
 
+    // If the pen tool is clicked
     pen.click(function() {
         currentTool = tools.PEN;
         canvas_object.changeBrushSize(brushes.SMALL);
@@ -62,6 +73,7 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
         large.attr("disabled", false);
     });
 
+    // If the eraser is clicked
     eraser.click(function() {
         currentTool = tools.ERASER;
         eraser.attr("disabled", true);
@@ -71,6 +83,7 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
         large.attr("disabled", true);
     });
 
+    // If the small size pen is clicked
     small.click(function() {
         canvas_object.changeBrushSize(brushes.SMALL);
         small.attr("disabled", true);
@@ -78,6 +91,7 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
         large.attr("disabled", false);
     });
 
+    // If the medium sized pen is clicked
     medium.click(function() {
         canvas_object.changeBrushSize(brushes.MEDIUM);
         small.attr("disabled", false);
@@ -85,6 +99,7 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
         large.attr("disabled", false);
     });
 
+    // If the large sized pen is clicked
     large.click(function() {
         canvas_object.changeBrushSize(brushes.LARGE);
         small.attr("disabled", false);
@@ -92,6 +107,9 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
         large.attr("disabled", true);
     });
 
+    // Implementes centre of gravity centering
+    // This is key to make sure images are in the correct position
+    // Performs mathematical calculations to find the centre
     centre.click(function() {
         var bounds = canvas_object.getCanvasBounds();
         var drawHeight = bounds["top"] - bounds["bottom"];
@@ -116,7 +134,7 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
                 }
             }
         }
-	
+
         heightCog = Math.floor(totalHeight/blackPixels);
         widthCog  = Math.floor(totalWidth/blackPixels);
         heightOffset = heightCentre - heightCog;
@@ -124,16 +142,21 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
         canvas_object.shiftDrawing(-heightOffset, widthOffset);
     });
 
+   // Creates the drawing tool
    function createLayout() {
         container = $('<div/>', {
             id: 'canvasContainer',
         }).appendTo(drawerContainer);
     }
 
+    // Prints the classes remaining
     function printRemainingClasses() {
         $('#classesRemainingDisplay').empty().prepend(classes_remaining + ' out of ' + max_labels + ' classes remaining!');
     }
 
+    // The classify function
+    // Gets the picture and uploads it to the server via AJAX
+    // Deals with the return JSON of probability
     function classify() {
         previewCanvas = canvas_object.generatePreview();
         imageURL = previewCanvas.toDataURL("image/png");
@@ -153,6 +176,9 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
         });
     }
 
+    // Creates the training button
+    // Gets all images and names from the HTML classes
+    // Posts the data to the server for training
     function createTrainButton() {
         train = $('#trainButton');
         train.attr("disabled", true);
@@ -169,7 +195,7 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
             });
 
             $.post(uploadURL, {
-                classImages: images, 
+                classImages: images,
                 pre_epoch: $('#pre_epoch').val(),
                 train_epoch: $('#train_epoch').val(),
                 train_loop: $('#train_loop').val(),
@@ -181,6 +207,11 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
         });
     }
 
+    // Adds a class of images to the layer
+    // Checks to make sure all requirements are satisfied
+    // Gets the image from the canvas
+    // Creates an image to show on the page
+    // Puts the element on the HTML page
     function addClass() {
         var previewCanvas = canvas_object.generatePreview();
         var imageURL = previewCanvas.toDataURL("image/png");
@@ -229,20 +260,24 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
         }
     }
 
+    // If the mouse is down, draw
     canvas.mousedown(draw);
 
+    // If the mouse moves, re draw
     canvas.mousemove( function (e) {
         if (currentlyDrawing) {
             draw(e);
         }
     });
 
+    // Clears the canvas of all drawings
     function clearCanvas() {
         canvas_object.addCheckerboard();
         blank = true;
         clear.attr("disabled", true);
     }
 
+    // Draws on the canvas at the given co-ordinates
     function draw(e){
         var offset = canvas.offset();
         x = Math.floor((e.pageX - offset.left) / canvas_object.aspRatio);
@@ -273,6 +308,7 @@ function PixelDrawer(drawerContainer, width, height, mode, max_labels, uploadURL
     });
 }
 
+// Creates the drawing canvas
 function Canvas(pixelWidth, pixelHeight){
     var aspRatio = 10;
     this.aspRatio = aspRatio;
