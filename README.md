@@ -21,7 +21,9 @@ You can also configure which DBN displays on the front page by editting HOME\_DB
 Importing our pre trainined handwritten digits DBN.
 ===========
 Run the following commands in the root website folder (where the README.md file is)
+
 ./activate
+
 python load\_handwritten\_digits.py
 
 Now go to the website and note down the ID of the new Handwritten digits DBN (the number in its url / in the list)
