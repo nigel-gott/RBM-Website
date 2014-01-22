@@ -32,7 +32,9 @@ So for example after runnin load\_handwritten\_digits.py you go to the website a
 FLIPPED_DBNS = [12]
 ```
 and change it to
+```
 FLIPPED_DBNS = [8]
+```
 
 where 8 is whatever ID of the new DBN.
 
