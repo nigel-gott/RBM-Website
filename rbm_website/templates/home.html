@@ -31,90 +31,92 @@ Please try out the Deep Belief Network below. It is trained to recognise hand-wr
 
 <hr style="background-color: #000000;border-color: #000000"/>
 
-<div id="drawerContainer">
-    <h2>Drawing Tool:</h2>
-    <div id="pixelDrawerContainer">
+{% if has_dbn %}
+    <div id="drawerContainer">
+        <h2>Drawing Tool:</h2>
+        <div id="pixelDrawerContainer">
+        </div>
+
+        <div id="commands">
+            <div id="brushContainer">
+                <button id="brush" class="btn draw-btn" type="button">
+                    <img src="{% static 'libs/img/brush.png' %}" alt="BRUSH">
+                </button>
+            </div>
+            <div id="eraserContainer">
+                <button id="eraser" class="btn draw-btn" type="button">
+                    <img src="{% static 'libs/img/eraser.png' %}" alt="ERASER">
+                </button>
+            </div>
+            <div id="smallContainer">
+                <button id="small" class="btn draw-btn" type="button">
+                    <img src="{% static 'libs/img/small.png' %}" alt="SMALL">
+                </button>
+            </div>
+            <div id="mediumContainer">
+                <button id="medium" class="btn draw-btn" type="button">
+                    <img src="{% static 'libs/img/medium.png' %}" alt="MEDIUM">
+                </button>
+            </div>
+            <div id="largeContainer">
+                <button id="large" class="btn draw-btn" type="button">
+                    <img src="{% static 'libs/img/large.png' %}" alt="LARGE">
+                </button>
+            </div>
+            <div id="clearContainer">
+                <button id="clear" class="btn draw-btn" type="button">
+                    <img src="{% static 'libs/img/clear.png' %}" alt="CLEAR">
+                </button>
+            </div>
+            <div id="centreContainer">
+                <button id="centre" class="btn draw-btn" type="button">
+                    <img src="{% static 'libs/img/centre.png' %}" alt="CENTRE">
+                </button>
+            </div>
+        </div>
     </div>
 
-    <div id="commands">
-        <div id="brushContainer">
-            <button id="brush" class="btn draw-btn" type="button">
-                <img src="{% static 'libs/img/brush.png' %}" alt="BRUSH">
-            </button>
+    <div id="controlContainer">
+        <h2>Results:</h2>
+        <div id="classifyButtonContainer" style="margin:20px 0px;">
+            <button id="classifyButton" type="button" class="btn btn-success btn-sm">Classify <i class="glyhpicon glyphicon-upload"></i></button>
+            Most Likely Class: <span id="maxProbContainer" style="color: #0E9A25; font-weight: bold"></span>
         </div>
-        <div id="eraserContainer">
-            <button id="eraser" class="btn draw-btn" type="button">
-                <img src="{% static 'libs/img/eraser.png' %}" alt="ERASER">
-            </button>
-        </div>
-        <div id="smallContainer">
-            <button id="small" class="btn draw-btn" type="button">
-                <img src="{% static 'libs/img/small.png' %}" alt="SMALL">
-            </button>
-        </div>
-        <div id="mediumContainer">
-            <button id="medium" class="btn draw-btn" type="button">
-                <img src="{% static 'libs/img/medium.png' %}" alt="MEDIUM">
-            </button>
-        </div>
-        <div id="largeContainer">
-            <button id="large" class="btn draw-btn" type="button">
-                <img src="{% static 'libs/img/large.png' %}" alt="LARGE">
-            </button>
-        </div>
-        <div id="clearContainer">
-            <button id="clear" class="btn draw-btn" type="button">
-                <img src="{% static 'libs/img/clear.png' %}" alt="CLEAR">
-            </button>
-        </div>
-        <div id="centreContainer">
-            <button id="centre" class="btn draw-btn" type="button">
-                <img src="{% static 'libs/img/centre.png' %}" alt="CENTRE">
-            </button>
-        </div>
-    </div>
-</div>
 
-<div id="controlContainer">
-    <h2>Results:</h2>
-    <div id="classifyButtonContainer" style="margin:20px 0px;">
-        <button id="classifyButton" type="button" class="btn btn-success btn-sm">Classify <i class="glyhpicon glyphicon-upload"></i></button>
-        Most Likely Class: <span id="maxProbContainer" style="color: #0E9A25; font-weight: bold"></span>
-    </div>
-
-    <div id="results">
-        <div id="probabilities">
-            <div id="probs-table">
-                <div class="probs-table-head">
-                    <table class="light-table" style="width: 300px" cellpadding="0" cellspacing="0">
-                      <tr>
-                        <th width="40%"><b>Label</b></th>
-                        <th width="60%"><b>Probability</b></th>
-                      </tr>
-                    </table>
-                </div>
-
-                <div style="overflow-x: hidden; overflow-y: auto;height: 250px; width: 315px;">
-                    <div class="probs-table-data">
-                        <table class="light-table" style="width: 300px;border-collapse:collapse;" cellpadding="0" cellspacing="0">
-
-                        {% for label in dbn.label_values %}
-                            {% with divName=label|add:"LabelContainer" %}
-                            <tr>
-                                <td style="border-collapse: collapse;" width="40%">{{ label }}</td>
-                                <td style="border-collapse: collapse;" width="60%"><span id="{{divName}}"></span></td>
-                            </tr>
-                            {% endwith %}
-                        {% endfor %}
+        <div id="results">
+            <div id="probabilities">
+                <div id="probs-table">
+                    <div class="probs-table-head">
+                        <table class="light-table" style="width: 300px" cellpadding="0" cellspacing="0">
+                          <tr>
+                            <th width="40%"><b>Label</b></th>
+                            <th width="60%"><b>Probability</b></th>
+                          </tr>
                         </table>
+                    </div>
+
+                    <div style="overflow-x: hidden; overflow-y: auto;height: 250px; width: 315px;">
+                        <div class="probs-table-data">
+                            <table class="light-table" style="width: 300px;border-collapse:collapse;" cellpadding="0" cellspacing="0">
+
+                            {% for label in dbn.label_values %}
+                                {% with divName=label|add:"LabelContainer" %}
+                                <tr>
+                                    <td style="border-collapse: collapse;" width="40%">{{ label }}</td>
+                                    <td style="border-collapse: collapse;" width="60%"><span id="{{divName}}"></span></td>
+                                </tr>
+                                {% endwith %}
+                            {% endfor %}
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-</div>
+    </div>
 
-<script>
-    pixelDrawer = new PixelDrawer($('#pixelDrawerContainer'), {{dbn.width}}, {{dbn.height}}, "classify", {{dbn.labels}}, "{% url 'classify' dbn.id %}", '{{csrf_token}}');
-</script>
+    <script>
+        pixelDrawer = new PixelDrawer($('#pixelDrawerContainer'), {{dbn.width}}, {{dbn.height}}, "classify", {{dbn.labels}}, "{% url 'classify' dbn.id %}", '{{csrf_token}}');
+    </script>
+{% endif %}
 
 {% endblock %}
