@@ -20,6 +20,7 @@ You can also configure which DBN displays on the front page by editting HOME\_DB
 
 Importing our pre trainined handwritten digits DBN.
 ===========
+Make sure you have registered at least one user before doing this using the sign up page on the website. 
 Run the following commands in the root website folder (where the README.md file is)
 
 ./activate
