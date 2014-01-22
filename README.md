@@ -2,7 +2,15 @@ RBM-Website
 ===========
 Django website for RBM Library. 
 
-Run install.sh to create virtual env, install required packages into it, clean database and setup git hooks. 
+How to install
+==============
+
+1. Ensure you have git, python and virtualenv installed on your system.
+2. Clone this repository to the desired location.
+3. Setup a database and configure the default database on line 25 of rbm\_website/settings.py, by default it looks for a postgresql with a database named dbn\_database, a user called postgres with the password postgres.
+4. Run install.sh to create virtual env, install required packages into it, clean database and setup git hooks. 
+5. Run both run\_webserver.sh and run\_celery.sh in seperate terminals. The celery terminal will display output when it trains an RBM and any errors related to that.
+6. Visit the url shown by run\_webserver.sh to see the site. 
 
 !!! Important !!!
 ===========
@@ -14,13 +22,11 @@ The git hooks will update requirements.txt every time you commit with whatever p
 Running the Website:
 ===========
 
-Once in the virtual environment, run 'python manage.py runserver' to setup the local server. If it runs correctly, it will output the address of the home page.
+Once in the virtual environment, run 'python manage.py runserver' to setup the local server. If it runs correctly, it will output the address of the home page. Alternatively you can just use run\_webserver.sh to do the same thing.
 
 Running Celery:
 ===========
 Celery is used to run the background tasks such as training. To edit these tasks, look at tasks.py. To start celery, run the following: ```python manage.py celeryd -v 2 -B -s celery -E -l INFO```
-
-I'm not 100% on what all these arguments do and will look into them soon.
 
 
 Project Structure 
