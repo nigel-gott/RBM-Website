@@ -60,7 +60,7 @@ http://blog.echen.me/2011/07/18/introduction-to-restricted-boltzmann-machines/ -
 http://deeplearning.net/tutorial/DBN.html - A guide to DBNs and implementing them
 www.cs.toronto.edu/~hinton/absps/guideTR.pdf - Guide to training RBMs by Geoffrey Hinton
 http://www.scholarpedia.org/article/Deep_belief_networks - Some resources on Deep Belief Networks
-
+The MNIST database of handwritten digits
 
 
 
