@@ -20,7 +20,7 @@ if __name__ == '__main__':
     model.name = "Handwritten Digits DBN"
     model.dbn = dbn
     model.creator_id = 1
-    model.description = "Handwritten Digits DBN, please google the MNIST handwritten digits database and look at the pictures to see in what style the digits have been written. Also please make sure you centre your digits as the MNIST training set is also centred. "
+    model.description = "MAKE SURE YOU UPDATE rbm_website/settings.py FLIPPED_DBNS LIST TO INCLUDE THE ID (the number at the end of this pages url) OF THIS DBN OR IT WILL ONLY CLASSIFY 2 AND 8. Handwritten Digits DBN, please google the MNIST handwritten digits database and look at the pictures to see in what style the digits have been written. Also please make sure you centre your digits as the MNIST training set is also centred. "
     model.trained = True
     model.height = 28
     model.width = 28

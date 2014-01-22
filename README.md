@@ -18,6 +18,26 @@ In rbm\_website you can configure FLIPPED\_DBNS to be the list of id's of rbms w
 
 You can also configure which DBN displays on the front page by editting HOME\_DBN with the corrosponding dbn's id.
 
+Importing our pre trainined handwritten digits DBN.
+===========
+Run the following commands in the root website folder (where the README.md file is)
+./activate
+python load\_handwritten\_digits.py
+
+Now go to the website and note down the ID of the new Handwritten digits DBN (the number in its url / in the list)
+Now open rbm\_website/settings.py and add its ID to the FLIPPED\_DBNS list.
+
+So for example after runnin load\_handwritten\_digits.py you go to the website and see that on the DBN list there is a new dbn with a 8 to its left. Now open up rbm\_website/settings.py find on line 37 
+```
+FLIPPED_DBNS = [12]
+```
+and change it to
+FLIPPED_DBNS = [8]
+
+where 8 is whatever ID of the new DBN.
+
+This is because the MNIST dataset we used to train this DBN treated black pixels as white and vice versa. 
+
 !!! Important !!!
 ===========
 Make sure you always have the virtual enviroment activated when working on the website.
