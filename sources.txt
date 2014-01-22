@@ -1,0 +1,86 @@
+Sources for Group Project
+
+Below is a list of sources that we used for our group project. The sources we used for our report can be found in the report itself, but the sources that helped us in the rest of project can be found in this file.
+
+Tools:
+
+Postgres Database:
+www.postgresql.org/‎
+en.wikipedia.org/wiki/PostgreSQL‎
+
+Python:
+www.python.org/‎
+en.wikipedia.org/wiki/Python_(programming_language)‎
+
+Numpy:
+www.numpy.org/‎
+en.wikipedia.org/wiki/NumPy‎
+
+Django:
+https://www.djangoproject.com/‎
+en.wikipedia.org/wiki/Django_(web_framework)‎
+
+Twitter Bootstrap:
+getbootstrap.com/‎
+en.wikipedia.org/wiki/Bootstrap_(front-end_framework)‎
+
+JQuery:
+http://jquery.com/
+http://jqueryui.com/
+http://en.wikipedia.org/wiki/JQuery
+
+Github:
+http://en.wikipedia.org/wiki/GitHub
+https://github.com/
+
+Sass:
+http://en.wikipedia.org/wiki/Sass_(stylesheet_language)
+sass-lang.com/‎
+
+Celery:
+http://www.celeryproject.org/
+
+
+
+
+Website Development:
+http://stackoverflow.com/
+http://www.w3schools.com/
+http://jsfiddle.net/
+https://docs.djangoproject.com/en/1.6/
+http://www.djangobook.com/en/2.0/index.html
+http://rhodesmill.org/brandon/2011/adding-compass/ - To help setup and migrate compass
+http://www.google.com/fonts
+
+
+Library Development:
+http://www.youtube.com/watch?v=AyzOUbkUf3M - The Next Generation of Neural Networks Youtube video
+http://en.wikipedia.org/wiki/Restricted_Boltzmann_machine - Wikipedia Article on RBMs
+http://blog.echen.me/2011/07/18/introduction-to-restricted-boltzmann-machines/ - Introduction to RBMs by Edwin Chen
+http://deeplearning.net/tutorial/DBN.html - A guide to DBNs and implementing them
+www.cs.toronto.edu/~hinton/absps/guideTR.pdf - Guide to training RBMs by Geoffrey Hinton
+http://www.scholarpedia.org/article/Deep_belief_networks - Some resources on Deep Belief Networks
+
+
+
+
+Presentation (Images and Info):
+
+Images:
+https://www.simonsfoundation.org/wp-content/uploads/2013/07/Geoff-Hinton_web.jpg - Geoffrey Hinton
+http://upload.wikimedia.org/wikipedia/commons/e/e8/Restricted_Boltzmann_machine.svg - RBM topology
+http://deeplearning.net/tutorial/_images/DBN3.png - DBN Topology
+http://www.pyzo.org/_images/python_logo.png - Python Logo
+http://upload.wikimedia.org/wikipedia/en/1/1b/NumPy_logo.png - NumPy Logo
+http://siliconangle.com/files/2012/03/github_logo.jpg - Github Logo
+http://www.thetawelle.de/wp-upload/django-logo.png - Django Logo
+http://www.myintervals.com/blog/wp-content/uploads/2011/12/postgresql-logo1.png - Postgres Logo
+http://prokofyev.ch/images/blog/django_celery.png - Celery Logo
+http://goldenworks.eu/images/finalfortune/bootstrap_html_css.png - Bootstrap Logo
+http://explainafide.com.au/wp-content/uploads/2012/10/jquery-logo.png - Jquery Logo
+http://sass-lang.com/assets/img/logo-235e394c.png - Sass Logo
+http://www.tupilabs.com/img/posts/2012-10-31_promoting-material-for-jenkins-user-event/jenkins_no_bg.png - Jenkins Logo
+http://www.publicdomainpictures.net/pictures/40000/nahled/question-mark.jpg - Question Mark
+
+General:
+Some images and info came from our software engineering reports
