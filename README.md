@@ -12,6 +12,12 @@ How to install
 5. Run both run\_webserver.sh and run\_celery.sh in seperate terminals. The celery terminal will display output when it trains an RBM and any errors related to that.
 6. Visit the url shown by run\_webserver.sh to see the site. 
 
+Some configuration options
+===========
+In rbm\_website you can configure FLIPPED\_DBNS to be the list of id's of rbms who you want black pixels to be treated as white and vice versa.
+
+You can also configure which DBN displays on the front page by editting HOME\_DBN with the corrosponding dbn's id.
+
 !!! Important !!!
 ===========
 Make sure you always have the virtual enviroment activated when working on the website.
